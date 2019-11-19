@@ -14,8 +14,7 @@ $(OUTDIR)/%.stl: $(SRCDIR)/%.scad $(SRCDIR)/**/*.scad Makefile
 
 # render model
 start:
-	@echo 'Starting openscad...'
-	@openscad $(SRCDIR)/$(SRCFILE) >&2 2>/dev/null &
+	openscad $(SRCDIR)/$(SRCFILE) >&2 2>/dev/null &
 
 # delete build
 clean:
