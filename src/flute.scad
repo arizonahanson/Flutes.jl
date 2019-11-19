@@ -4,6 +4,7 @@
  *   License: MIT
  */
 include <lib/config.scad>
+use <headjoint.scad>
 
-// TODO: replace placeholder
-cylinder(r1=1,r2=1,h=1);
+color("BurlyWood")
+  headjoint();
