@@ -6,5 +6,4 @@
 include <lib/config.scad>
 use <headjoint.scad>
 
-color("BurlyWood")
-  headjoint();
+headjoint();
