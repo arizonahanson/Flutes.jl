@@ -1,13 +1,17 @@
-INFILE=src/flute.scad
-DEPFILES=src/*.scad
+SRCDIR=src
+OUTDIR=build
+SRCFILE=flute.scad
 OUTFILE=flute.stl
 RESOLUTION=0.125
 
 # build model
-build: $(OUTFILE)
-$(OUTFILE): $(DEPFILES) Makefile
-	openscad $(INFILE) -o $(OUTFILE) -Dfs=$(RESOLUTION)
+build: $(OUTDIR)/$(OUTFILE)
+
+# compile scad file to stl
+$(OUTDIR)/%.stl: $(SRCDIR)/%.scad $(SRCDIR)/*.scad Makefile
+	mkdir -p $(OUTDIR)
+	openscad -Dfs=$(RESOLUTION) $< -o $@
 
 # delete build
 clean:
-	rm -f $(OUTFILE)
+	rm -rf $(OUTDIR)
