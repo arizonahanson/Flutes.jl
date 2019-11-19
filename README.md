@@ -1,6 +1,6 @@
- > Parametric CSG Flute Model
- > Author: Isaac W Hanson
- > License: MIT
+## Parametric CSG Flute Model
+### Author: Isaac W Hanson
+### License: MIT
 
 to create stl file:
 ```sh
