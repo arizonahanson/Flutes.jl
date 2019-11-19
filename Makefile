@@ -2,7 +2,7 @@ SRCDIR=src
 OUTDIR=build
 SRCFILE=flute.scad
 OUTFILE=flute.stl
-FLAGS=-Dfs=0.125
+FLAGS=-Dfs=0.125 -Dfa=0.01
 
 # build model
 build: $(OUTDIR)/$(OUTFILE)
