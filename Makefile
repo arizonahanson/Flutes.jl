@@ -12,6 +12,11 @@ $(OUTDIR)/%.stl: $(SRCDIR)/%.scad $(SRCDIR)/**/*.scad Makefile
 	mkdir -p $(OUTDIR)
 	openscad $(FLAGS) -o $@ $<
 
+# render model
+start:
+	@echo 'Starting openscad...'
+	@openscad $(SRCDIR)/$(SRCFILE) >&2 2>/dev/null &
+
 # delete build
 clean:
 	rm -rf $(OUTDIR)
