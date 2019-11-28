@@ -2,12 +2,14 @@
 ### Author: Isaac W Hanson
 ### License: MIT
 
-to create stl file:
+a work-in-progress openscad flute model
+
+to export stl file:
 ```sh
 make build
 ```
 
-to view/edit in openscad:
+to open with openscad and vim:
 ```sh
 make start
 ```

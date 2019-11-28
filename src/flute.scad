@@ -6,7 +6,8 @@
 include <lib/config.scad>
 use <lib/shapes.scad>
 
+rotate([0,-90,180])
 difference() {
-  turn(bore1=12,bore2=9,length=50,thick1=2,thick2=2);
-  hole(pos=10,r1=3,r2=3,h=14.01);
+  turn(bore1=10,bore2=8,length=180,thick1=2,thick2=4);
+  hole(pos=25,r1=5,r2=3,h=12.01);
 }
