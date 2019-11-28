@@ -7,10 +7,6 @@ include <lib/config.scad>
 use <lib/shapes.scad>
 
 difference() {
-  w = 10;
-  r = 19;
-  color("Gray")
-    hcylinder(r1=r,r2=r-1,h=182.5,w=w);
-  color("BurlyWood")
-    hole(pos=61,r1=8.5,r2=8.5,h=r+w);
+  turn(bore1=12,bore2=9,length=50,thick1=2,thick2=2);
+  hole(pos=10,r1=3,r2=3,h=14.01);
 }
