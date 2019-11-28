@@ -1,14 +1,12 @@
 SRCDIR=src
-OUTDIR=build
-BASENAME=flute
-FLAGS=-Dfs=0.125 -Dfa=0.01
-
-SRCFILE=$(BASENAME).scad
-OUTFILE=$(BASENAME).stl
+OUTDIR?=build
+BASENAME?=flute
+FLAGS?=-Dfs=0.125 -Dfa=0.01
+EDITOR?=vi
 
 # output stl model
 .PHONY: build
-build: $(OUTDIR)/$(OUTFILE)
+build: $(OUTDIR)/$(BASENAME).stl
 
 # output stl model matching scad file
 $(OUTDIR)/%.stl: $(SRCDIR)/%.scad $(SRCDIR)/**/*.scad Makefile
@@ -18,8 +16,8 @@ $(OUTDIR)/%.stl: $(SRCDIR)/%.scad $(SRCDIR)/**/*.scad Makefile
 # preview scad model
 .PHONY: start
 start:
-	@openscad $(SRCDIR)/$(SRCFILE) >&2 2>/dev/null &
-	@$(EDITOR) $(SRCDIR)/$(SRCFILE)
+	@openscad $(SRCDIR)/$(BASENAME).scad >&2 2>/dev/null &
+	@$(EDITOR) $(SRCDIR)/$(BASENAME).scad
 
 # delete output
 .PHONY: clean
