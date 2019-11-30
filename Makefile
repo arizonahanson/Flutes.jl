@@ -1,25 +1,30 @@
-SRCDIR=src
+## default build env
 OUTDIR?=build
-BASENAME?=flute
-FLAGS?=-Dfs=0.125 -Dfa=0.01
+OUTFILES?=src/flute.stl
+OUTFLAGS?=-Dfs=0.125 -Dfa=0.01
+
 EDITOR?=vi
+EDITFILE=src/flute.scad
+DEPFILES=src/**/*.scad Makefile
 
 # output stl model
 .PHONY: build
-build: $(OUTDIR)/$(BASENAME).stl
+build: $(OUTFILES)
+	@mkdir -p $(OUTDIR)
+	@cp -v $(OUTFILES) $(OUTDIR)
 
 # output stl model matching scad file
-$(OUTDIR)/%.stl: $(SRCDIR)/%.scad $(SRCDIR)/**/*.scad Makefile
-	@mkdir -p $(OUTDIR)
-	openscad $(FLAGS) -o $@ $<
+%.stl: %.scad $(DEPFILES)
+	openscad $(OUTFLAGS) -o $@ $<
 
 # preview scad model
 .PHONY: start
 start:
-	@openscad $(SRCDIR)/$(BASENAME).scad >&2 2>/dev/null &
-	@$(EDITOR) $(SRCDIR)/$(BASENAME).scad
+	@openscad $(EDITFILE) >&2 2>/dev/null &
+	@$(EDITOR) $(EDITFILE)
 
 # delete output
 .PHONY: clean
 clean:
-	@rm -rf $(OUTDIR) -v
+	@rm -fv $(OUTFILES)
+	@rm -rfv $(OUTDIR)
