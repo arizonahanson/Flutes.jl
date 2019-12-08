@@ -1,5 +1,5 @@
-## Parametric Flute Model
+## Parametric Flute Modeler
 ### Author: Isaac W Hanson
 ### License: MIT
 
-A work-in-progress parametric flute model, defined in Julia and OpenSCad
+A work-in-progress parametric flute modeler, written in Julia and OpenSCad

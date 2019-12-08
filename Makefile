@@ -1,10 +1,10 @@
 ## default build env
 OUTDIR?=build
-OUTFILES?=src/scad/Flute.stl
+OUTFILES?=src/scad/flute.stl
 OUTFLAGS?=-Dfs=0.125 -Dfa=0.01
 
 EDITOR?=vi
-EDITFILE=src/scad/Flute.scad
+EDITFILE=src/scad/flute.scad
 DEPFILES=src/**/*.scad Makefile
 
 # output stl model
