@@ -1,0 +1,4 @@
+name = "Flute"
+uuid = "e7acecde-1968-11ea-25fd-95583f36a98c"
+authors = ["Isaac W Hanson <isaac@starlig.ht>"]
+version = "0.1.0"
