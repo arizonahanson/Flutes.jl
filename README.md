@@ -1,5 +1,5 @@
-## Parametric CSG Flute Model
+## Parametric Flute Model
 ### Author: Isaac W Hanson
 ### License: MIT
 
-a work-in-progress parametric flute model, defined in julia and openscad
+A work-in-progress parametric flute model, defined in Julia and OpenSCad
