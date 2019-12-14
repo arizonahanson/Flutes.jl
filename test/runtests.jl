@@ -1,2 +1,4 @@
+using Flutes
+using Test
 
-println("runtests.jl not implemented")
+@test Flutes.soundspeed(0) == 331.3
