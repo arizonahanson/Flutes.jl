@@ -1,4 +1,4 @@
 using Flutes
 using Test
 
-@test Flutes.soundspeed(0) == 331.3
+@test round(Flutes.soundspeed(0); sigdigits=4) == 331.3
