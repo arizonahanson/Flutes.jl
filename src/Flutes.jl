@@ -3,5 +3,6 @@
 Parametric Flute Modeler
 """
 module Flutes
-    greet() = print("Hello World!")
+    # speed of sound (mm/s)
+    const 𝑐 = 346000
 end # module
