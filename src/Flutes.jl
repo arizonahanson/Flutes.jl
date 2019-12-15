@@ -3,6 +3,7 @@
 Parametric Flute Modeler
 """
 module Flutes
+    export soundspeed, wavelength
 
     """
         soundspeed(𝜗::Number=25.0)
