@@ -1,6 +1,6 @@
 
 """
-Parametric Flute Modeler
+Parametric Flute Modeling Tool
 
 distances in millimeters
 frequencies in Hertz
@@ -31,6 +31,6 @@ module Flutes
     function wavelength(𝐹::Number=261.6255653, 𝜗::Number=25.0)
         𝑐 = soundspeed(𝜗)
         𝜆 = 𝑐/𝐹
-        round(𝜆; digits=3) # (mm, round to μm)
+        round(𝜆; digits=2)
     end
 end
