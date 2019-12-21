@@ -19,16 +19,18 @@ module Flutes
         𝛾 = 1.400            # heat capacity ratio of air
         𝑅 = 8.31446261815324 # molar gas constant (J/mol/K)
         𝑀 = 0.028965369      # mean molar mass of air (kg/mol)
-        √(𝛾 * 𝑅/𝑀 * 273.15) * √(1.0 + 𝜗/273.15) * 1000.0
+        𝑐 = √(𝛾 * 𝑅/𝑀 * 273.15) * √(1.0 + 𝜗/273.15)
+        round(𝑐; sigdigits=4) * 1000.0 # (to mm/s)
     end
 
     """
-        𝜆₁ = wavelength(𝐹::Number=261.6255653, 𝜗::Number=25.0)
+        𝜆 = wavelength(𝐹::Number=261.6255653, 𝜗::Number=25.0)
 
     Calculate the wavelength of frequency 𝐹 in air of temperature 𝜗
     """
     function wavelength(𝐹::Number=261.6255653, 𝜗::Number=25.0)
         𝑐 = soundspeed(𝜗)
-        𝑐/𝐹
+        𝜆 = 𝑐/𝐹
+        round(𝜆; digits=3) # (mm, round to μm)
     end
 end
