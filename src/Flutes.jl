@@ -8,7 +8,13 @@ temperatures in Celsius (default 25.0°C)
 time in seconds
 """
 module Flutes
-    export soundspeed, wavelength
+    export Flute, soundspeed, wavelength, tubelength
+
+    struct Flute
+        𝐹::Number
+        𝜗::Number
+        𝑑ₜ::Number
+    end
 
     """
         𝑐 = soundspeed(𝜗::Number=25.0)
@@ -24,13 +30,54 @@ module Flutes
     end
 
     """
+        temperature_at(𝑥::Number=0.0)
+
+    Temperature at 𝑥 distance from embouchure: Coltman (1968)
+    """
+    function temperature_at(𝑥::Number=0.0)
+        𝑇 = 30.3 - .0077𝑥
+        round(𝑇; sigdigits=3)
+    end
+
+    """
         𝜆 = wavelength(𝐹::Number=261.6255653, 𝜗::Number=25.0)
 
     Calculate the wavelength of frequency 𝐹 in air of temperature 𝜗
     """
     function wavelength(𝐹::Number=261.6255653, 𝜗::Number=25.0)
         𝑐 = soundspeed(𝜗)
-        𝜆 = 𝑐/𝐹
-        round(𝜆; digits=2)
+        𝑐/𝐹
+    end
+
+    """
+        embouchurecorrection()
+
+    Correction of tube-length at embouchure
+    """
+    function embouchurecorrection()
+        𝛥ℓₑ = 52.0
+    end
+
+    """
+        endcorrection(𝑑ₜ::Number=19.0)
+
+    Correction of tube-length at open-end
+    """
+    function endcorrection(𝑑ₜ::Number=19.0)
+        𝛥ℓₜ = 0.3𝑑ₜ
+    end
+
+    """
+        tubelength(𝐹::Number=261.6155653, 𝜗::Number=25.0, 𝑑ₜ::Number=19.0)
+
+    Calculate tube length from embouchure-hole to open-end for fundamental frequency 𝐹,
+    with air temperature 𝜗 and open-end diameter 𝑑ₜ
+    """
+    function tubelength(𝐹::Number=261.6155653, 𝜗::Number=25.0, 𝑑ₜ::Number=19.0)
+        𝐿ₛ = wavelength(𝐹, 𝜗)/2
+        𝛥ℓₑ = embouchurecorrection()
+        𝛥ℓₜ = endcorrection(𝑑ₜ)
+        ℓₜ = 𝐿ₛ - 𝛥ℓₑ - 𝛥ℓₜ
+        round(ℓₜ; digits=2)
     end
 end
