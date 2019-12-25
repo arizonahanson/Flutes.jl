@@ -40,16 +40,6 @@ module Flutes
     end
 
     """
-        𝜆 = wavelength(𝐹::Number=261.6255653, 𝜗::Number=25.0)
-
-    Calculate the wavelength of frequency 𝐹 in air of temperature 𝜗
-    """
-    function wavelength(𝐹::Number=261.6255653, 𝜗::Number=25.0)
-        𝑐 = soundspeed(𝜗)
-        𝑐/𝐹
-    end
-
-    """
         embouchurecorrection()
 
     Correction of tube-length at embouchure
@@ -74,7 +64,8 @@ module Flutes
     with air temperature 𝜗 and open-end diameter 𝑑ₜ
     """
     function tubelength(𝐹::Number=261.6155653, 𝜗::Number=25.0, 𝑑ₜ::Number=19.0)
-        𝐿ₛ = wavelength(𝐹, 𝜗)/2
+        𝑐 = soundspeed(𝜗)
+        𝐿ₛ = 𝑐/2𝐹
         𝛥ℓₑ = embouchurecorrection()
         𝛥ℓₜ = endcorrection(𝑑ₜ)
         ℓₜ = 𝐿ₛ - 𝛥ℓₑ - 𝛥ℓₜ
