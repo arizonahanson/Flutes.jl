@@ -43,15 +43,6 @@ module Flutes
     end
 
     """
-        embouchurecorrection(𝑑₀=17.4, 𝑑ₑ=11.2, ℓₑ=4.3)
-
-    Correction of tube-length at embouchure of bore diameter 𝑑₀, diameter 𝑑ₑ and height ℓₑ
-    """
-    function embouchurecorrection(𝑑₀=17.4, 𝑑ₑ=11.2, ℓₑ=4.3, 𝛥ℓₖ=0.0)
-        𝛥ℓₑ = (𝑑₀/𝑑ₑ)^2 * (ℓₑ + 0.71𝑑ₑ) + 𝛥ℓₖ
-    end
-
-    """
         function tubelength(𝐹=261.6155653, 𝜗=25.0, 𝑑ₜ=19.0, 𝑑₀=17.4, 𝑑ₑ=11.2, ℓₑ=4.3)
 
     Calculate tube length from embouchure-hole to open-end for fundamental frequency 𝐹,
@@ -60,7 +51,7 @@ module Flutes
     function tubelength(𝐹=261.6155653, 𝜗=25.0, 𝑑ₜ=19.0, 𝑑₀=17.4, 𝑑ₑ=11.2, ℓₑ=4.3)
         𝑐 = soundspeed(𝜗)
         𝐿ₛ = 𝑐/2𝐹
-        𝛥ℓₑ = embouchurecorrection(𝑑₀, 𝑑ₑ, ℓₑ, 20.0)
+        𝛥ℓₑ = 53.0
         ℓₜ = 𝐿ₛ - 𝛥ℓₑ - 0.3𝑑ₜ
         round(ℓₜ; digits=2)
     end
