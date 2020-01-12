@@ -1,14 +1,14 @@
 
 $fa=0.5;
 $fs=0.1;
-outer=21;
+outer=23;
 difference() {
     // body
     union() {
+        // lip plate
         hull() {
             cylinder(d=outer,h=5);
             translate([0,0,5])
-                // lip plate
                 intersection() {
                     cylinder(d=26,h=50);
                     translate([0,0,25])
@@ -20,7 +20,9 @@ difference() {
                 cylinder(d=outer,h=5);
         }
         translate([0,0,60])
-            cylinder(d=outer,h=115);
+            cylinder(d=outer,h=90);
+        translate([0,0,150])
+            cylinder(d=outer-2,h=25);
     }
     // bore
     translate([0,0,13])
