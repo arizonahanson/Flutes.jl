@@ -14,7 +14,7 @@ difference() {
                     translate([0,0,25])
                         rotate([0,90,0])
                             scale([1,0.5,1])
-                                cylinder(d2=50,d1=42,h=13);
+                                cylinder(d2=50,d1=od*2,h=13);
                 }
             translate([0,0,55])
                 cylinder(d=od,h=5);
