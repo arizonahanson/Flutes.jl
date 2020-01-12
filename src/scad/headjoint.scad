@@ -1,40 +1,40 @@
 
 $fa=0.5;
 $fs=0.1;
-outer=22;
+od=21;
 difference() {
-    //body
+    // body
     union() {
         hull() {
-            translate([0,0,166.8])
-                cylinder(d=outer,h=8);
-            translate([0,0,124.8])
+            cylinder(d=od,h=5);
+            translate([0,0,5])
+                // lip plate
                 intersection() {
                     cylinder(d=26,h=50);
                     translate([0,0,25])
                         rotate([0,90,0])
                             scale([1,0.5,1])
-                                cylinder(d2=50,d1=44,h=13);
+                                cylinder(d2=50,d1=42,h=13);
                 }
-            translate([0,0,120.8])
-                cylinder(d=outer,h=4);
+            translate([0,0,55])
+                cylinder(d=od,h=5);
         }
-        translate([0,0,40])
-            cylinder(d=outer,h=80.8);
-        cylinder(d=20,h=40);
+        translate([0,0,60])
+            cylinder(d=od,h=115);
     }
-    //bore
-    hull() {
-        translate([0,0,165.8])
-            cylinder(d=16.9,h=1);
-        translate([0,0,149.8])
-            cylinder(d=17.4,h=1);
-        translate([0,0,-0.01])
-            cylinder(d=19,h=1);
-    }
-    //hole
-	translate([0,0,149.8])
-		rotate([-21,90,0])
+    // bore
+    translate([0,0,13])
+        hull() {
+            cylinder(d=17,h=1);
+            translate([0,0,11])
+                cylinder(d=17.4,h=12);
+            translate([0,0,161])
+                cylinder(d=19,h=1.01);
+        }
+    // hole
+	translate([0,0,30])
+		rotate([21,90,0])
             scale([1, 5/6, 1])
-                cylinder(h=13, d1=17.4, d2=12);
+                cylinder(h=13.01, d1=17.4, d2=12);
 }
+
