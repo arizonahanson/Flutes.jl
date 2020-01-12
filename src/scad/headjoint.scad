@@ -1,26 +1,26 @@
 
 $fa=0.5;
 $fs=0.1;
-od=21;
+outer=21;
 difference() {
     // body
     union() {
         hull() {
-            cylinder(d=od,h=5);
+            cylinder(d=outer,h=5);
             translate([0,0,5])
                 // lip plate
                 intersection() {
                     cylinder(d=26,h=50);
                     translate([0,0,25])
                         rotate([0,90,0])
-                            scale([1,0.5,1])
-                                cylinder(d2=50,d1=od*2,h=13);
+                            scale([1,0.6,1])
+                                cylinder(d2=50,d1=outer/.6,h=13);
                 }
             translate([0,0,55])
-                cylinder(d=od,h=5);
+                cylinder(d=outer,h=5);
         }
         translate([0,0,60])
-            cylinder(d=od,h=115);
+            cylinder(d=outer,h=115);
     }
     // bore
     translate([0,0,13])
