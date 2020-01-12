@@ -4,19 +4,27 @@ Parametric Flute Modeling Tool
 
 distances in millimeters
 frequencies in Hertz
-temperatures in Celsius (default 25.0°C)
+temperatures in Celsius
 time in seconds
 """
 module Flutes
-    export Flute, soundspeed, tubelength
+    export Flute, createFlute, tubelength
 
-    struct Flute
-        𝐹  # Fundamental frequency
-        𝜗  # Air temperature
-        𝑑ₜ # End tube bore diameter
-        𝑑ₑ # Embouchure diameter
-        𝑑₀ # Bore diameter at embouchure
-        ℓₑ # Embouchure height
+    mutable struct Flute
+        𝐹   # Fundamental frequency       (261.6155653)
+        𝜗   # Air temperature             (25.0)
+        𝑑ₜ  # End tube bore diameter      (19.0)
+        𝑑₀  # Bore diameter at embouchure (17.4)
+        𝑑ₑ  # Embouchure diameter         (10.95)
+        ℓₑ  # Embouchure height           (4.3)
+        𝛥ℓₑ # Embouchure correction       (52.0)
+    end
+
+    """
+        flute = createFlute(𝐹=261.6155653, 𝜗=25.0, 𝑑ₜ=19.0, 𝑑₀=17.4, 𝑑ₑ=10.95, ℓₑ=4.3, 𝛥ℓₑ=52.0)
+    """
+    function createFlute(𝐹=261.6155653, 𝜗=25.0, 𝑑ₜ=19.0, 𝑑₀=17.4, 𝑑ₑ=10.95, ℓₑ=4.3, 𝛥ℓₑ=52.0)
+        return Flute(𝐹, 𝜗, 𝑑ₜ, 𝑑₀, 𝑑ₑ, ℓₑ, 𝛥ℓₑ)
     end
 
     """
@@ -43,16 +51,15 @@ module Flutes
     end
 
     """
-        function tubelength(𝐹=261.6155653, 𝜗=25.0, 𝑑ₜ=19.0, 𝑑₀=17.4, 𝑑ₑ=11.2, ℓₑ=4.3)
+        function tubelength(flute::Flute)
 
-    Calculate tube length from embouchure-hole to open-end for fundamental frequency 𝐹,
-    with air temperature 𝜗, open-end diameter 𝑑ₜ, and embouchure bore diameter 𝑑₀, diameter 𝑑ₑ, height ℓₑ
+    Calculate tube length from embouchure-hole to open-end for supplied flute struct
     """
-    function tubelength(𝐹=261.6155653, 𝜗=25.0, 𝑑ₜ=19.0, 𝑑₀=17.4, 𝑑ₑ=11.2, ℓₑ=4.3)
-        𝑐 = soundspeed(𝜗)
-        𝐿ₛ = 𝑐/2𝐹
-        𝛥ℓₑ = 53.0
-        ℓₜ = 𝐿ₛ - 𝛥ℓₑ - 0.3𝑑ₜ
+    function tubelength(flute::Flute)
+        𝑐 = soundspeed(flute.𝜗)
+        𝜆₁ = 2 * flute.𝐹
+        𝐿ₛ = 𝑐/𝜆₁
+        ℓₜ = 𝐿ₛ - flute.𝛥ℓₑ - (0.3 * flute.𝑑ₜ)
         round(ℓₜ; digits=2)
     end
 end
