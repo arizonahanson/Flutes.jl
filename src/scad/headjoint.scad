@@ -26,12 +26,16 @@ difference() {
     }
     // bore
     translate([0,0,13])
-        hull() {
-            cylinder(d=17,h=1);
-            translate([0,0,11])
-                cylinder(d=17.4,h=12);
-            translate([0,0,161])
-                cylinder(d=19,h=1.01);
+        union() {
+            hull() {
+                cylinder(d=17,h=1);
+                translate([0,0,11])
+                    cylinder(d=17.4,h=12);
+                translate([0,0,119])
+                    cylinder(d=19,h=1.01);
+            }
+            translate([0,0,120])
+                cylinder(d=19,h=42.01);
         }
     // hole
 	translate([0,0,30])
