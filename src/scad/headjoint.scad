@@ -1,5 +1,5 @@
 
-$fa=0.5;
+$fa=1.0;
 $fs=0.1;
 outer=23;
 difference() {
@@ -20,9 +20,10 @@ difference() {
                 cylinder(d=outer,h=5);
         }
         translate([0,0,60])
-            cylinder(d=outer,h=90);
-        translate([0,0,150])
-            cylinder(d=outer-2,h=25);
+            cylinder(d=outer,h=96);
+        // tenon
+        translate([0,0,156])
+            cylinder(d=outer-2,h=30);
     }
     // bore
     translate([0,0,13])
@@ -31,11 +32,11 @@ difference() {
                 cylinder(d=17,h=1);
                 translate([0,0,11])
                     cylinder(d=17.4,h=12);
-                translate([0,0,119])
+                translate([0,0,142])
                     cylinder(d=19,h=1.01);
             }
-            translate([0,0,120])
-                cylinder(d=19,h=42.01);
+            translate([0,0,143])
+                cylinder(d=19,h=30.01);
         }
     // hole
 	translate([0,0,30])
