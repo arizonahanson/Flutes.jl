@@ -1,7 +1,10 @@
 
 $fa=1.0;
 $fs=0.1;
-outer=23;
+noz=0.4;
+outer=24;
+inner=19+noz;
+bevel=(outer-inner)/2;
 difference() {
     // body
     union() {
@@ -23,25 +26,31 @@ difference() {
             cylinder(d=outer,h=96);
         // tenon
         translate([0,0,156])
-            cylinder(d=outer-2,h=30);
+            cylinder(d=outer-bevel,h=30-bevel);
+        translate([0,0,186-bevel])
+            hull() {
+                cylinder(d=outer-bevel,h=bevel/2);
+                translate([0,0,bevel/2])
+                    cylinder(d=inner,h=bevel/2);
+            }
     }
     // bore
     translate([0,0,13])
         union() {
             hull() {
-                cylinder(d=17,h=1);
+                cylinder(d=17+noz,h=1);
                 translate([0,0,11])
-                    cylinder(d=17.4,h=12);
+                    cylinder(d=17.4+noz,h=12);
                 translate([0,0,142])
-                    cylinder(d=19,h=1.01);
+                    cylinder(d=inner,h=1.01);
             }
             translate([0,0,143])
-                cylinder(d=19,h=30.01);
+                cylinder(d=inner,h=30.01);
         }
     // hole
 	translate([0,0,30])
 		rotate([21,90,0])
-            scale([1, 5/6, 1])
+            scale([1, (10-(noz/2))/12, 1])
                 cylinder(h=13.01, d1=17.4, d2=12);
 }
 
