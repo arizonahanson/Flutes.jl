@@ -38,6 +38,16 @@ module Flutes
     end
 
     """
+      𝐿ₛ = halfwavelength(𝐹=440.0, 𝜗=25.0)
+
+    calculate half of a wavelength of given frequency 𝐹 in air of temperature 𝜗
+    """
+    function halfwavelength(𝐹=440.0, 𝜗=25.0)
+        𝑐 = soundspeed(𝜗)
+        𝐿ₛ = 𝑐/2𝐹
+    end
+
+    """
         temperature_at(𝑥=0.0)
 
     Temperature at 𝑥 distance from embouchure: Coltman (1968)
@@ -47,25 +57,20 @@ module Flutes
         round(𝑇; sigdigits=3)
     end
 
-    function halfwavelength(𝜗=25.0, 𝐹=440)
-        𝑐 = soundspeed(𝜗)
-        𝐿ₛ = 𝑐/2𝐹
-    end
-
     """
         function tubelength(flute::Flute)
 
     Calculate tube length from embouchure-hole to open-end for supplied flute struct
     """
     function tubelength(flute::Flute)
-        𝐿ₛ = halfwavelength(flute.𝜗, flute.𝐹)
+        𝐿ₛ = halfwavelength(flute.𝐹, flute.𝜗)
         𝛥ℓₜ = 0.3 * flute.𝑑ₜ
         ℓₜ = 𝐿ₛ - flute.𝛥ℓₑ - 𝛥ℓₜ
         round(ℓₜ; digits=2)
     end
 
-    function holelength(flute::Flute, 𝐹=440, ℓₕ=1.0, 𝑑ₕ=7, 𝑑₁=19.0, 𝑔=2^(1/12)-1)
-        𝐿ₛ = halfwavelength(flute.𝜗, 𝐹)
+    function holelength(flute::Flute, 𝐹=440, ℓₕ=2.5, 𝑑ₕ=7, 𝑑₁=19.0, 𝑔=2^(1/12)-1)
+        𝐿ₛ = halfwavelength(𝐹, flute.𝜗)
         𝐿ₕ = (ℓₕ + 𝑑ₕ) * (𝑑₁ / 𝑑ₕ)^2 - 0.45𝑑₁
         𝑧 = 𝑔/2 * √(1 + 4𝐿ₕ/(𝑔 * 𝐿ₛ)) - 𝑔/2
         𝛥ℓₕ = 𝑧 * 𝐿ₛ
