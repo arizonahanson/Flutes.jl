@@ -12,21 +12,22 @@
 ₑ # embouchure
 ₔ # bore taper end
 ₙ # tenon headjoint-body
-ᵩ # headjoint end
+ₐ # headjoint end
 ₕ # tone hole
 ₘ # mortise body-foot
 ₜ # flute end
+ᵩ # effective length
 ₓ # extruder
 
 # ----- headjoint -----
-ℓ₀ # embouchure-crown length      30.0mm
+ℓ₀ # embouchure-crown distance    30.0mm
 ℓₚ # lip-plate length             50.0mm
 𝜙ₚ # lip-plate width              26.0mm
 ℓᵣ # reflector-embouchure length  17.0mm
 ℓₔ # embouchure-taper distance   120.0mm
 ℓₙ # tenon start                 126.0mm
 ℎₙ # tenon wall depth             1.25mm
-ℓᵩ # embouchure-headjoint length 156.0mm
+ℓₐ # embouchure-headjoint length 156.0mm
 ⌀₀ # crown diameter               24.0mm
 ⌀ᵣ # bore diameter at reflector   17.0mm
 ⌀ₑ # bore diameter at embouchure  17.4mm
@@ -34,7 +35,7 @@
 𝜙ₑ # embouchure hole width        10.0mm (𝜙ₑ/𝑑ₑ)
 𝜃ₑ # embouchure undercut angle
 ℎₑ # embouchure hole height        4.3mm
-𝛥ℓₑ # correction at embouchure    52.0mm
+𝛥ℓᵩ # correction at embouchure    52.0mm
 
 # ----- flute -----
 𝑓ₜ  # fundamental frequency

@@ -14,14 +14,14 @@ module Flutes
         𝑓ₜ  # Fundamental frequency       (261.6155653)
         𝜗   # Air temperature             (25.0)
         ⌀ₜ  # End tube bore diameter      (19.0)
-        𝛥ℓₑ # Embouchure correction       (52.0)
+        𝛥ℓᵩ # Embouchure correction       (52.0)
     end
 
     """
-        flute = createFlute(𝑓ₜ=261.6155653, 𝜗=25.0, ⌀ₜ=19.0, 𝛥ℓₑ=52.0)
+        flute = createFlute(𝑓ₜ=261.6155653, 𝜗=25.0, ⌀ₜ=19.0, 𝛥ℓᵩ=52.0)
     """
-    function createFlute(𝑓=261.6155653, 𝜗=25.0, ⌀ₜ=19.0, 𝛥ℓₑ=52.0)
-        return Flute(𝑓ₜ, 𝜗, ⌀ₜ, 𝛥ℓₑ)
+    function createFlute(𝑓ₜ=261.6155653, 𝜗=25.0, ⌀ₜ=19.0, 𝛥ℓᵩ=52.0)
+        return Flute(𝑓ₜ, 𝜗, ⌀ₜ, 𝛥ℓᵩ)
     end
 
     """
@@ -56,7 +56,7 @@ module Flutes
     function tubelength(flute::Flute)
         𝜑 = halfwavelength(flute.𝑓ₜ, flute.𝜗)
         𝛥ℓₜ = 0.3 * flute.⌀ₜ
-        ℓₜ = 𝜑 - flute.𝛥ℓₑ - 𝛥ℓₜ
+        ℓₜ = 𝜑 - flute.𝛥ℓᵩ - 𝛥ℓₜ
         round(ℓₜ; digits=2)
     end
 
@@ -71,7 +71,7 @@ module Flutes
         ℓᵦ = (ℎₕ + 𝑑ₕ) * (⌀ₕ / 𝑑ₕ)^2 - 0.45⌀ₕ
         𝑧 = 𝑔/2 * √(1 + 4ℓᵦ/(𝑔 * 𝜑)) - 𝑔/2
         𝛥ℓₕ = 𝑧 * 𝜑
-        ℓₕ = 𝜑 - flute.𝛥ℓₑ - 𝛥ℓₕ
+        ℓₕ = 𝜑 - flute.𝛥ℓᵩ - 𝛥ℓₕ
         round(ℓₕ; digits=2)
     end
 end
