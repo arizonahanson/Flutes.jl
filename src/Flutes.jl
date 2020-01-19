@@ -9,6 +9,7 @@ time in seconds
 """
 module Flutes
     export Flute, createFlute, tubelength, holelength
+    include("apply.jl")
 
     mutable struct Flute
         𝑓ₜ  # Fundamental frequency       (261.6155653)

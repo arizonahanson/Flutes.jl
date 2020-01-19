@@ -10,6 +10,7 @@
 ₀ # crown (z=0)
 ᵣ # reflector
 ₑ # embouchure
+ₚ # lip-plate
 ₔ # bore taper end
 ₙ # tenon headjoint-body
 ₐ # headjoint end
@@ -48,6 +49,7 @@
 ⌀ₕ # bore diameter at tone hole   19.0mm
 ℎₕ # tone hole height             2.5mm
 𝑑ₕ # tone hole diameter
+𝜃ₕ # tone hole undercut
 𝑔  # interval ratio minus one     2^(1/12)-1
 ℓₕ # embouchure-hole distance
 
