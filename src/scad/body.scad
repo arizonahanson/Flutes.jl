@@ -4,8 +4,8 @@ noz=0.4;
 outer=24.0;
 inner=19.0+noz;
 bevel=(outer-inner)/2;
-slen=15.0;
-tlen=10.0;
+slen=376;
+tlen=30.0;
 difference() {
     // body
     union() {
