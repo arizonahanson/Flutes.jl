@@ -3,8 +3,8 @@
 𝑑 # hole diameter (Z axis in XZ plane)
 𝜃 # undercut angle (∠ °XZ plane)
 𝜙 # elliptical hole width (X axis in XZ plane)
+ℓ # absolute distance from embouchure center (Z axis)
 ⌀ # bore diameter (Y axis in XY plane)
-ℓ # length/distance (Z axis)
 ℎ # height/depth (Y axis)
 # ~~ subscripts ~~
 ₀ # crown (z=0)
@@ -34,7 +34,7 @@
 ⌀ₑ # bore diameter at embouchure  17.4mm
 𝑑ₑ # embouchure hole diameter     12.0mm
 𝜙ₑ # embouchure hole width        10.0mm (𝜙ₑ/𝑑ₑ)
-𝜃ₑ # embouchure undercut angle
+𝜃ₑ # embouchure undercut angle    11.7°
 ℎₑ # embouchure hole height        4.3mm
 𝛥ℓᵩ # correction at embouchure    52.0mm
 
