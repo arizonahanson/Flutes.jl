@@ -14,15 +14,16 @@ module Flutes
     mutable struct Flute
         𝑓ₜ  # Fundamental frequency       (261.6155653)
         𝜗   # Air temperature             (25.0)
-        ⌀ₜ  # End tube bore diameter      (19.0)
+        ⌀ₔ  # stop taper bore diameter    (19.0)
+        ⌀ₜ  # flute end bore diameter     (19.0)
         𝛥ℓᵩ # Embouchure correction       (52.0)
     end
 
     """
-        flute = createFlute(𝑓ₜ=261.6155653, 𝜗=25.0, ⌀ₜ=19.0, 𝛥ℓᵩ=52.0)
+        flute = createFlute(𝑓ₜ=261.6155653, 𝜗=25.0, ⌀ₔ=19.0, ⌀ₜ=19.0, 𝛥ℓᵩ=52.0)
     """
-    function createFlute(𝑓ₜ=261.6155653, 𝜗=25.0, ⌀ₜ=19.0, 𝛥ℓᵩ=52.0)
-        return Flute(𝑓ₜ, 𝜗, ⌀ₜ, 𝛥ℓᵩ)
+    function createFlute(𝑓ₜ=261.6155653, 𝜗=25.0, ⌀ₔ=19.0, ⌀ₜ=19.0, 𝛥ℓᵩ=52.0)
+        return Flute(𝑓ₜ, 𝜗, ⌀ₔ, ⌀ₜ, 𝛥ℓᵩ)
     end
 
     """
@@ -62,15 +63,15 @@ module Flutes
     end
 
     """
-      ℓₕ = holelength(flute::Flute, 𝑓ₕ=440, ℎₕ=2.5, 𝑑ₕ=7, ⌀ₕ=19.0, 𝑔=2^(1/12)-1)
+    ℓₕ = holelength(flute::Flute, 𝑓ₕ=440, ℎₕ=2.5, 𝑑ₕ=7, ⌀ₕ=19.0, 𝑔=2^(1/12)-1)
 
     Calculate distance from embouchure hole center to tone hole center for supplied frequency 𝑓ₕ,
       tone hole height ℎₕ, tone hole diameter 𝑑ₕ, bore diameter ⌀ₕ and interval ratio 𝑔 (minus one)
     """
     function holelength(flute::Flute, 𝑓ₕ=440, ℎₕ=2.5, 𝑑ₕ=7, ⌀ₕ=19.0, 𝑔=2^(1/12)-1)
         𝜑 = halfwavelength(𝑓ₕ, flute.𝜗)
-        ℓᵦ = (ℎₕ + 𝑑ₕ) * (⌀ₕ / 𝑑ₕ)^2 - 0.45⌀ₕ
-        𝑧 = 𝑔/2 * √(1 + 4ℓᵦ/(𝑔 * 𝜑)) - 𝑔/2
+        𝐿ₕ = (ℎₕ + 𝑑ₕ) * (⌀ₕ/𝑑ₕ)^2 - 0.45⌀ₕ
+        𝑧 = 𝑔/2 * √(1 + 4𝐿ₕ/(𝑔*𝜑)) - 𝑔/2
         𝛥ℓₕ = 𝑧 * 𝜑
         ℓₕ = 𝜑 - flute.𝛥ℓᵩ - 𝛥ℓₕ
         round(ℓₕ; digits=2)
