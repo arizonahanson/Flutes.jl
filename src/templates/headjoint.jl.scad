@@ -1,50 +1,53 @@
 
 $fa=1.0;
 $fs=0.1;
-douter={{⌀ᵦ}}+2*{{ℎᵦ}};
 dplate={{⌀ₑ}}+2*{{ℎₑ}};
-dtenon={{⌀ₙ}}+2*{{ℎₙ}};
+douter={{⌀ₛ}}+2*{{ℎₛ}};
+dtenon={{⌀ₛ}}+{{ℎₛ}};
 hplate=dplate-outer;
-difference() {
-  // outer shell
-  union() {
-      cylinder(d=douter,h={{ℓ₀}}+{{ℓₙ}});
-      // tenon
-      translate([0,0,{{ℓ₀}}+{{ℓₙ}}])
-        cylinder(d=dtenon,h={{ℓₐ}}-{{ℓₙ}});
-      // lip-plate
-      translate([0,0,{{ℓ₀}}-{{𝑑ₚ}}/2-hplate])
-        hull() {
-          cylinder(d=douter,h={{⌀₊}});
-          translate([0,0,hplate])
-            intersection() {
-              cylinder(d=dplate,h={{𝑑ₚ}});
-              translate([0,0,{{𝑑ₚ}}/2])
-                rotate([0,90,0])
-                  scale([{{𝑠ₚ}}/{{𝑑ₚ}},1,1])
-                    cylinder(d={{𝑑ₚ}},h=dplate);
-            }
-          translate([0,0,{{𝑑ₚ}}+hplate-{{⌀₊}}])
-            cylinder(d=douter,h={{⌀₊}});
-        }
+edepth=2*(dplate-(({{⌀ₑ}}/2)^2-({{𝑑ₑ}}/2)^2)^0.5);
+translate([0,0,{{ℓ₀}}])
+  difference() {
+    // outer shell
+    union() {
+        translate([0,0,-{{ℓ₀}})
+          cylinder(d=douter,h={{ℓ₀}}+{{ℓₐ}}-30);
+        // tenon
+        translate([0,0,{{ℓₐ}}-30])
+          cylinder(d=dtenon,h=30);
+        // lip-plate
+        translate([0,0,-{{ℓₑ}}-hplate])
+          hull() {
+            cylinder(d=douter,h={{ℓ₊}});
+            translate([0,0,hplate])
+              intersection() {
+                cylinder(d=dplate,h=2*{{ℓₑ}});
+                translate([0,0,{{ℓₑ}}])
+                  rotate([0,90,0])
+                    scale([dplate/2*{{ℓₑ}},1,1])
+                      cylinder(d=2*{{ℓₑ}},h=dplate);
+              }
+            translate([0,0,2*{{ℓₑ}}+2*hplate-{{ℓ₊}}])
+              cylinder(d=douter,h={{ℓ₊}});
+          }
+      }
     }
-  }
-  // bore
-  translate([0,0,{{ℓ₀}}-{{ℓᵣ}}])
+    // bore
     union() {
       hull() {
-        cylinder(d={{⌀ᵣ}}+{{⌀₊}},h={{⌀₊}});
-        translate([0,0,{{ℓᵣ}}-{{𝑑ₑ}}/2])
+        translate([0,0,{{ℓ₊}}-{{ℓᵣ}}])
+          cylinder(d={{⌀ᵣ}}+{{⌀₊}},h={{ℓ₊}});
+        translate([0,0,-{{𝑑ₑ}}/2])
           cylinder(d={{⌀ₑ}}+{{⌀₊}},h={{𝑑ₑ}});
-        translate([0,0,{{ℓᵦ}}])
-          cylinder(d={{⌀ᵦ}}+{{⌀₊}},h={{⌀₊}});
+        translate([0,0,{{ℓₛ}}])
+          cylinder(d={{⌀ₛ}}+{{⌀₊}},h={{ℓ₊}});
       }
-      translate([0,0,{{ℓᵦ}}])
-        cylinder(d={{⌀ᵦ}}+{{⌀₊}},h={{ℓₐ}}-{{ℓᵦ}}+{{⌀₊}});
+      translate([0,0,{{ℓₛ}}])
+        cylinder(d={{⌀ₛ}}+{{⌀₊}},h={{ℓₐ}}-{{ℓₛ}}+{{ℓ₊}});
     }
-  // hole
-  translate([0-dplate/2,0,{{ℓ₀}}])
-    rotate([atan({{𝑠ₑ}}/{{𝑑ₑ}}/2)*180/PI,-90,0])
-      scale([({{𝑠ₑ}}-{{⌀₊}}/2)/{{𝑑ₑ}}, 1, 1])
-        cylinder(h=2*{{ℎₑ}}+{{⌀₊}}, d1={{𝑑ₑ}}, d2={{𝑑ₑ}}+tan({{𝜙ₑ}})*2*{{ℎₑ}}); // d1=𝑑ₑ, d2=𝑑ₑ+tan(𝜙ₑ)*2ℎₑ
-}
+    // hole
+    translate([0-dplate/2,0,0])
+      rotate([atan({{𝑠ₑ}}/{{𝑑ₑ}}/2)*180/PI,-90,0])
+        scale([({{𝑠ₑ}}-{{⌀₊}}/2)/{{𝑑ₑ}}, 1, 1])
+          cylinder(h=edepth, d1={{𝑑ₑ}}, d2={{𝑑ₑ}}+tan({{𝜙ₑ}})*edepth);
+  }
