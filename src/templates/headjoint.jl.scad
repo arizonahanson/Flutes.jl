@@ -2,33 +2,32 @@
 $fa=1.0;
 $fs=0.1;
 dplate={{⌀ₑ}}+2*{{ℎₑ}};
-douter={{⌀ₛ}}+2*{{ℎₛ}};
 dtenon={{⌀ₛ}}+{{ℎₛ}};
-hplate=dplate-outer;
+hplate=dplate-{{⌀₀}};
 edepth=2*(dplate-(({{⌀ₑ}}/2)^2-({{𝑑ₑ}}/2)^2)^0.5);
 translate([0,0,{{ℓ₀}}])
   difference() {
     // outer shell
     union() {
         translate([0,0,-{{ℓ₀}})
-          cylinder(d=douter,h={{ℓ₀}}+{{ℓₐ}}-30);
+          cylinder(d={{⌀₀}},h={{ℓ₀}}+{{ℓₐ}}-30);
         // tenon
         translate([0,0,{{ℓₐ}}-30])
           cylinder(d=dtenon,h=30);
         // lip-plate
-        translate([0,0,-{{ℓₑ}}-hplate])
+        translate([0,0,-25-hplate])
           hull() {
-            cylinder(d=douter,h={{ℓ₊}});
+            cylinder(d={{⌀₀}},h={{ℓ₊}});
             translate([0,0,hplate])
               intersection() {
-                cylinder(d=dplate,h=2*{{ℓₑ}});
-                translate([0,0,{{ℓₑ}}])
+                cylinder(d=dplate,h=50);
+                translate([0,0,25)
                   rotate([0,90,0])
-                    scale([dplate/2*{{ℓₑ}},1,1])
-                      cylinder(d=2*{{ℓₑ}},h=dplate);
+                    scale([dplate/50,1,1])
+                      cylinder(d=50,h=dplate);
               }
-            translate([0,0,2*{{ℓₑ}}+2*hplate-{{ℓ₊}}])
-              cylinder(d=douter,h={{ℓ₊}});
+            translate([0,0,50+2*hplate-{{ℓ₊}}])
+              cylinder(d={{⌀₀}},h={{ℓ₊}});
           }
       }
     }

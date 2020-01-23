@@ -1,32 +1,31 @@
 
 # ~~~~~ legend ~~~~~
-ℓ # absolute distance from embouchure center (Z axis)
-⌀ # inner diameter (XY plane) ⌀+2ℎ = outer
+ℓ # distance from embouchure center (Z axis)
+⌀ # diameter (XY plane)
 ℎ # height/thickness (Y axis)
 𝑑 # diameter or ellipse length (XZ plane)
 𝑠 # ellipse width (X axis in XZ plane)
 𝜃 # rotation angle (∠ °XY plane)
 𝜙 # undercut angle (∠ °XY plane)
 𝑓 # frequency
-𝜗 # bore air temperature
+𝜗 # internal air temperature
 # ~~ subscripts ~~
 ᵩ # effective length ~ 1/2 wavelength
 ₀ # crown (z=0)
 ᵣ # reflector
 ₑ # embouchure
-ₛ # taper stationary point
-ₐ # headjoint end
+ₛ # stationary point
 ₕ # tone hole
+ₐ # headjoint end
 ₜ # flute end
 ₊ # extruder
 
 # ----- headjoint -----
 ℓᵩ # correction to 1/2 wavelength 52.0mm
 ℓ₀ # embouchure-crown distance    32.0mm
+⌀₀ # crown outer diameter         24.0mm
 ℓᵣ # reflector-embouchure length  17.0mm
 ⌀ᵣ # bore diameter at reflector   17.0mm
-ℎᵣ # reflector wall thickness
-ℓₑ # lip-plate edge distance      25.0mm
 ⌀ₑ # bore diameter at embouchure  17.4mm
 ℎₑ # embouchure hole height        4.3mm
 𝑑ₑ # embouchure hole length       12.0mm
