@@ -22,9 +22,7 @@
 
 # ----- headjoint -----
 ℓᵩ # correction to 1/2 wavelength 52.0mm
-ℓ₀ # embouchure-crown distance    30.0mm
-⌀₀ # crown diameter               17.0mm
-ℎ₀ # crown wall thickness
+ℓ₀ # embouchure-crown distance    32.0mm
 ℓᵣ # reflector-embouchure length  17.0mm
 ⌀ᵣ # bore diameter at reflector   17.0mm
 ℎᵣ # reflector wall thickness
@@ -32,15 +30,13 @@
 ⌀ₑ # bore diameter at embouchure  17.4mm
 ℎₑ # embouchure hole height        4.3mm
 𝑑ₑ # embouchure hole length       12.0mm
-𝑠ₑ # embouchure hole width        10.0mm (𝑠ₑ/𝑑ₑ)
+𝑠ₑ # embouchure hole width        10.0mm
 𝜃ₑ # embouchure hole rotation     21.0°
 𝜙ₑ # embouchure undercut angle    11.7°
 ℓₛ # bore taper stationary point 120.0mm
 ⌀ₛ # bore diameter at stationary  19.0mm
 ℎₛ # flute wall @ stationary point 2.5mm
 ℓₐ # embouchure-headjoint length 156.0mm
-⌀ₐ # headjoint end diameter       19.0mm
-ℎₐ # headjoint end wall diameter
 
 # ----- flute -----
 𝜗  # bore air temperature         25.0°C

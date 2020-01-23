@@ -12,11 +12,11 @@ module Flutes
     include("apply.jl")
 
     mutable struct Flute
+        ℓᵩ  # Embouchure correction       (52.0)
         𝑓ₜ  # Fundamental frequency       (261.6155653)
         𝜗   # Air temperature             (25.0)
         ⌀ₛ  # stop taper bore diameter    (19.0)
         ⌀ₜ  # flute end bore diameter     (19.0)
-        ℓᵩ  # Embouchure correction       (52.0)
     end
 
     """
