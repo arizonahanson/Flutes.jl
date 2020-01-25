@@ -16,7 +16,7 @@ module turn(z=0, d=2*$fd, l=$fl) {
 
 // turn, but add $fd to diameter
 module bore(z=0, d=2*$fd, l=$fl) {
-  turn(z=z, d=d+$fd, l=l);
+  turn(z=z-0.0005, d=d+$fd, l=l+0.001);
 }
 
 // hole cut
@@ -46,7 +46,7 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
 difference() {
   b=17.4; h=4.3;
   turn(d=b+2*h,l=50);
-  bore(z=-$fl, d=b, l=50+2*$fl);
+  bore(d=b, l=50);
   hole(z=42, b=b, h=h, d=7);
   hole(z=17, b=b, h=h, d=10, s=12, u=7, r=-22, o=7);
 }
