@@ -24,13 +24,13 @@ module hole(z=0, b, h, d, s, u=0, r=0, o=0) {
   s = (s==undef) ? d : s;
   bh=(b/2+h);
   zh=sqrt(pow(bh,2)-pow(d/2,2));
-  oh=bh-zh;
+  oh=bh-zh+$fl;
   up(z) // position
     scale([1,1,s/d]) // eccentricity
       rotate([-r,90,0]) // rotation
         union() {
           up(zh-$fl) // shoulder cut
-            cylinder(d1=d, d2=d+tan(o)*2*oh, h=oh+$fl);
+            cylinder(d1=d, d2=d+tan(o)*2*oh, h=oh);
           // undercut
           cylinder(d2=d, d1=d+tan(u)*2*zh, h=zh);
         }
@@ -38,8 +38,9 @@ module hole(z=0, b, h, d, s, u=0, r=0, o=0) {
 
 // example
 difference() {
-  turn(d=26,l=34);
-  bore(z=-$fl, d=17.4, l=34+2*$fl);
+  turn(d=26,l=50);
+  bore(z=-$fl, d=17.4, l=50+2*$fl);
+  hole(z=40, b=17.4, h=4.3, d=8);
   hole(z=17, b=17.4, h=4.3, d=10, s=12, u=8, r=-22, o=8);
 }
 
