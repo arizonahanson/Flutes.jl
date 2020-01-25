@@ -15,8 +15,10 @@
 ₀ # crown (z=0)
 ᵣ # reflector
 ₑ # embouchure
+ₚ # lip-plate
 ₛ # stationary point
 ₕ # tone hole
+ₙ # tenon start
 ₐ # headjoint end
 ₜ # flute end
 ₊ # extruder
