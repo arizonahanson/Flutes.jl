@@ -51,5 +51,5 @@ translate([0,0,crownl])
     translate([0-dplate/2,0,0])
       rotate([atan({{𝑠ₑ}}/{{𝑑ₑ}}/2)*180/PI,-90,0])
         scale([({{𝑠ₑ}}-{{⌀₊}}/2)/{{𝑑ₑ}}, 1, 1])
-          cylinder(h=edepth, d1={{𝑑ₑ}}, d2={{𝑑ₑ}}+tan({{𝜃ₑ}})*edepth);
+          cylinder(h=edepth, d1={{𝑑ₑ}}, d2={{𝑑ₑ}}+tan({{𝜓ₑ}})*edepth);
   }

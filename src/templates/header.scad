@@ -33,7 +33,8 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
     scale([1,1,s/d]) // eccentricity
       rotate([-r,90,0]) // rotation
         union() {
-          up(zo) // shoulder cut
+          // shoulder cut
+          up(zo)
             cylinder(d1=d, d2=do, h=oh);
           // undercut
           up(zi)
