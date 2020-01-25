@@ -50,9 +50,13 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
 // example
 difference() {
   b=17.4; h=4.3;
+  // outer
   turn(b=b+2*h,l=50);
+  // inner bore
   bore(b=b, l=50);
+  // tone-hole style
   hole(z=42, b=b, h=h, d=7);
+  // embouchure style
   hole(z=17, b=b, h=h, d=10, s=12, u=7, r=-22, o=7);
 }
 
