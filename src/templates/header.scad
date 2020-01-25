@@ -9,17 +9,22 @@ module up(z=$fl) {
   translate([0,0,z]) children();
 }
 
-// translate z, then cylinder d, h=l
-module turn(z=0, d=2*$fd, l=$fl) {
-  up(z) cylinder(d=d, h=l);
+// translate z, then cylinder d=b, h=l
+module turn(z=0, b=2*$fd, l=$fl) {
+  up(z) cylinder(d=b, h=l);
 }
 
-// turn, but add $fd to diameter
-module bore(z=0, d=2*$fd, l=$fl) {
-  turn(z=z-0.0005, d=d+$fd, l=l+0.001);
+// fudge the bore diameter
+function fdge(b) {
+  return b+$fd;
 }
 
-// hole cut
+// like turn, but fuzz the diameter and position
+module bore(z=0, b=2*$fd, l=$fl) {
+  turn(z=z-0.0005, b=fdge(b), l=l+0.001);
+}
+
+// tone or embouchure hole
 module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
   s = (s==undef) ? d : s;
   rz=b/2;
@@ -27,7 +32,7 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
   oh=rz+h-zo;
   do=d+tan(o)*2*oh;
   di=d+tan(u)*2*zo;
-  zi=sqrt(pow(rz+$fd/2,2)-pow(di/2,2));
+  zi=sqrt(pow(fdge(rz)/2,2)-pow(di/2,2));
   ih=rz+h-zi-oh;
   up(z) // position
     scale([1,1,s/d]) // eccentricity
@@ -45,8 +50,8 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
 // example
 difference() {
   b=17.4; h=4.3;
-  turn(d=b+2*h,l=50);
-  bore(d=b, l=50);
+  turn(b=b+2*h,l=50);
+  bore(b=b, l=50);
   hole(z=42, b=b, h=h, d=7);
   hole(z=17, b=b, h=h, d=10, s=12, u=7, r=-22, o=7);
 }
