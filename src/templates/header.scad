@@ -28,7 +28,7 @@ module hole(z=0, b, h, d, s, u=0, r=0, o=0) {
   do=d+tan(o)*2*oh;
   di=d+tan(u)*2*zo;
   zi=sqrt(pow(rz,2)-pow(di/2,2));
-  ih=rz+h-zi-oh+$fl;
+  ih=rz+h-zi-oh+.001;
   up(z) // position
     scale([1,1,s/d]) // eccentricity
       rotate([-r,90,0]) // rotation
