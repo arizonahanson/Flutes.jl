@@ -28,17 +28,17 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
   do=d+tan(o)*2*oh;
   di=d+tan(u)*2*zo;
   zi=sqrt(pow(rz+$fd/2,2)-pow(di/2,2));
-  ih=rz+h-zi-oh+.001;
+  ih=rz+h-zi-oh;
   up(z) // position
     scale([1,1,s/d]) // eccentricity
       rotate([-r,90,0]) // rotation
         union() {
           // shoulder cut
           up(zo)
-            cylinder(d1=d, d2=do, h=oh);
+            cylinder(d1=d, d2=do, h=oh+0.0005);
           // undercut
           up(zi)
-            cylinder(d1=di, d2=d, h=ih);
+            cylinder(d1=di, d2=d, h=ih+0.0005);
         }
 }
 
