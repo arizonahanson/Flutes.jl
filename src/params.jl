@@ -1,10 +1,10 @@
 
 # ~~~~~ legend ~~~~~
 ℓ # distance from embouchure center (Z axis)
-⌀ # diameter (XY plane)
-ℎ # height/thickness (Y axis)
-𝑑 # diameter or ellipse length (XZ plane)
-𝑠 # ellipse width (X axis in XZ plane)
+⌀ # diameter (Y axis in XY plane)
+ℎ # height/thickness (Y axis in XY plane)
+𝑑 # diameter or ellipse width (X axis in XZ plane)
+𝑠 # ellipse length (Z axis in XZ plane)
 𝜃 # rotation angle (∠ °XY plane)
 𝜙 # undercut angle (∠ °XY plane)
 𝑓 # frequency

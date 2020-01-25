@@ -1,55 +1,52 @@
 
-$fa=1.0;
-$fs=0.1;
-dplate={{⌀ₑ}}+2*{{ℎₑ}};
-dtenon={{⌀ₛ}}+{{ℎₛ}};
-hplate=dplate-{{⌀₀}};
-edepth=2*(dplate-(({{⌀ₑ}}/2)^2-({{𝑑ₑ}}/2)^2)^0.5);
-crownl=32;
-tenonl=30;
-platel=50;
-translate([0,0,crownl])
-  difference() {
-    // outer shell
-    union() {
-        translate([0,0,-crownl)
-          cylinder(d={{⌀₀}},h=crownl+{{ℓₐ}}-tenonl);
+include <header.scad>
+
+// lip-plate
+module plate(z=0, d1, d2, l) {
+  up(-l/2-(d2-d1)+z)
+    hull() {
+      turn(d=d1);
+      up(d2-d1)
+        intersection() {
+          turn(d=d2,l=l);
+          up(l/2)
+            rotate([0,90,0])
+              scale([d/l,1,1])
+                turn(d=l,l=d2);
+        }
+      turn(z=l+2*(d2-d1)-$fl, d=d1);
+}
+
+module headjoint() {
+  up({{ℓ₀}}) {
+    difference() {
+      // outer shell
+      union() {
+        // tube
+        turn(z=-{{ℓ₀}}, d={{⌀₀}}, l={{ℓ₀}}+{{ℓₐ}}-{{ℓₙ}});
         // tenon
-        translate([0,0,{{ℓₐ}}-tenonl])
-          cylinder(d=dtenon,h=tenonl);
+        turn(z={{ℓₐ}}-{{ℓₙ}}, d={{⌀ₛ}}+{{ℎₛ}}, l={{ℓₙ}});
         // lip-plate
-        translate([0,0,-lplate/2-hplate])
-          hull() {
-            cylinder(d={{⌀₀}},h={{ℓ₊}});
-            translate([0,0,hplate])
-              intersection() {
-                cylinder(d=dplate,h=lplate);
-                translate([0,0,lplate/2)
-                  rotate([0,90,0])
-                    scale([dplate/lplate,1,1])
-                      cylinder(d=lplate,h=dplate);
-              }
-            translate([0,0,lplate+2*hplate-{{ℓ₊}}])
-              cylinder(d={{⌀₀}},h={{ℓ₊}});
-          }
+        plate(d1={{⌀₀}}, d2={{⌀ₑ}}+2*{{ℎₑ}}, l={{𝑑ₚ}});
       }
-    }
-    // bore
-    union() {
-      hull() {
-        translate([0,0,{{ℓ₊}}-{{ℓᵣ}}])
-          cylinder(d={{⌀ᵣ}}+{{⌀₊}},h={{ℓ₊}});
-        translate([0,0,-{{𝑑ₑ}}/2])
-          cylinder(d={{⌀ₑ}}+{{⌀₊}},h={{𝑑ₑ}});
-        translate([0,0,{{ℓₛ}}])
-          cylinder(d={{⌀ₛ}}+{{⌀₊}},h={{ℓ₊}});
+      // bore
+      union() {
+        // taper
+        hull() {
+          // reflector plate
+          bore(z=-{{ℓᵣ}}, d={{⌀ᵣ}});
+          // embouchure bore
+          bore(z=-{{𝑑ₑ}}/2, d={{⌀ₑ}}, l={{𝑑ₑ}});
+          // stationary point
+          bore(z={{ℓₛ}}, d={{⌀ₛ}});
+        }
+        // cylindrical section
+        bore(z={{ℓₛ}}, d={{⌀ₛ}}, l={{ℓₐ}}-{{ℓₛ}});
       }
-      translate([0,0,{{ℓₛ}}])
-        cylinder(d={{⌀ₛ}}+{{⌀₊}},h={{ℓₐ}}-{{ℓₛ}}+{{ℓ₊}});
+      // embouchure hole
+      hole(b={{⌀ₑ}}, h={{ℎₑ}}, d={{𝑑ₑ}}, s={{𝑠ₑ}}, u={{𝜙ₑ}}, r={{𝜃ₑ}});
     }
-    // hole
-    translate([0-dplate/2,0,0])
-      rotate([atan({{𝑠ₑ}}/{{𝑑ₑ}}/2)*180/PI,-90,0])
-        scale([({{𝑠ₑ}}-{{⌀₊}}/2)/{{𝑑ₑ}}, 1, 1])
-          cylinder(h=edepth, d1={{𝑑ₑ}}, d2={{𝑑ₑ}}+tan({{𝜙ₑ}})*edepth);
   }
+}
+
+headjoint();
