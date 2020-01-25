@@ -22,14 +22,13 @@ module bore(z=0, d=2*$fd, l=$fl) {
 // hole cut
 module hole(z=0, b, h, d, s, u=0, r=0, o=0) {
   s = (s==undef) ? d : s;
-  r=b/2;
-  rh=r+h;
-  zo=sqrt(pow(rh,2)-pow(d/2,2));
-  oh=rh-zo;
+  rz=b/2;
+  zo=sqrt(pow(rz+h,2)-pow(d/2,2));
+  oh=rz+h-zo;
   do=d+tan(o)*2*oh;
   di=d+tan(u)*2*zo;
-  zi=sqrt(pow(b/2,2)-pow(di/2,2));
-  ih=rh-zi-oh+$fl;
+  zi=sqrt(pow(rz,2)-pow(di/2,2));
+  ih=rz+h-zi-oh+$fl;
   up(z) // position
     scale([1,1,s/d]) // eccentricity
       rotate([-r,90,0]) // rotation
