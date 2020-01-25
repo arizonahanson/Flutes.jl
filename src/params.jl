@@ -5,8 +5,9 @@
 ℎ # height/thickness (Y axis in XY plane)
 𝑑 # diameter or ellipse width (X axis in XZ plane)
 𝑠 # ellipse length (Z axis in XZ plane)
-𝜃 # rotation angle (∠ °XY plane)
-𝜙 # undercut angle (∠ °XY plane)
+𝑟 # rotation angle (∠ °XY plane)
+𝜃 # undercut angle (∠ °XY plane)
+𝜙 # shoulder-cut angle  (∠ °XY plane)
 𝑓 # frequency
 𝜗 # internal air temperature
 # ~~ subscripts ~~
@@ -29,8 +30,9 @@
 ℎₑ # embouchure hole height        4.3mm
 𝑑ₑ # embouchure hole length       12.0mm
 𝑠ₑ # embouchure hole width        10.0mm
-𝜃ₑ # embouchure hole rotation     21.0°
-𝜙ₑ # embouchure undercut angle    11.7°
+𝑟ₑ # embouchure hole rotation     21.0°
+𝜃ₑ # embouchure undercut angle    11.7°
+𝜙ₑ # embouchure shoulder-cut angle 8.0°
 ℓₛ # bore taper stationary point 120.0mm
 ⌀ₛ # bore diameter at stationary  19.0mm
 ℎₛ # flute wall @ stationary point 2.5mm
@@ -48,8 +50,8 @@
 ⌀ₕ # bore diameter at tone hole   19.0mm
 ℎₕ # tone hole height             2.5mm
 𝑑ₕ # tone hole diameter           ~~
-𝜃ₕ # tone hole rotation
-𝜙ₕ # tone hole undercut           ~~
+𝑟ₕ # tone hole rotation
+𝜃ₕ # tone hole undercut           ~~
 
 # ---- printing -----
 ℓ₊ # layer height                 0.162mm
