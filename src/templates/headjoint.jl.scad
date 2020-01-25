@@ -1,5 +1,5 @@
 
-include <header.scad>
+use <header.scad>
 
 // lip-plate
 module plate(z=0, d1, d2, l) {
