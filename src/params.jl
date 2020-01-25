@@ -22,7 +22,6 @@
 
 # ----- headjoint -----
 ℓᵩ # correction to 1/2 wavelength 52.0mm
-ℓ₀ # embouchure-crown distance    32.0mm
 ⌀₀ # crown outer diameter         24.0mm
 ℓᵣ # reflector-embouchure length  17.0mm
 ⌀ᵣ # bore diameter at reflector   17.0mm
