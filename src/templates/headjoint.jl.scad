@@ -14,7 +14,7 @@ module plate(z=0, d1, d2, l) {
               scale([d/l,1,1])
                 turn(d=l,l=d2);
         }
-      turn(z=l+2*(d2-d1)-$fl, d=d1);
+      turn(z=l+2*(d2-d1), d=d1);
 }
 
 module headjoint() {

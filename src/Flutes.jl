@@ -61,7 +61,8 @@ module Flutes
     """
         ℓₜ = tubelength(𝑭::Flute)
 
-    Calculate tube length from embouchure-hole to open-end for supplied flute struct
+    Calculate tube length from embouchure-hole to open-end
+      for supplied flute struct
     """
     function tubelength(𝑭::Flute)
         𝜑 = halfwavelength(𝑭.𝑓ₜ, 𝑭.𝜗)
@@ -73,8 +74,9 @@ module Flutes
     """
       ℓₕ = holelength(𝑭::Flute, 𝑓ₕ=440, ℎₕ=2.5, 𝑑ₕ=7, ⌀ₕ=19.0, 𝑔=(𝐺 - 1))
 
-    Calculate distance from embouchure hole center to tone hole center for supplied frequency 𝑓ₕ,
-      tone hole height ℎₕ, tone hole diameter 𝑑ₕ, bore diameter ⌀ₕ and interval ratio 𝑔 (minus one)
+    Calculate distance from embouchure hole center to tone hole center
+      for supplied frequency 𝑓ₕ, tone hole height ℎₕ, tone hole diameter 𝑑ₕ,
+      bore diameter ⌀ₕ and interval ratio 𝑔 (minus one)
     """
     function holelength(𝑭::Flute, 𝑓ₕ=440, ℎₕ=2.5, 𝑑ₕ=7, ⌀ₕ=19.0, 𝑔=(𝐺 - 1))
         𝜑 = halfwavelength(𝑓ₕ, 𝑭.𝜗)

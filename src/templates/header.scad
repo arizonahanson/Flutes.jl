@@ -20,7 +20,7 @@ module bore(z=0, d=2*$fd, l=$fl) {
 }
 
 // hole cut
-module hole(z=0, b, h, d, s, u=0, r=0, o=0) {
+module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
   s = (s==undef) ? d : s;
   rz=b/2;
   zo=sqrt(pow(rz+h,2)-pow(d/2,2));
@@ -43,9 +43,10 @@ module hole(z=0, b, h, d, s, u=0, r=0, o=0) {
 
 // example
 difference() {
-  turn(d=26,l=50);
-  bore(z=-$fl, d=17.4, l=50+2*$fl);
-  hole(z=40, b=17.4, h=4.3, d=8);
-  hole(z=17, b=17.4, h=4.3, d=10, s=12, u=7, r=-22, o=7);
+  b=17.4; h=4.3;
+  turn(d=b+2*h,l=50);
+  bore(z=-$fl, d=b, l=50+2*$fl);
+  hole(z=42, b=b, h=h, d=7);
+  hole(z=17, b=b, h=h, d=10, s=12, u=7, r=-22, o=7);
 }
 
