@@ -16,7 +16,7 @@ module turn(z=0, b=2*$fd, l=$fl) {
 
 // like turn, but fuzz the diameter and position
 module bore(z=0, b=2*$fd, l=$fl) {
-  turn(z=z-0.0005, b=b+$fd, l=l+0.001);
+  turn(z=z-0.001, b=b+$fd, l=l+0.002);
 }
 
 // tone or embouchure hole
@@ -43,19 +43,18 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
 }
 
 // lip-plate
-module plate(z=0, b1, b2, l, r=0) {
-  h=b2-b1;
+module plate(z=0, b, h, l, r=0) {
   up(-l-h+z)
     rotate([0,0,-r])
       hull() {
-        turn(b=b1);
+        turn(b=b);
         up(h)
           intersection() {
-            turn(b=b2,l=2*l);
-            up(l) rotate([0,90,0]) scale([1,b2/l,1])
-              cylinder(d2=2*l, d1=b1, h=b2/2);
+            turn(b=b+2*h,l=2*l);
+            up(l) rotate([0,90,0]) scale([1,(b+2*h)/l,1])
+              cylinder(d2=2*l, d1=b, h=(b+2*h)/2);
           }
-        turn(z=2*l+2*h, b=b1);
+        turn(z=2*l+2*h, b=b);
       }
 }
 
@@ -65,7 +64,8 @@ difference() {
   // outer
   union() {
     turn(b=b+2*h,l=100);
-    plate(z=32, b1=b+2*h, b2=b+8.6, l=24, r=-22);
+    // plate
+    plate(z=32, b=b, h=4.3, l=24, r=-22);
   }
   // inner bore
   bore(b=b, l=100);
@@ -73,7 +73,6 @@ difference() {
   hole(z=70, b=b, h=h, d=7);
   hole(z=80, b=b, h=h, d=5, r=20);
   // embouchure style
-  hole(z=32, b=b, h=4.3, d=10, s=12, u=7, o=7);
-  // plate
+  hole(z=32, b=b, h=4.3, d=10, s=12, u=8, o=5);
 }
 
