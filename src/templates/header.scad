@@ -14,13 +14,14 @@ module pivot(r=0) {
 }
 
 // translate z, then cylinder d=b, h=l
-module shell(z=0, b=2*$fd, l=$fl) {
-  slide(z) cylinder(d=b, h=l);
+module shell(z=0, b=2*$fd, b2, l=$fl) {
+  b2 = (b2==undef) ? b : b2;
+  slide(z) cylinder(d1=b, d2=b2, h=l);
 }
 
 // like shell, but fuzz the diameter and position
-module bore(z=0, b=2*$fd, l=$fl) {
-  shell(z=z-0.001, b=b+$fd, l=l+0.002);
+module bore(z=0, b=2*$fd, b2, l=$fl) {
+  shell(z=z-0.001, b=b+$fd, b2=b2, l=l+0.002);
 }
 
 // tone or embouchure hole
@@ -38,11 +39,9 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
       pivot(-r) // rotation
         union() {
           // shoulder cut
-          slide(zo)
-            cylinder(d1=d, d2=do, h=oh+0.001);
+          shell(z=zo, b=d, b2=do, l=oh+0.001);
           // undercut
-          slide(zi)
-            cylinder(d1=di, d2=d, h=ih+0.001);
+          shell(z=zi, b=di, b2=d, l=ih+0.001);
         }
 }
 
@@ -57,7 +56,7 @@ module plate(z=0, b, h, l, r=0) {
           intersection() {
             shell(b=od,l=2*l);
             slide(l) pivot() scale([1,od/l,1])
-              cylinder(d2=2*l, d1=b, h=od/2);
+              shell(b=b, b2=2*l, l=od/2);
           }
         shell(z=2*l+2*h, b=b);
       }
@@ -68,9 +67,9 @@ difference() {
   b=17.4; h=2;
   // outer
   union() {
-    shell(b=b+2*h,l=100);
+    shell(b=b+2*h, l=100);
     // plate
-    plate(z=32, b=b, h=4.3, l=24, r=22);
+    plate(z=32, b=b, h=4.3, l=24, r=22.62);
   }
   // inner bore
   bore(b=b, l=100);
