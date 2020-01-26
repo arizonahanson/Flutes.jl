@@ -1,20 +1,16 @@
 
 use <templates/header.scad>
 outer=24.0;
-bevel=(outer-19)/2; //19mm bore
 tenon=30;
+slen=186;
 difference() {
     // body
     union() {
-      shell(b=outer,l=186-tenon);
+      shell(b=outer,l=slen-tenon);
       // lip plate
       plate(z=32,b=17.4,h=4.3,l=24,r=22.62);
       // tenon
-      shell(z=186-tenon, b=outer-bevel, l=tenon-bevel);
-      slide(186-bevel) hull() {
-        shell(b=outer-bevel,l=bevel/2);
-        shell(z=bevel/2, b=19, l=bevel/2);
-      }
+      tenon(z=slen-tenon, b=19, h=1.25, l=tenon);
     }
     // bore
     slide(15) union() {

@@ -62,17 +62,25 @@ module plate(z=0, b, h, l, r=0) {
       }
 }
 
+module tenon(z=0, b, h, l) {
+  slide(z) {
+    shell(b=b+2*h, l=l-h);
+    shell(z=l-h, b=b+2*h, b2=b, l=h);
+  }
+}
+
 // example
 difference() {
   b=17.4; h=2;
   // outer
   union() {
     shell(b=b+2*h, l=100);
+    tenon(z=100, b=b, h=h/2, l=30);
     // plate
     plate(z=32, b=b, h=4.3, l=24, r=22.62);
   }
   // inner bore
-  bore(b=b, l=100);
+  bore(b=b, l=130);
   // tone-hole style
   hole(z=70, b=b, h=h, d=7);
   hole(z=75, b=b, h=h, d=2, r=20);
