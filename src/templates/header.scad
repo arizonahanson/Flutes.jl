@@ -39,10 +39,10 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
         union() {
           // shoulder cut
           rise(zo)
-            cylinder(d1=d, d2=do, h=oh+0.0005);
+            cylinder(d1=d, d2=do, h=oh+0.001);
           // undercut
           rise(zi)
-            cylinder(d1=di, d2=d, h=ih+0.0005);
+            cylinder(d1=di, d2=d, h=ih+0.001);
         }
 }
 
