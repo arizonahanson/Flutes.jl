@@ -44,15 +44,16 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
 
 // lip-plate
 module plate(z=0, b, h, l, r=0) {
+  od=b+2*h;
   up(-l-h+z)
     rotate([0,0,-r])
       hull() {
         turn(b=b);
         up(h)
           intersection() {
-            turn(b=b+2*h,l=2*l);
-            up(l) rotate([0,90,0]) scale([1,(b+2*h)/l,1])
-              cylinder(d2=2*l, d1=b, h=(b+2*h)/2);
+            turn(b=od,l=2*l);
+            up(l) rotate([0,90,0]) scale([1,od/l,1])
+              cylinder(d2=2*l, d1=b, h=od/2);
           }
         turn(z=2*l+2*h, b=b);
       }
@@ -71,7 +72,7 @@ difference() {
   bore(b=b, l=100);
   // tone-hole style
   hole(z=70, b=b, h=h, d=7);
-  hole(z=80, b=b, h=h, d=5, r=20);
+  hole(z=75, b=b, h=h, d=2, r=20);
   // embouchure style
   hole(z=32, b=b, h=4.3, d=10, s=12, u=8, o=5);
 }
