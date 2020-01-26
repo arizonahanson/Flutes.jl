@@ -5,13 +5,17 @@ $fl=0.162; // layer height
 $fd=0.4; // nozzle diameter
 
 // translate +z axis
-module up(z=$fl) {
+module rise(z=$fl) {
   translate([0,0,z]) children();
+}
+
+module face(r=0) {
+  rotate([r,90,-90]) children();
 }
 
 // translate z, then cylinder d=b, h=l
 module turn(z=0, b=2*$fd, l=$fl) {
-  up(z) cylinder(d=b, h=l);
+  rise(z) cylinder(d=b, h=l);
 }
 
 // like turn, but fuzz the diameter and position
@@ -29,15 +33,15 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
   di=d+tan(u)*2*zo;
   zi=sqrt(pow(rz+$fd/2,2)-pow(di/2,2));
   ih=rz+h-zi-oh;
-  up(z) // position
+  rise(z) // position
     scale([1,1,s/d]) // eccentricity
-      rotate([-r,90,0]) // rotation
+      face(-r) // rotation
         union() {
           // shoulder cut
-          up(zo)
+          rise(zo)
             cylinder(d1=d, d2=do, h=oh+0.0005);
           // undercut
-          up(zi)
+          rise(zi)
             cylinder(d1=di, d2=d, h=ih+0.0005);
         }
 }
@@ -45,14 +49,14 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
 // lip-plate
 module plate(z=0, b, h, l, r=0) {
   od=b+2*h;
-  up(-l-h+z)
-    rotate([0,0,-r])
+  rise(-l-h+z)
+    rotate([0,0,r])
       hull() {
         turn(b=b);
-        up(h)
+        rise(h)
           intersection() {
             turn(b=od,l=2*l);
-            up(l) rotate([0,90,0]) scale([1,od/l,1])
+            rise(l) face() scale([1,od/l,1])
               cylinder(d2=2*l, d1=b, h=od/2);
           }
         turn(z=2*l+2*h, b=b);
@@ -66,7 +70,7 @@ difference() {
   union() {
     turn(b=b+2*h,l=100);
     // plate
-    plate(z=32, b=b, h=4.3, l=24, r=-22);
+    plate(z=32, b=b, h=4.3, l=24, r=22);
   }
   // inner bore
   bore(b=b, l=100);

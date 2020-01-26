@@ -29,15 +29,19 @@
 ℓᵣ # reflector-embouchure length  17.0mm
 ⌀ᵣ # bore diameter at reflector   17.0mm
 ⌀ₑ # bore diameter at embouchure  17.4mm
+⌀ₚ # bore diameter under lip-plate
+ℎₚ # wall height under lip-plate
+ℓₚ # lip plate edge distance
+𝜃ₚ # lip plate rotation           -22.0°
 ℎₑ # embouchure hole height        4.3mm
 𝑑ₑ # embouchure hole length       12.0mm
 𝑠ₑ # embouchure hole width        10.0mm
-𝜃ₑ # embouchure hole rotation     21.0°
 𝜓ₑ # embouchure undercut angle    11.7°
 𝜙ₑ # embouchure shoulder-cut angle 8.0°
 ℓₛ # bore taper stationary point 120.0mm
 ⌀ₛ # bore diameter at stationary  19.0mm
 ℎₛ # flute wall @ stationary point 2.5mm
+ℓₙ # tenon start
 ℓₐ # embouchure-headjoint length 156.0mm
 
 # ----- flute -----
