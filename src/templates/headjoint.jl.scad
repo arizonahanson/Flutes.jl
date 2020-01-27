@@ -17,12 +17,9 @@ module headjoint() {
       union() {
         // taper
         hull() {
-          // reflector plate
-          bore(z=-{{ℓᵣ}}, b={{⌀ᵣ}});
-          // embouchure bore
-          bore(z=-{{𝑠ₑ}}/2, b={{⌀ₑ}}, l={{𝑠ₑ}});
-          // stationary point
-          bore(z={{ℓₛ}}, b={{⌀ₛ}});
+          bore(z=-{{ℓᵣ}}, b={{⌀ᵣ}}); // reflector plate
+          bore(z=-{{𝑠ₑ}}/2, b={{⌀ₑ}}, l={{𝑠ₑ}}); // embouchure bore
+          bore(z={{ℓₛ}}, b={{⌀ₛ}}); // stationary point
         }
         // cylindrical section
         bore(z={{ℓₛ}}, b={{⌀ₛ}}, l={{ℓₐ}}-{{ℓₛ}});
