@@ -1,8 +1,8 @@
 
-$fa=1.0; // min angle
-$fs=0.1; // min segment
+$fa=1.0;   // min angle
+$fs=0.1;   // min segment
 $fl=0.162; // layer height
-$fd=0.4; // nozzle diameter
+$fd=0.4;   // nozzle diameter
 
 // translate +z axis
 module slide(z=$fl) {
