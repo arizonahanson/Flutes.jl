@@ -56,7 +56,7 @@ calculate half of a wavelength of given frequency 𝑓 in air of temperature �
 function halfwavelength(𝑓=440.0, 𝜗=25.0)
   𝑐 = soundspeed(𝜗)
   𝜑 = 𝑐/2𝑓
-  round(𝜑; digits=6)
+  round(𝜑; sigdigits=6)
 end
 
 """
@@ -76,13 +76,13 @@ end
   ℓₕ = holelength(𝑭::Flute, 𝑓ₕ=440, ℎₕ=2.5, 𝑑ₕ=7, ⌀ₕ=19.0, 𝑔=(𝐺 - 1))
 
 Calculate distance from embouchure hole center to tone hole center
-  for supplied frequency 𝑓ₕ, tone hole height ℎₕ, tone hole diameter 𝑑ₕ,
-  bore diameter ⌀ₕ and interval ratio 𝑔 (minus one)
+  for supplied frequency 𝑓, tone hole height ℎ, tone hole diameter 𝑑,
+  bore diameter ⌀ and interval ratio 𝑔 (minus one)
 """
-function holelength(𝑭::Flute, 𝑓ₕ=440, ℎₕ=2.5, 𝑑ₕ=7, ⌀ₕ=19.0, 𝑔=(𝐺 - 1))
-  𝜑 = halfwavelength(𝑓ₕ, 𝑭.𝜗)
-  𝐿 = (ℎₕ + 𝑑ₕ)*(⌀ₕ/𝑑ₕ)^2 - 0.45⌀ₕ
-  𝑧 = 𝑔/2*√(1 + 4𝐿/(𝑔*𝜑)) - 𝑔/2
+function holelength(𝑭::Flute, 𝑓=440, ℎ=2.5, 𝑑=7, ⌀=19.0, 𝑔=(𝐺 - 1))
+  𝜑 = halfwavelength(𝑓, 𝑭.𝜗)
+  𝐿 = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
+  𝑧 = 𝑔/2 * √(1 + 4𝐿/(𝑔*𝜑)) - 𝑔/2
   𝛥ℓₕ = 𝑧*𝜑
   ℓₕ = 𝜑 - 𝑭.ℓᵩ - 𝛥ℓₕ
   round(ℓₕ; digits=2)

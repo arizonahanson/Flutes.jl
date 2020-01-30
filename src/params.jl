@@ -45,13 +45,13 @@
 ℓₐ # embouchure-headjoint length 156.0mm
 
 # ----- flute -----
-𝜗  # bore air temperature         25.0°C
 𝑓ₜ # fundamental frequency
 ℓₜ # bore length
 
 # ----- per hole -----
 𝑔  # interval ratio minus one     2^(1/12)-1
 𝑓ₕ # frequency of hole
+# ~~~
 ℓₕ # embouchure-hole distance     ~~
 ⌀ₕ # bore diameter at tone hole   19.0mm
 ℎₕ # tone hole height             2.5mm

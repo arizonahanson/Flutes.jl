@@ -1,14 +1,14 @@
 
-include <header.scad>
+include <src/templates/header.scad>
 
 // module parameters
-L0={{ℓ₀}}; B0={{⌀₀}};
-Lr={{ℓᵣ}}; Br={{⌀ᵣ}}; Hr={{ℎᵣ}};
-Be={{⌀ₑ}}; He={{ℎₑ}}; De={{𝑑ₑ}}; Se={{𝑠ₑ}}; Ue={{𝜓ₑ}}; Oe={{𝜙ₑ}};
-Lp={{ℓₚ}}; Rp={{𝜃ₚ}};
-Ls={{ℓₛ}}; Bs={{⌀ₛ}}; Hs={{ℎₛ}};
-Ln={{ℓₙ}};
-La={{ℓₐ}};
+L0=32.0; B0=24.0;
+Lr=17.0; Br=17.0; Hr=3.5;
+Be=17.4; He=4.3; De=10.0; Se=12.0; Ue=7.0; Oe=0.0;
+Lp=24.0; Rp=22.6;
+Ls=120.0; Bs=19.0; Hs=2.5;
+Ln=126.0;
+La=156.0;
 module headjoint() {
   slide(L0) {
     difference() {
