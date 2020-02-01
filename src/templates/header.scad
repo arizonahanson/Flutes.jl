@@ -64,7 +64,10 @@ module plate(z=0, b, h, l, r=0) {
 
 module tenon(z=0, b, h, l) {
   slide(z) {
-    shell(b=b+2*h, l=l-h);
-    shell(z=l-h, b=b+2*h, b2=b, l=h);
+    hx=h+$fd/4;
+    lz=l-hx;
+    bx=b+2*hx;
+    shell(b=bx, l=lz);
+    shell(z=lz, b=bx, b2=b, l=hx);
   }
 }
