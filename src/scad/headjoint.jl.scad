@@ -1,5 +1,5 @@
 
-include <src/templates/flutes.scad>
+include <src/flutes.scad>
 // module parameters
 L0={{ℓ₀}}; B0={{⌀₀}};
 Lr={{ℓᵣ}}; Br={{⌀ᵣ}}; Hr={{ℎᵣ}};

@@ -1,5 +1,5 @@
 
-TEMPLATES=src/templates
+SCAD=src/scad
 
 .PHONY: all
 all: headjoint
@@ -8,7 +8,7 @@ all: headjoint
 headjoint: headjoint.stl
 
 # render jl.scad template
-%.scad: $(TEMPLATES)/%.jl.scad $(TEMPLATES)/%.json
+%.scad: $(SCAD)/%.jl.scad $(SCAD)/%.json
 	@echo "making" $@
 	@julia src/make.jl $@ $^
 
@@ -17,5 +17,6 @@ headjoint: headjoint.stl
 	@echo "making" $@
 	openscad $< -o $@ -q
 
+.PHONY: clean
 clean:
 	@git clean -fxd
