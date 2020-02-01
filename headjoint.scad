@@ -1,5 +1,5 @@
 
-include <src/templates/header.scad>
+include <src/templates/flutes.scad>
 // module parameters
 L0=32.0; B0=24.0;
 Lr=17.0; Br=17.0; Hr=3.5;
