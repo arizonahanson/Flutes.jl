@@ -12,5 +12,4 @@ function apply(inpath, outpath, vars)
   close(io)
 end
 
-println(ARGS[2]*" -> "*ARGS[1]*".scad : "*ARGS[3])
-apply(ARGS[2], ARGS[1]*".scad", JSON.parsefile(ARGS[3]))
+apply(ARGS[2], ARGS[1], JSON.parsefile(ARGS[3]))
