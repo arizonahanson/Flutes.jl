@@ -16,3 +16,6 @@ headjoint: headjoint.stl
 %.stl: %.scad
 	@echo "making" $@
 	openscad $< -o $@ -q
+
+clean:
+	@git clean -fxd
