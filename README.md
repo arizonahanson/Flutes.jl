@@ -29,41 +29,41 @@ A work-in-progress parametric flute modeling tool
 ₊ # extruder
 
 # ----- head-joint -----
-ℓᵩ # correction to 1/2 wavelength 52.0mm
-⌀₀ # crown outer diameter         24.0mm
-ℓᵣ # reflector-embouchure length  17.0mm
-⌀ᵣ # bore diameter at reflector   17.0mm
-⌀ₑ # bore diameter at embouchure  17.4mm
+ℓᵩ # correction to 1/2 wavelength
+⌀₀ # crown outer diameter
+ℓᵣ # reflector-embouchure length
+⌀ᵣ # bore diameter at reflector
+ℎᵣ # wall thickness at reflector
 ⌀ₚ # bore diameter under lip-plate
-ℎₚ # wall height under lip-plate
 ℓₚ # lip plate edge distance
-𝜃ₚ # lip plate rotation           -22.0°
-ℎₑ # embouchure hole height        4.3mm
-𝑑ₑ # embouchure hole length       12.0mm
-𝑠ₑ # embouchure hole width        10.0mm
-𝜓ₑ # embouchure undercut angle    11.7°
-𝜙ₑ # embouchure shoulder-cut angle 8.0°
-ℓₛ # bore taper stationary point 120.0mm
-⌀ₛ # bore diameter at stationary  19.0mm
-ℎₛ # flute wall @ stationary point 2.5mm
+𝜃ₚ # lip plate rotation
+⌀ₑ # bore diameter at embouchure
+ℎₑ # embouchure hole height
+𝑑ₑ # embouchure hole length
+𝑠ₑ # embouchure hole width
+𝜓ₑ # embouchure undercut angle
+𝜙ₑ # embouchure shoulder-cut angle
+ℓₛ # bore taper stationary point
+⌀ₛ # bore diameter at stationary
+ℎₛ # flute wall @ stationary point
 ℓₙ # tenon start
-ℓₐ # embouchure-headjoint length 156.0mm
+ℓₐ # embouchure-headjoint length
 
 # ----- flute -----
 𝑓ₜ # fundamental frequency
 ℓₜ # bore length
 
 # ----- per hole -----
-𝑔  # interval ratio minus one     2^(1/12)-1
+𝑔  # interval ratio minus one
 𝑓ₕ # frequency of hole
 # ~~~
 ℓₕ # embouchure-hole distance
-⌀ₕ # bore diameter at tone hole   19.0mm
-ℎₕ # tone hole height             2.5mm
+⌀ₕ # bore diameter at tone hole
+ℎₕ # tone hole height
 𝑑ₕ # tone hole diameter
 𝜃ₕ # tone hole rotation
 𝜓ₕ # tone hole undercut
 
 # ---- printing -----
-ℓ₊ # layer height                 0.162mm
-⌀₊ # extruder bore diameter       0.4mm
+ℓ₊ # layer height
+⌀₊ # extruder bore diameter
