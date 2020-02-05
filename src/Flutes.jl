@@ -10,7 +10,6 @@ time in seconds
 module Flutes
 
 export Flute, createFlute, tubelength, holelength, 𝐺
-include("apply.jl")
 
 mutable struct Flute
   ℓᵩ  # Embouchure correction       (52.0)
