@@ -9,15 +9,10 @@ time in seconds
 """
 module Flutes
 
-export Flute, createFlute, tubelength, holelength, 𝐺
-
-mutable struct Flute
-  ℓᵩ  # Embouchure correction       (52.0)
-  𝑓ₜ  # Fundamental frequency       (261.6155653)
-  𝜗   # Air temperature             (25.0)
-  ⌀ₛ  # stop taper bore diameter    (19.0)
-  ⌀ₜ  # flute end bore diameter     (19.0)
-end
+include("structs.jl")
+export Flute, Head, ToneHole, createFlute
+export tubelength, holelength
+export 𝐺
 
 """
   𝐺 = 2^(1/12)
@@ -26,13 +21,6 @@ The constant by which a frequency may be multiplied to result in a
   frequency one semitone higher, using equal temperament tuning.
 """
 𝐺 = 2^(1/12)
-
-"""
-  𝑭 = createFlute(ℓᵩ=52.0, 𝑓ₜ=261.615565, 𝜗=25.0, ⌀ₜ=19.0)
-"""
-function createFlute(ℓᵩ=52.0, 𝑓ₜ=261.615565, 𝜗=25.0, ⌀ₜ=19.0)
-  return Flute(ℓᵩ, 𝑓ₜ, 𝜗, ⌀ₜ, ⌀ₜ)
-end
 
 """
   𝑐 = soundspeed(𝜗=25.0)
@@ -59,31 +47,31 @@ function halfwavelength(𝑓=440.0, 𝜗=25.0)
 end
 
 """
-  ℓₜ = tubelength(𝑭::Flute)
+  ℓₜ = tubelength(ℓᵩ=52.0, ⌀ₜ=19.0, 𝑓ₜ=261.615565, 𝜗=25.0)
 
 Calculate tube length from embouchure-hole to open-end
   for supplied flute struct
 """
-function tubelength(𝑭::Flute)
-  𝜑 = halfwavelength(𝑭.𝑓ₜ, 𝑭.𝜗)
-  𝛥ℓₜ = 0.3𝑭.⌀ₜ
-  ℓₜ = 𝜑 - 𝑭.ℓᵩ - 𝛥ℓₜ
+function tubelength(ℓᵩ=52.0, 𝑓ₜ=261.615565, ⌀ₜ=19.0, 𝜗=25.0)
+  𝜑 = halfwavelength(𝑓ₜ, 𝜗)
+  𝛥ℓₜ = 0.3⌀ₜ
+  ℓₜ = 𝜑 - ℓᵩ - 𝛥ℓₜ
   round(ℓₜ; digits=2)
 end
 
 """
-  ℓₕ = holelength(𝑭::Flute, 𝑓ₕ=440, ℎₕ=2.5, 𝑑ₕ=7, ⌀ₕ=19.0, 𝑔=(𝐺 - 1))
+  ℓₕ = holelength(ℓᵩ=52.0, 𝜗=25.0, 𝑓=440, ⌀=19.0, ℎ=2.5, 𝑑=7, 𝑔=(𝐺 - 1))
 
 Calculate distance from embouchure hole center to tone hole center
   for supplied frequency 𝑓, tone hole height ℎ, tone hole diameter 𝑑,
   bore diameter ⌀ and interval ratio 𝑔 (minus one)
 """
-function holelength(𝑭::Flute, 𝑓=440, ℎ=2.5, 𝑑=7, ⌀=19.0, 𝑔=(𝐺 - 1))
-  𝜑 = halfwavelength(𝑓, 𝑭.𝜗)
+function holelength(ℓᵩ=52.0, 𝜗=25.0, 𝑓=440, ⌀=19.0, ℎ=2.5, 𝑑=7, 𝑔=(𝐺 - 1))
+  𝜑 = halfwavelength(𝑓, 𝜗)
   𝐿 = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
   𝑧 = 𝑔/2 * √(1 + 4𝐿/(𝑔*𝜑)) - 𝑔/2
   𝛥ℓₕ = 𝑧*𝜑
-  ℓₕ = 𝜑 - 𝑭.ℓᵩ - 𝛥ℓₕ
+  ℓₕ = 𝜑 - ℓᵩ - 𝛥ℓₕ
   round(ℓₕ; digits=2)
 end
 end
