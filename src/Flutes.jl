@@ -45,13 +45,15 @@ function halfwavelength(𝑓=440.0, 𝜗=25.0)
 end
 
 """
-  ℓₜ = tubelength(;𝑓ₜ=261.615565, 𝜗=25.0, ℓᵩ=52.0, ⌀ₜ=19.0)
+  ℓₜ = tubelength(;𝑓=261.615565, 𝜗=25.0, ℓᵩ=52.0, ⌀=19.0)
 
 Calculate tube length from embouchure-hole to open-end
+  for fundamental frequency 𝑓, temperature 𝜗, embouchure correction ℓᵩ,
+  and open-end bore diameter ⌀
 """
-function tubelength(;𝑓ₜ=261.615565, 𝜗=25.0, ℓᵩ=52.0, ⌀ₜ=19.0)
-  𝜑 = halfwavelength(𝑓ₜ, 𝜗)
-  𝛥ℓₜ = 0.3⌀ₜ
+function tubelength(𝑓=261.615565; 𝜗=25.0, ℓᵩ=52.0, ⌀=19.0)
+  𝜑 = halfwavelength(𝑓, 𝜗)
+  𝛥ℓₜ = 0.3⌀
   ℓₜ = 𝜑 - ℓᵩ - 𝛥ℓₜ
   round(ℓₜ; digits=2)
 end
@@ -60,10 +62,11 @@ end
   ℓₕ = holelength(;𝑓=440, 𝜗=25.0, ℓᵩ=52.0, ⌀=19.0, ℎ=2.5, 𝑑=7, 𝑔=(𝐺 - 1))
 
 Calculate distance from embouchure hole center to tone hole center
-  for supplied frequency 𝑓, tone hole height ℎ, tone hole diameter 𝑑,
-  bore diameter ⌀ and interval ratio 𝑔 (minus one)
+  for supplied frequency 𝑓, temperature 𝜗, embouchure correction ℓᵩ,
+  tone-hole bore diameter ⌀, tone-hole height ℎ, tone-hole diameter 𝑑,
+  and interval coefficient 𝑔
 """
-function holelength(;𝑓=440, 𝜗=25.0, ℓᵩ=52.0, ⌀=19.0, ℎ=2.5, 𝑑=7, 𝑔=(𝐺 - 1))
+function holelength(𝑓=440; 𝜗=25.0, ℓᵩ=52.0, ⌀=19.0, ℎ=2.5, 𝑑=7, 𝑔=(𝐺 - 1))
   𝜑 = halfwavelength(𝑓, 𝜗)
   𝐿 = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
   𝑧 = 𝑔/2 * √(1 + 4𝐿/(𝑔*𝜑)) - 𝑔/2
