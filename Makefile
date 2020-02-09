@@ -1,5 +1,5 @@
 
-SCAD=src/scad
+TPL=tpl
 
 .PHONY: all
 all: headjoint
@@ -7,10 +7,10 @@ all: headjoint
 .PHONY: headjoint
 headjoint: headjoint.stl
 
-# render jl.scad template
-%.scad: $(SCAD)/%.jl.scad $(SCAD)/%.json
+# render scad template
+%.scad: $(TPL)/%.tpl.scad $(TPL)/%.tpl.json
 	@echo "making" $@
-	@julia src/make.jl $@ $^
+	@julia render.jl $@ $^
 
 # compile stl from scad
 %.stl: %.scad
