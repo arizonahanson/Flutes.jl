@@ -10,9 +10,9 @@ A work-in-progress parametric flute modeling tool
 ℎ # hole or wall height (Y axis in XY plane)
 𝑑 # hole diameter or ellipse height (X axis in XZ plane)
 𝑠 # hole ellipse width (Z axis in XZ plane)
-𝜃 # hole rotation angle (∠ °Z axis in XY plane)
-𝜓 # hole undercut angle (∠ °Z axis in XY plane)
-𝜙 # hole shoulder-cut angle (∠ °Z axis in XY plane)
+𝜃 # hole rotation angle (°⦭ XY plane)
+𝜓 # hole undercut angle (°⦮ XY plane)
+𝜙 # hole shoulder-cut angle (°⦬ YZ plane)
 𝑓 # frequency
 𝜗 # internal air temperature
 # ~~ subscripts ~~

@@ -1,9 +1,9 @@
 
-* initialize variables (diameter->position)
-  - static headjoint
-  - fundamental frequency
-  - flute bore, wall thickness
-  - tonehole frequencies
+* initialize struct
+  - static headjoint parameters
+  - constant flute bore, wall thickness, temperature
+  - fundamental frequency 𝑓ₜ
+  - tonehole frequencies 𝒇 = 𝑓₁, 𝑓₂, ...
   - initial tonehole diameters/bore/height/position
 * optimize merit-function
   - variable tone-hole diameter->position
@@ -12,4 +12,19 @@
 * render with optimized parameters
   - flute struct
   - scad model
+
+* symbols:
+  - 𝜗 : °C
+  - ℓ : z offset
+  - ⌀ : xy diameter
+  - ℎ : y height
+  - 𝑑 : xz diameter / x height
+  - 𝑠 : z width
+  - 𝜃 : z rotation angle
+  - 𝜓 : z undercut angle
+  - 𝜙 : -z outercut angle
+
+opt:
+ 𝜗 ℓₑ
+ ℓₜ← 𝑓ₜ ⌀ₜ {ℓₕ← 𝑓ₕ ⌀ₕ 𝑑ₕ ℎₕ}
 
