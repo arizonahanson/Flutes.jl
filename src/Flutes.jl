@@ -27,11 +27,11 @@ function soundspeed(ϑ=25.0)
 end
 
 """
-  𝜆 = wavelength(𝑓=A₄, ϑ=25.0)
+  𝜆 = wavelength(𝑓=A₄; ϑ=25.0)
 
 calculate wavelength of given frequency 𝑓 in air of temperature ϑ
 """
-function wavelength(𝑓=A₄, ϑ=25.0)
+function wavelength(𝑓=A₄; ϑ=25.0)
   𝑐 = soundspeed(ϑ)
   𝜆 = 𝑐/𝑓
   round(𝜆; sigdigits=6)
@@ -63,7 +63,7 @@ function toneholelength(𝑓=A₄; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, ℎ=2.5, 𝑑
   𝛬 = wavelength(𝑓, ϑ)/2
   𝐿 = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
   𝑧 = 𝑔/2 * √(1 + 4𝐿/(𝑔*𝛬)) - 𝑔/2
-  𝛥ℓₕ = 𝑧*𝛬
+  𝛥ℓₕ = 𝑧 * 𝛬
   ℓₕ = 𝛬 - ℓₑ - 𝛥ℓₕ
   round(ℓₕ; digits=2)
 end
