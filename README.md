@@ -12,9 +12,9 @@ A work-in-progress parametric flute modeling tool
 𝑠 # hole ellipse width (Z axis in XZ plane)
 𝜃 # hole rotation angle (°⦭ XY plane)
 𝜓 # hole undercut angle (°⦮ XY plane)
-𝜑 # hole shoulder-cut angle (°⦬ YZ plane)
+𝜑 # hole shoulder-cut angle (°⦭ YZ plane)
 𝑓 # frequency
-𝜗 # internal air temperature
+ϑ # internal air temperature
 # ~~ subscripts ~~
 ₀ # crown (z=0)
 ᵣ # reflector
