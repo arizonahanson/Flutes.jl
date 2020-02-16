@@ -5,14 +5,14 @@
 A work-in-progress parametric flute modeling tool
 
 # ~~~~~ legend ~~~~~
-ℓ # distance from embouchure center (Z axis)
-⌀ # diameter (Y axis in XY plane)
-ℎ # height/thickness (Y axis in XY plane)
-𝑑 # diameter or ellipse width (X axis in XZ plane)
-𝑠 # ellipse length (Z axis in XZ plane)
-𝜃 # rotation angle (∠ °XY plane)
-𝜓 # undercut angle (∠ °XY plane)
-𝜙 # shoulder-cut angle  (∠ °XY plane)
+ℓ # distance to embouchure center (Z axis)
+⌀ # bore diameter (XY plane)
+ℎ # hole or wall height (Y axis in XY plane)
+𝑑 # hole diameter or ellipse height (X axis in XZ plane)
+𝑠 # hole ellipse width (Z axis in XZ plane)
+𝜃 # hole rotation angle (∠ °Z axis in XY plane)
+𝜓 # hole undercut angle (∠ °Z axis in XY plane)
+𝜙 # hole shoulder-cut angle (∠ °Z axis in XY plane)
 𝑓 # frequency
 𝜗 # internal air temperature
 # ~~ subscripts ~~
@@ -28,14 +28,14 @@ A work-in-progress parametric flute modeling tool
 ₊ # extruder
 
 # ----- head-joint -----
-⌀₀ # crown outer diameter
+⌀₀ # crown outer diameter*
 ℓᵣ # reflector-embouchure length
 ⌀ᵣ # bore diameter at reflector
 ℎᵣ # wall thickness at reflector
 ⌀ₚ # bore diameter under lip-plate
 ℓₚ # lip plate edge distance
 𝜃ₚ # lip plate rotation
-ℓₑ # correction to 1/2 wavelength
+ℓₑ # embouchure correction*
 ⌀ₑ # bore diameter at embouchure
 ℎₑ # embouchure hole height
 𝑑ₑ # embouchure hole length
