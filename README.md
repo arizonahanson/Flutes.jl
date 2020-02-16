@@ -16,7 +16,6 @@ A work-in-progress parametric flute modeling tool
 𝑓 # frequency
 𝜗 # internal air temperature
 # ~~ subscripts ~~
-ᵩ # effective length ~ 1/2 wavelength
 ₀ # crown (z=0)
 ᵣ # reflector
 ₑ # embouchure
@@ -29,7 +28,6 @@ A work-in-progress parametric flute modeling tool
 ₊ # extruder
 
 # ----- head-joint -----
-ℓᵩ # correction to 1/2 wavelength
 ⌀₀ # crown outer diameter
 ℓᵣ # reflector-embouchure length
 ⌀ᵣ # bore diameter at reflector
@@ -37,6 +35,7 @@ A work-in-progress parametric flute modeling tool
 ⌀ₚ # bore diameter under lip-plate
 ℓₚ # lip plate edge distance
 𝜃ₚ # lip plate rotation
+ℓₑ # correction to 1/2 wavelength
 ⌀ₑ # bore diameter at embouchure
 ℎₑ # embouchure hole height
 𝑑ₑ # embouchure hole length
