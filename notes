@@ -1,0 +1,15 @@
+
+* initialize variables (diameter->position)
+  - static headjoint
+  - fundamental frequency
+  - flute bore, wall thickness
+  - tonehole frequencies
+  - initial tonehole diameters/bore/height/position
+* optimize merit-function
+  - variable tone-hole diameter->position
+  - fixed(?) tuning, bore, height
+  - diameter, position constraints
+* render with optimized parameters
+  - flute struct
+  - scad model
+
