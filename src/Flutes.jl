@@ -38,7 +38,7 @@ function wavelength(𝑓=A₄, 𝜗=25.0)
 end
 
 """
-  ℓₜ = flutelength(;𝑓=C₄, 𝜗=25.0, ℓₑ=52.0, ⌀=19.0)
+  ℓₜ = flutelength(𝑓=C₄; 𝜗=25.0, ℓₑ=52.0, ⌀=19.0)
 
 Calculate flute length from embouchure-hole to open-end
   for fundamental frequency 𝑓, temperature 𝜗, embouchure correction ℓₑ,
@@ -52,7 +52,7 @@ function flutelength(𝑓=C₄; 𝜗=25.0, ℓₑ=52.0, ⌀=19.0)
 end
 
 """
-  ℓₕ = toneholelength(;𝑓=A₄, 𝜗=25.0, ℓₑ=52.0, ⌀=19.0, ℎ=2.5, 𝑑=7, 𝑔=(𝐺 - 1))
+  ℓₕ = toneholelength(𝑓=A₄; 𝜗=25.0, ℓₑ=52.0, ⌀=19.0, ℎ=2.5, 𝑑=7, 𝑔=(𝐺 - 1))
 
 Calculate distance from embouchure hole center to tone hole center
   for supplied frequency 𝑓, temperature 𝜗, embouchure correction ℓₑ,
