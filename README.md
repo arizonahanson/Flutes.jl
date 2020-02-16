@@ -28,7 +28,9 @@ A work-in-progress parametric flute modeling tool
 ₊ # extruder
 
 # ----- head-joint -----
-⌀₀ # crown outer diameter*
+ℓ₀ # crown-embouchure distance
+⌀₀ # crown inner diameter
+ℎ₀ # crown wall height
 ℓᵣ # reflector-embouchure length
 ⌀ᵣ # bore diameter at reflector
 ℎᵣ # wall thickness at reflector
