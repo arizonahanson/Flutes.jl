@@ -12,7 +12,7 @@ A work-in-progress parametric flute modeling tool
 𝑠 # hole ellipse width (Z axis in XZ plane)
 𝜃 # hole rotation angle (°⦭ XY plane)
 𝜓 # hole undercut angle (°⦮ XY plane)
-𝜙 # hole shoulder-cut angle (°⦬ YZ plane)
+𝜑 # hole shoulder-cut angle (°⦬ YZ plane)
 𝑓 # frequency
 𝜗 # internal air temperature
 # ~~ subscripts ~~
@@ -43,7 +43,7 @@ A work-in-progress parametric flute modeling tool
 𝑑ₑ # embouchure hole length
 𝑠ₑ # embouchure hole width
 𝜓ₑ # embouchure undercut angle
-𝜙ₑ # embouchure shoulder-cut angle
+𝜑ₑ # embouchure shoulder-cut angle
 ℓₛ # bore taper stationary point
 ⌀ₛ # bore diameter at stationary
 ℎₛ # flute wall @ stationary point
