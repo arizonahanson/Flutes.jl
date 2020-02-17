@@ -13,17 +13,6 @@
   - flute struct
   - scad model
 
-* symbols:
-  - 𝑓 : frequency
-  - ℓ : z offset
-  - ⌀ : xy diameter
-  - ℎ : y height
-  - 𝑑 : xz diameter / x height
-  - 𝑠 : z width
-  - 𝜃 : z rotation angle
-  - 𝜓 : z undercut angle
-  - 𝜑 : -z overcut angle
-
 (frequencies) + unoptimized diameter⤞ position
  -> (diameter constraints): optimize diameter⤞ position
 merit:
@@ -31,8 +20,7 @@ merit:
   hole size
 
 𝒇 →  𝒅 →  𝓵
-
 ℓₜ ←  𝑓ₜ
 ℓₕ ⥆  𝑓ₕ 𝑑ₕ*
 
-
+input-scale | init-params | optimize | merit-model | scad
