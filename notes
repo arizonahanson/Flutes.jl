@@ -16,11 +16,8 @@
 (frequencies) + unoptimized diameter⤞ position
  -> (diameter constraints): optimize diameter⤞ position
 merit:
-  hole-hole distance min/max
-  hole size
+  hole-hole distance min/max/ideal
+  hole size ++
 
-𝒇 →  𝒅 →  𝓵
-ℓₜ ←  𝑓ₜ
-ℓₕ ⥆  𝑓ₕ 𝑑ₕ*
+optimize ∘ merit ∘ frequencies: diameters, minbox | struct -> scad
 
-input-scale | init-params | optimize | merit-model | scad
