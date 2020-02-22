@@ -8,9 +8,7 @@ function f(x) #rosenbrock example
 end
 
 function main()
-  lower = [1.0, 1.0]
-  upper = [10.0, 10.0]
-  initial = [5.0, 5.0]
+  lower = [-10.0, -10.0]; upper = [10.0, 10.0]; initial = [5.0, 5.0]
   solver = LBFGS()
   results = optimize(f, lower, upper, initial, Fminbox(solver);
                      autodiff=:forward)

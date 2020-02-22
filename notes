@@ -21,3 +21,5 @@ merit:
 
 optimize ∘ merit ∘ frequencies: diameters, minbox | struct -> scad
 
+1) F[]->D[], U[], L[], Zmin[], Zmax[]
+  freq, upper, lower, minsep, maxsep
