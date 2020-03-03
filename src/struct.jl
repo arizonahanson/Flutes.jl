@@ -1,3 +1,4 @@
+export createHead
 
 struct Head
   ℓₑ

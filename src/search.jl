@@ -1,6 +1,4 @@
-
-module Flutes
-include("Notes.jl")
+export findflute
 
 function mkflute(freqs, diams)
   # TODO: generate flute
@@ -45,7 +43,4 @@ function findflute(scale:Array<Float64>,
   diams = dosearch(errfn, mindiam, maxdiam, initial)
   # return result
   return mkflute(scale, diams)
-end
-
-export findflute
 end
