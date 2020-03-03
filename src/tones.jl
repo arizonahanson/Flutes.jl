@@ -14,9 +14,9 @@ function note(s::String, A₄=440.0)
     semi -= 1 # no E#
   end
   if length(s) == 3
-    if s[2] == '♭'
+    if s[2] == '♭' || s[2] == 'b'
       semi -= 1
-    elseif s[2] == '♯'
+    elseif s[2] == '♯' || s[2] == '#'
       semi += 1
     end
   end
