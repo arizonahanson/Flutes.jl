@@ -5,7 +5,7 @@ function mkflute(freqs, diams)
 end
 
 # error function factory (other-constraints)
-function mkerrfn(freqs, minpad, maxpad)
+function mkerrfn(freqs, minpaddings, maxpaddings)
   # return error function
   function errfn(diams)
     # generate flute
@@ -15,10 +15,10 @@ function mkerrfn(freqs, minpad, maxpad)
   return errfn
 end
 
-function dosearch(errfn, mindiam, maxdiam, initial)
+function dosearch(errfn, mindiameters, maxdiameters, initdiameters)
   # minimize error function
   solver = LBGFS()
-  result = optimize(errfn, mindiam, maxdiam, initial,
+  result = optimize(errfn, mindiameters, maxdiameters, initdiameters,
                     Fminbox(solver), autodiff=:forward)
   # check for convergence
   if !converged(result)
@@ -32,15 +32,15 @@ end
 search for flute with constraints
 """
 function findflute(scale:Array<Float64>,
-                  minpad:Array<Float64>,
-                  maxpad:Array<Float64>,
-                 mindiam:Array<Float64>,
-                 maxdiam:Array<Float64>,
-                 initial:Array<Float64>)
+             minpaddings:Array<Float64>,
+             maxpaddings:Array<Float64>,
+            mindiameters:Array<Float64>,
+            maxdiameters:Array<Float64>,
+           initdiameters:Array<Float64>)
   # error function
-  errfn = mkerrfn(scale, minpad, maxpad)
+  errfn = mkerrfn(scale, minpaddings, maxpaddings)
   # find optimal diameter set
-  diams = dosearch(errfn, mindiam, maxdiam, initial)
+  diams = dosearch(errfn, mindiameters, maxdiameters, initdiameters)
   # return result
   return mkflute(scale, diams)
 end
