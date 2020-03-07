@@ -1,7 +1,17 @@
 export findflute
 
 function mkflute(freqs, diams)
-  # TODO: generate flute
+  𝑭 = []
+  𝑓ₜ = freqs[1]
+  ℓₜ = flutelength(𝑓ₜ)
+  push!(𝑭, ℓₜ)
+  for h = 2:length(freqs)
+    𝑓ₕ = freqs[h]
+    𝑑ₕ = diams[h]
+    ℓₕ = toneholelength(𝑓ₕ; 𝑑=𝑑ₕ)
+    push!(𝑭, ℓₕ)
+  end
+  return 𝑭
 end
 
 # error function factory (other-constraints)
