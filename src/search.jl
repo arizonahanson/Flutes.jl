@@ -1,6 +1,6 @@
 export findflute
 
-function mkflute(freqs, diams)
+function holepositions(freqs, diams)
   𝑭 = []
   𝑓ₜ = freqs[1]
   ℓₜ = flutelength(𝑓ₜ)
@@ -19,7 +19,7 @@ function mkerrfn(freqs, minpaddings, maxpaddings)
   # return error function
   function errfn(diams)
     # generate flute
-    flute = mkflute(freqs, diams)
+    positions = holepositions(freqs, diams)
     # TODO: calculate error
   end
   return errfn
