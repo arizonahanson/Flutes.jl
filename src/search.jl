@@ -26,12 +26,12 @@ end
 function createflute()
   f = createflute(note("D4"))
   addtonehole!(f, note("E4"); 𝑝₊=Inf, 𝑑₊=7.0)
-  addtonehole!(f, note("F4"); 𝑝₊=20.0)
+  addtonehole!(f, note("F4"); 𝑝₊=20.0, 𝑝₋=15.0)
   addtonehole!(f, note("G4"))
   addtonehole!(f, note("A4"); 𝑝₊=30.0)
-  addtonehole!(f, note("B♭4"); 𝑝₊=Inf)
+  addtonehole!(f, note("B♭4");𝑝₊=Inf)
   addtonehole!(f, note("C5"))
-  addtonehole!(f, note("D5"))
+  addtonehole!(f, note("D5"); 𝑝₊=30.0)
   return f
 end
 
@@ -42,20 +42,22 @@ function mkerrfn(flute::FluteConstraint)
   𝑯 = 1:length(flute.holes)
   function errfn(𝒅)
     ϵ = 0.0
-    ℓₓ = ℓₜ # length of last hole, or flute
+    ℓᵩ = ℓₜ # length of last hole, or flute
     for h in 𝑯
       # for each hole calculate error
       𝒉 = flute.holes[h]
-      𝑑ₕ = 𝒅[h]
-      ℓₕ = toneholelength(𝒉.𝑓; 𝑑=𝑑ₕ)
-      # target ideal placement
-      ℓmax = ℓₓ - 𝒉.𝑝₋
-      ℓmin = ℓₓ - 𝒉.𝑝₊
-      λℓₐ = abs(ℓmax - ℓₕ)
-      λℓᵦ = max(0, ℓmin - ℓₕ) + max(0, ℓₕ - ℓmax)
+      ℓₕ = toneholelength(𝒉.𝑓; 𝑑=𝒅[h])
+      # relative target range
+      ℓmax = ℓₕ - ℓᵩ - 𝒉.𝑝₋
+      ℓmin = ℓᵩ - ℓₕ - 𝒉.𝑝₊
+      # distance to ideal (max)
+      λℓₐ = abs(ℓmax)
+      # distance outside target range
+      λℓᵦ = max(0, ℓmin, ℓmax)
+      # sum errors
       ϵ += λℓₐ + λℓᵦ^2
       # next loop use this hole as last hole
-      ℓₓ = ℓₕ
+      ℓᵩ = ℓₕ
     end
     return ϵ
   end
@@ -65,7 +67,7 @@ end
 function minbox(flute::FluteConstraint)
   𝒅₋ = map(𝒉->𝒉.𝑑₋, flute.holes)
   𝒅₊ = map(𝒉->𝒉.𝑑₊, flute.holes)
-  𝒅₀ = map(𝑑->𝑑-rand(), 𝒅₊)
+  𝒅₀ = map(𝒅->𝒅*rand(), (𝒅₊-𝒅₋)) + 𝒅₋
   return (𝒅₋, 𝒅₊, 𝒅₀)
 end
 
@@ -79,16 +81,16 @@ function optimal(flute)
   if !Optim.converged(result)
     println("warning: unable to converge on a result")
   end
-  println(result)
+  #println(result)
   params = Optim.minimizer(result)
   x = flutelength(flute.𝑓)
   for h in 1:length(flute.holes)
     hole = flute.holes[h]
     print("𝑓ₕ: ", round(hole.𝑓; digits=2))
-    print(" 𝑑ₕ: ", round(params[h]; digits=2))
+    print(" \t𝑑ₕ: ", round(params[h]; digits=2))
     l = toneholelength(hole.𝑓, 𝑑=params[h])
-    print(" 𝑝ₕ: ", round(x-l; digits=2))
-    println(" ℓₕ: ", round(l; digits=2))
+    print(" \t𝑝ₕ: ", round(x-l; digits=2))
+    println(" \tℓₕ: ", round(l; digits=2))
     x = l
   end
   # return minimizer
