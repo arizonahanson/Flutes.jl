@@ -45,6 +45,9 @@ function mkerrfn(flute::FluteConstraint)
       𝒉 = flute.holes[h]
       𝑑ₕ = params[h]
       ℓₕ = toneholelength(𝒉.𝑓; 𝑑=𝑑ₕ)
+      # target max hole diameter (convert to length)
+      ℓ₊ = toneholelength(𝒉.𝑓; 𝑑=𝒉.𝑑₊)
+      λℓₕ = ℓ₊ - ℓₕ
       # constrain distance to last hole, or flute end
       λ𝑝ₕ = 0.0
       𝑝ₕ = ℓₓ - ℓₕ
@@ -55,10 +58,8 @@ function mkerrfn(flute::FluteConstraint)
         # below minimum distance
         λ𝑝ₕ = 𝒉.𝑝₋ - 𝑝ₕ
       end
-      # target max hole diameter
-      λ𝑑ₕ = 𝒉.𝑑₊ - 𝑑ₕ
       # sum weighted errors
-      ϵ += λ𝑑ₕ^2 + (2λ𝑝ₕ)^2
+      ϵ += λℓₕ^2 + 2λ𝑝ₕ^2
       # next loop use this hole as last hole
       ℓₓ = ℓₕ
     end
@@ -86,5 +87,5 @@ function optimal(flute)
   end
   println(result)
   # return minimizer
-  return Optim.minimizer(result)
+  return map(𝑑->round(𝑑; digits=2), Optim.minimizer(result))
 end
