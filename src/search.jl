@@ -15,7 +15,7 @@ struct ToneHoleConstraint
   𝑝₊ # max separation
 end
 
-function addtonehole!(flute::FluteConstraint, 𝑓; 𝑑₋=2.0, 𝑑₊=9.0, 𝑝₋=18.0, 𝑝₊=24.0)
+function addtonehole!(flute::FluteConstraint, 𝑓; 𝑑₋=2.0, 𝑑₊=9.0, 𝑝₋=15.0, 𝑝₊=40.0)
   push!(flute.holes, ToneHoleConstraint(𝑓, 𝑑₋, 𝑑₊, 𝑝₋, 𝑝₊))
 end
 
@@ -26,12 +26,12 @@ end
 function createflute()
   f = createflute(note("D4"))
   addtonehole!(f, note("E4"); 𝑝₊=Inf, 𝑑₊=7.0)
-  addtonehole!(f, note("F4"); 𝑝₊=20.0, 𝑝₋=15.0)
+  addtonehole!(f, note("F4"))
   addtonehole!(f, note("G4"))
-  addtonehole!(f, note("A4"); 𝑝₊=30.0)
+  addtonehole!(f, note("A4"))
   addtonehole!(f, note("B♭4");𝑝₊=Inf)
   addtonehole!(f, note("C5"))
-  addtonehole!(f, note("D5"); 𝑝₊=30.0)
+  addtonehole!(f, note("D5"))
   return f
 end
 
@@ -50,10 +50,10 @@ function mkerrfn(flute::FluteConstraint)
       # relative target range
       ℓmax = ℓₕ - ℓᵩ - 𝒉.𝑝₋
       ℓmin = ℓᵩ - ℓₕ - 𝒉.𝑝₊
-      # distance to ideal (max)
+      # distance from maximum
       λℓₐ = abs(ℓmax)
-      # distance outside target range
-      λℓᵦ = max(0, ℓmin, ℓmax)
+      # distance outside range
+      λℓᵦ = max(ℓmin, 0.0, ℓmax)
       # sum errors
       ϵ += λℓₐ + λℓᵦ^2
       # next loop use this hole as last hole
@@ -86,9 +86,9 @@ function optimal(flute)
   x = flutelength(flute.𝑓)
   for h in 1:length(flute.holes)
     hole = flute.holes[h]
+    l = toneholelength(hole.𝑓, 𝑑=params[h])
     print("𝑓ₕ: ", round(hole.𝑓; digits=2))
     print(" \t𝑑ₕ: ", round(params[h]; digits=2))
-    l = toneholelength(hole.𝑓, 𝑑=params[h])
     print(" \t𝑝ₕ: ", round(x-l; digits=2))
     println(" \tℓₕ: ", round(l; digits=2))
     x = l
