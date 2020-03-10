@@ -1,6 +1,7 @@
 export FluteConstraint, ToneHoleConstraint
 export optimal, createflute, addtonehole
 using Optim
+using Statistics
 
 struct FluteConstraint
   𝑓  # lowest frequency
@@ -26,7 +27,7 @@ end
 function createflute()
   f = createflute(note("D4"))
   addtonehole!(f, note("E4"); 𝑝₊=Inf, 𝑑₊=7.0)
-  addtonehole!(f, note("F4"))
+  addtonehole!(f, note("F4"); 𝑝₊=24.0)
   addtonehole!(f, note("G4"))
   addtonehole!(f, note("A4"))
   addtonehole!(f, note("B♭4");𝑝₊=Inf)
@@ -40,22 +41,27 @@ function mkerrfn(flute::FluteConstraint)
   # return error function
   ℓₜ= flutelength(flute.𝑓)
   𝑯 = 1:length(flute.holes)
+  𝒍₊ = map(𝒉->toneholelength(𝒉.𝑓; 𝑑=𝒉.𝑑₊), flute.holes)
   function errfn(𝒅)
     ϵ = 0.0
     ℓᵩ = ℓₜ # length of last hole, or flute
+    𝑑mean = mean(𝒅)
     for h in 𝑯
       # for each hole calculate error
       𝒉 = flute.holes[h]
       ℓₕ = toneholelength(𝒉.𝑓; 𝑑=𝒅[h])
-      # relative target range
-      ℓmax = ℓₕ - ℓᵩ - 𝒉.𝑝₋
+      # distance from absolute max hole position
+      λℓ₊ = abs(𝒍₊[h] - ℓₕ)
+      # distance outside reachable range
       ℓmin = ℓᵩ - ℓₕ - 𝒉.𝑝₊
-      # distance from maximum
-      λℓₐ = abs(ℓmax)
-      # distance outside range
-      λℓᵦ = max(ℓmin, 0.0, ℓmax)
-      # sum errors
-      ϵ += λℓₐ + λℓᵦ^2
+      ℓmax = ℓₕ - ℓᵩ - 𝒉.𝑝₋
+      λℓout = max(ℓmin, 0.0, ℓmax)
+      # distance from next hole with padding
+      λℓprev = abs(ℓmax)
+      # distance from mean hole-size
+      λℓmean = abs(toneholelength(𝒉.𝑓; 𝑑=𝑑mean) - ℓₕ)
+      # sum weighted errors
+      ϵ += 2λℓout^2 + 0.5λℓ₊ + λℓmean + λℓprev
       # next loop use this hole as last hole
       ℓᵩ = ℓₕ
     end
@@ -87,10 +93,10 @@ function optimal(flute)
   for h in 1:length(flute.holes)
     hole = flute.holes[h]
     l = toneholelength(hole.𝑓, 𝑑=params[h])
-    print("𝑓ₕ: ", round(hole.𝑓; digits=2))
-    print(" \t𝑑ₕ: ", round(params[h]; digits=2))
-    print(" \t𝑝ₕ: ", round(x-l; digits=2))
-    println(" \tℓₕ: ", round(l; digits=2))
+    println("𝑓ₕ: ",   round(hole.𝑓;    digits=2),
+            "\t𝑑ₕ: ", round(params[h]; digits=2),
+            "\t𝑝ₕ: ", round(x-l;       digits=2),
+            "\tℓₕ: ", round(l;         digits=2))
     x = l
   end
   # return minimizer
