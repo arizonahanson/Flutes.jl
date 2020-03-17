@@ -1,7 +1,5 @@
 /*
- * tools.scad
- *   various flute-making tools
- *   `include` to get vars
+ * Various flute-making tools
  */
 include <env.scad>;
 

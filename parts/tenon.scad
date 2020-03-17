@@ -9,17 +9,15 @@ C=23.42; // piston outer diameter
 F=20.68; // gland outer diameter
 CS=1.78; // o-ring minor diameter
 X=23.9;  // o-ring diameter (unstretched)
-B=19.0;  // flute bore diameter
-O=26.0;  // flute outer diameter
 
 module mortise(z=0, l=26) {
-  lz=(A-B)/2;
+  lz=(A-$inner)/2;
   slide(z) difference() {
-    shell(b=O, l=l);
+    shell(b=$outer, l=l);
     // bore
     bore(b=A, l=l-lz);
     // bevel to flute bore
-    bore(z=l-lz, b=A, b2=B, l=lz);
+    bore(z=l-lz, b=A, b2=$inner, l=lz);
     // entrance lip
     bore(b=X, b2=A, l=(X-A)/2);
   }
@@ -38,14 +36,14 @@ module gland(z=0) {
 }
 
 module tenon(z=0, l=26) {
-  lz=(C-B)/2;
+  lz=(C-$inner)/2;
   lg=(C-F)/2+CS;
   slide(z) difference() {
     union() {
       shell(b=C, l=l-lz);
-      shell(z=l-lz, b=C, b2=B, l=lz);
+      shell(z=l-lz, b=C, b2=$inner, l=lz);
     }
-    bore(b=B, l=l);
+    bore(b=$inner, l=l);
     gland(z=l-lz-lg-$fl*2);
     gland(z=6);
   }
