@@ -1,7 +1,8 @@
 /*
  * Tenon & mortise using AS568-019 o-rings
  */
-include <tools.scad>;
+include <env.scad>;
+use <tools.scad>;
 
 A=23.52; // mortise inner bore
 C=23.42; // piston outer diameter
@@ -37,14 +38,15 @@ module gland(z=0) {
 }
 
 module tenon(z=0, l=26) {
+  lz=(C-B)/2;
+  lg=(C-F)/2+CS;
   slide(z) difference() {
-    lz=(C-B)/2;
     union() {
       shell(b=C, l=l-lz);
       shell(z=l-lz, b=C, b2=B, l=lz);
     }
     bore(b=B, l=l);
-    gland(z=l-6);
+    gland(z=l-lz-lg-$fl*2);
     gland(z=6);
   }
 }
