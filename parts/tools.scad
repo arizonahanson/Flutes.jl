@@ -34,13 +34,10 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
   di=d+tan(u)*2*zo;
   zi=sqrt(pow(rz+$fd/2,2)-pow(di/2,2));
   ih=rz+h-zi-oh;
-  slide(z) // position
-    scale([1,1,s/d]) // eccentricity
-      pivot(-r) // rotation
-        union() {
-          // shoulder cut
-          shell(z=zo, b=d, b2=do, l=oh+0.001);
-          // undercut
-          shell(z=zi, b=di, b2=d, l=ih+0.001);
-        }
+  slide(z) scale([1,1,s/d]) pivot(-r) union() {
+    // shoulder cut
+    shell(z=zo, b=d, b2=do, l=oh+0.001);
+    // undercut
+    shell(z=zi, b=di, b2=d, l=ih+0.001);
+  }
 }

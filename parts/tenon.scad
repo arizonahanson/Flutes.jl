@@ -49,5 +49,5 @@ module tenon(z=0, l=26) {
   }
 }
 
-translate([-15,0,0]) tenon();
-translate([15,0,0]) mortise();
+tenon();
+mortise();
