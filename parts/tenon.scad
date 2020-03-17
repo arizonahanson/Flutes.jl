@@ -24,7 +24,7 @@ module mortise(z=0, l=26) {
   }
 }
 
-module gland019(z=0) {
+module gland(z=0) {
   lz=(C-F)/2;
   slide(z) difference() {
     // piston
@@ -44,8 +44,8 @@ module tenon(z=0, l=26) {
       shell(z=l-lz, b=C, b2=B, l=lz);
     }
     bore(b=B, l=l);
-    gland019(z=l-6);
-    gland019(z=6);
+    gland(z=l-6);
+    gland(z=6);
   }
 }
 
