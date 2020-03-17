@@ -1,7 +1,7 @@
 /*
  * Various flute-making tools
  */
-include <env.scad>;
+include <consts.scad>;
 
 // translate +z axis
 module slide(z=$fl) {

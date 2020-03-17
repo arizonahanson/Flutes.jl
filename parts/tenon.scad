@@ -1,7 +1,7 @@
 /*
  * Tenon & mortise using AS568-019 o-rings
  */
-include <env.scad>;
+include <consts.scad>;
 use <tools.scad>;
 
 A=23.52; // mortise inner bore

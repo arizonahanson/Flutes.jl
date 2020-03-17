@@ -1,5 +1,5 @@
 /*
- * Global variables
+ * Global constants
  */
 $fa=1.0;     // min angle
 $fs=0.1;     // min segment
