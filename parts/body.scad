@@ -5,10 +5,10 @@ include <consts.scad>;
 use <tools.scad>;
 use <tenon.scad>;
 
-L=$ln;
-HOLES=[];
+BODY_LEN=$ln;
+BODY_HOLES=[];
 
-module body(l=L, holes=HOLES) {
+module body(l=BODY_LEN, holes=BODY_HOLES) {
   slide($ln) difference() {
     union() {
       mortise(z=-$ln);
