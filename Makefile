@@ -18,9 +18,9 @@ foot: foot.stl
 # compile stl from scad
 %.stl: parts/%.scad $(DEPS)
 	@echo "making" $@"..."
-	@openscad $< -o $@ $(subst $$,\$$,$(value ARGS))
+	openscad $< -q -o $@ $(subst $$,\$$,$(value ARGS))
 
-# delete untracted files (stl)
+# delete stl files
 .PHONY: clean
 clean:
-	@git clean -fxd
+	@rm -fv head.stl body.stl foot.stl
