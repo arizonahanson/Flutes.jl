@@ -1,12 +1,21 @@
 /*
  * Global constants
  */
-$fa=1.0;     // min angle
-$fs=0.1;     // min segment
-$fl=0.162;   // layer height
-$fd=0.4;     // nozzle diameter
-$inner=19.0; // inner flute bore
-$outer=26.0; // outer flute diameter
-$ln=$outer;  // tenon/mortise length
-$lo=32.0;    // embouchure-origin distance
-$la=156.0;   // headjoint length from embouchure
+// min angle
+$fa=1.0;
+// min segment
+$fs=0.1;
+// layer height
+LAYER_HEIGHT=0.162;
+// nozzle diameter
+NOZZLE_DIAMETER=0.4;
+// inner flute bore
+FLUTE_INNER=19.0;
+// outer flute diameter
+FLUTE_OUTER=26.0;
+// tenon/mortise length
+TENON_LENGTH=FLUTE_OUTER;
+// embouchure-origin distance
+CROWN_LENGTH=32.0;
+// headjoint length from embouchure
+HEAD_LENGTH=156.0;

@@ -4,7 +4,7 @@
 include <consts.scad>;
 
 // translate +z axis
-module slide(z=$fl) {
+module slide(z=LAYER_HEIGHT) {
   translate([0,0,z]) children();
 }
 
@@ -14,15 +14,15 @@ module pivot(r=0) {
 }
 
 // translate z, then cylinder d1=b, d2=b2|b, h=l
-module shell(z=0, b=$fd, b2, l=$fl) {
+module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
   slide(z) cylinder(d1=b, d2=b2, h=l);
 }
 
 // like shell, but fuzz the diameter and position
-module bore(z=0, b=$fd, b2, l=$fl) {
+module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
-  shell(z=z-0.001, b=b+$fd, b2=b2+$fd, l=l+0.002);
+  shell(z=z-0.001, b=b+NOZZLE_DIAMETER, b2=b2+NOZZLE_DIAMETER, l=l+0.002);
 }
 
 // tone or embouchure hole
@@ -33,7 +33,7 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
   oh=rz+h-zo;
   do=d+tan(o)*2*oh;
   di=d+tan(u)*2*zo;
-  zi=sqrt(pow(rz+$fd/2,2)-pow(di/2,2));
+  zi=sqrt(pow(rz+NOZZLE_DIAMETER/2,2)-pow(di/2,2));
   ih=rz+h-zi-oh;
   slide(z) scale([1,1,s/d]) pivot(-r) union() {
     // shoulder cut

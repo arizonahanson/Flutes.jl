@@ -5,21 +5,21 @@ include <consts.scad>;
 use <tools.scad>;
 use <tenon.scad>;
 
-BODY_LEN=$ln;
+BODY_LENGTH=TENON_LENGTH;
 BODY_HOLES=[];
 
-module body(l=BODY_LEN, holes=BODY_HOLES) {
-  slide($ln) difference() {
+module body(l=BODY_LENGTH, holes=BODY_HOLES) {
+  slide(TENON_LENGTH) difference() {
     union() {
-      mortise(z=-$ln);
-      shell(b=$outer, l=l-$ln);
-      tenon(z=l-$ln);
+      mortise(z=-TENON_LENGTH);
+      shell(b=FLUTE_OUTER, l=l-TENON_LENGTH);
+      tenon(z=l-TENON_LENGTH);
     }
     // bore
-    bore(b=$inner, l=l-$ln);
+    bore(b=FLUTE_INNER, l=l-TENON_LENGTH);
     // holes
-    for(h=holes) let (zh=h[0], dh=h[1], hh=($outer-$inner)/2) {
-      hole(z=zh, b=$inner, h=hh, d=dh);
+    for(h=holes) let (zh=h[0], dh=h[1], hh=(FLUTE_OUTER-FLUTE_INNER)/2) {
+      hole(z=zh, b=FLUTE_INNER, h=hh, d=dh);
     }
   }
 }
