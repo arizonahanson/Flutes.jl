@@ -21,7 +21,8 @@ module shell(z=0, b, b2, l=$fl) {
 
 // like shell, but fuzz the diameter and position
 module bore(z=0, b, b2, l=$fl) {
-  shell(z=z-0.001, b=b+$fd, b2=b2, l=l+0.002);
+  b2 = (b2==undef) ? b : b2;
+  shell(z=z-0.001, b=b+$fd, b2=b2+$fd, l=l+0.002);
 }
 
 // tone or embouchure hole
