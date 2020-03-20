@@ -14,13 +14,13 @@ module pivot(r=0) {
 }
 
 // translate z, then cylinder d1=b, d2=b2|b, h=l
-module shell(z=0, b, b2, l=$fl) {
+module shell(z=0, b=$fd, b2, l=$fl) {
   b2 = (b2==undef) ? b : b2;
   slide(z) cylinder(d1=b, d2=b2, h=l);
 }
 
 // like shell, but fuzz the diameter and position
-module bore(z=0, b, b2, l=$fl) {
+module bore(z=0, b=$fd, b2, l=$fl) {
   b2 = (b2==undef) ? b : b2;
   shell(z=z-0.001, b=b+$fd, b2=b2+$fd, l=l+0.002);
 }

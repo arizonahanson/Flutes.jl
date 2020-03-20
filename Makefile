@@ -1,21 +1,14 @@
 
-TPL=tpl
+.PHONY: default
+default: all
 
 .PHONY: all
-all: headjoint
-
-.PHONY: headjoint
-headjoint: headjoint.stl
-
-# render scad template
-%.scad: $(TPL)/%.tpl.scad $(TPL)/%.tpl.json
-	@echo "making" $@
-	@julia render.jl $@ $^
+all: head.stl body.stl foot.stl
 
 # compile stl from scad
-%.stl: %.scad
+%.stl: parts/%.scad
 	@echo "making" $@
-	openscad $< -o $@ -q
+	openscad $(value ARGS) $< -o $@
 
 .PHONY: clean
 clean:
