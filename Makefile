@@ -1,8 +1,7 @@
 
+# example: make foot ARGS='-D$fd=0.4 -D$fl=0.162'
+#
 DEPS=parts/consts.scad parts/tenon.scad parts/tools.scad
-
-.PHONY: default
-default: all
 
 .PHONY: all
 all: head body foot
