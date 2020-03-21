@@ -13,7 +13,7 @@ TENON_LIP=A+(TENON_OUTER-A)/3;
 
 module mortise(z=0) {
   lz=(A-FLUTE_INNER)/2;
-  ll=TENON_LENGTH-LAYER_HEIGHT;
+  ll=TENON_LENGTH;
   slide(z) difference() {
     shell(b=TENON_OUTER, l=ll);
     // bore
@@ -40,13 +40,14 @@ module gland(z=0) {
 module tenon(z=0) {
   lz=(C-FLUTE_INNER)/2;
   lg=(C-F)/2+CS;
+  ll=TENON_LENGTH+LAYER_HEIGHT;
   slide(z) difference() {
     union() {
-      shell(b=C, l=TENON_LENGTH-lz);
-      shell(z=TENON_LENGTH-lz, b=C, b2=FLUTE_INNER, l=lz);
+      shell(b=C, l=ll-lz);
+      shell(z=ll-lz, b=C, b2=FLUTE_INNER, l=lz);
     }
-    bore(b=FLUTE_INNER, l=TENON_LENGTH);
-    gland(z=TENON_LENGTH-lz-lg-LAYER_HEIGHT);
+    bore(b=FLUTE_INNER, l=ll);
+    gland(z=ll-lz-lg-LAYER_HEIGHT);
     gland(z=6);
   }
 }

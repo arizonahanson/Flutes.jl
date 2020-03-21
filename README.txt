@@ -9,7 +9,7 @@ environment variables
 | variable | default | description                   |
 ------------------------------------------------------
 | PREFIX   | build   | directory to output stl files |
-| ARGS     |         | extra openscad arguments      |
+| SFLAGS   |         | extra openscad arguments      |
 ------------------------------------------------------
 
 openscad variables
@@ -33,5 +33,5 @@ make targets
 
 example
 -------
-make all ARGS='-DLAYER_HEIGHT=0.32' PREFIX='draft'
+make all SFLAGS='-DLAYER_HEIGHT=0.32' PREFIX='draft'
 
