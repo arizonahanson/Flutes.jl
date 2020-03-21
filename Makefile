@@ -1,26 +1,28 @@
 
-# example: make foot ARGS='-D$fd=0.4 -D$fl=0.162'
-#
-DEPS=parts/consts.scad parts/tenon.scad parts/tools.scad
+SCAD_PATH=scad
+PREFIX=build
 
 .PHONY: all
 all: head body foot
 
 .PHONY: head
-head: head.stl
+head: $(PREFIX)/head.stl
 
 .PHONY: body
-body: body.stl
+body: $(PREFIX)/body.stl
 
 .PHONY: foot
-foot: foot.stl
+foot: $(PREFIX)/foot.stl
 
 # compile stl from scad
-%.stl: parts/%.scad $(DEPS)
+$(PREFIX)/%.stl: $(SCAD_PATH)/%.scad $(SCAD_PATH)/lib/*.scad
 	@echo "making" $@"..."
+	@mkdir -p $(PREFIX)
 	openscad $< -q -o $@ $(subst $$,\$$,$(value ARGS))
 
 # delete stl files
 .PHONY: clean
 clean:
-	@rm -fv head.stl body.stl foot.stl
+	@rm -fv $(PREFIX)/head.stl
+	@rm -fv $(PREFIX)/body.stl
+	@rm -fv $(PREFIX)/foot.stl
