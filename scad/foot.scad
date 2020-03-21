@@ -1,9 +1,7 @@
 /*
  * Foot
  */
-include <lib/consts.scad>;
-use <lib/tools.scad>;
-use <lib/tenon.scad>;
+include <lib/index.scad>;
 
 FOOT_LENGTH=TENON_LENGTH;
 FOOT_HOLES=[];

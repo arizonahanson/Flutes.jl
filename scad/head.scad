@@ -1,9 +1,7 @@
 /*
  * Headjoint
  */
-include <lib/consts.scad>;
-use <lib/tools.scad>;
-use <lib/tenon.scad>;
+include <lib/index.scad>;
 
 module head() {
   slide(CROWN_LENGTH) difference() {

@@ -1,9 +1,7 @@
 /*
  * Body
  */
-include <lib/consts.scad>;
-use <lib/tools.scad>;
-use <lib/tenon.scad>;
+include <lib/index.scad>;
 
 BODY_LENGTH=TENON_LENGTH;
 BODY_HOLES=[];
