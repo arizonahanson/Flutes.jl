@@ -40,7 +40,7 @@ module gland(z=0) {
 module tenon(z=0) {
   lz=(C-FLUTE_INNER)/2;
   lg=(C-F)/2+CS;
-  ll=TENON_LENGTH+LAYER_HEIGHT;
+  ll=TENON_LENGTH;
   slide(z) difference() {
     union() {
       shell(b=C, l=ll-lz);

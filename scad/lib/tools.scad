@@ -19,10 +19,12 @@ module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z) cylinder(d1=b, d2=b2, h=l);
 }
 
+function fuzz(b) = 1/cos(180/ceil(max(min(360/$fa,b*2*PI/$fs),5)));
+
 // like shell, but fuzz the diameter and position
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
-  shell(z=z-0.001, b=b+NOZZLE_DIAMETER, b2=b2+NOZZLE_DIAMETER, l=l+0.002);
+  shell(z=z-0.001, b=b*fuzz(b), b2=b2*fuzz(b2), l=l+0.002);
 }
 
 // tone or embouchure hole
@@ -37,8 +39,8 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
   ih=rz+h-zi-oh;
   slide(z) scale([1,1,s/d]) pivot(-r) union() {
     // shoulder cut
-    shell(z=zo, b=d, b2=do, l=oh+0.001);
+    bore(z=zo, b=d, b2=do, l=oh);
     // undercut
-    shell(z=zi, b=di, b2=d, l=ih+0.001);
+    bore(z=zi, b=di, b2=d, l=ih);
   }
 }
