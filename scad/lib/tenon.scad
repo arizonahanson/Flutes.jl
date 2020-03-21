@@ -4,22 +4,24 @@
 include <consts.scad>;
 use <tools.scad>;
 
-A=23.52; // mortise inner bore
-C=23.42; // piston outer diameter
-F=20.68; // gland outer diameter
-CS=1.78; // o-ring minor diameter
-X=23.9;  // o-ring diameter (unstretched)
+A=23.55; // mortise inner bore - 0.925-0.927"
+C=23.42; // piston outer diameter - 0.923-0.922"
+F=20.70; // gland outer diameter - 0.815-0.813"
+CS=1.78; // o-ring minor diameter - .067-.073"
+TENON_OUTER=FLUTE_OUTER+NOZZLE_DIAMETER;
+TENON_LIP=A+(TENON_OUTER-A)/3;
 
 module mortise(z=0) {
   lz=(A-FLUTE_INNER)/2;
+  ll=TENON_LENGTH-LAYER_HEIGHT;
   slide(z) difference() {
-    shell(b=FLUTE_OUTER, l=TENON_LENGTH);
+    shell(b=TENON_OUTER, l=ll);
     // bore
-    bore(b=A, l=TENON_LENGTH-lz);
+    bore(b=A, l=ll-lz);
     // bevel to flute bore
-    bore(z=TENON_LENGTH-lz, b=A, b2=FLUTE_INNER, l=lz);
+    bore(z=ll-lz, b=A, b2=FLUTE_INNER, l=lz);
     // entrance lip
-    bore(b=X, b2=A, l=(X-A)/2);
+    bore(b=TENON_LIP, b2=A, l=(TENON_LIP-A)/2);
   }
 }
 
@@ -29,9 +31,9 @@ module gland(z=0) {
     // piston
     bore(b=C, l=CS+lz);
     // flat
-    bore(b=F, l=CS);
+    shell(b=F, l=CS);
     // bevel to piston
-    bore(z=CS, b=F, b2=C, l=lz);
+    shell(z=CS, b=F, b2=C, l=lz);
   }
 }
 
@@ -44,7 +46,7 @@ module tenon(z=0) {
       shell(z=TENON_LENGTH-lz, b=C, b2=FLUTE_INNER, l=lz);
     }
     bore(b=FLUTE_INNER, l=TENON_LENGTH);
-    gland(z=TENON_LENGTH-lz-lg-(LAYER_HEIGHT*2));
+    gland(z=TENON_LENGTH-lz-lg-LAYER_HEIGHT);
     gland(z=6);
   }
 }
