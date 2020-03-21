@@ -4,14 +4,34 @@
 
 A work-in-progress parametric flute modeling tool
 
-FOOT_LENGTH=26
-FOOT_HOLES=[]
-BODY_LENGTH=26
-BODY_HOLES=[]
+environment variables
+------------------------------------------------------
+| variable | default | description                   |
+------------------------------------------------------
+| PREFIX   | build   | directory to output stl files |
+| ARGS     |         | extra openscad arguments      |
+------------------------------------------------------
 
-# examples
-make all ARGS='-D$fl=0.2'
+openscad variables
+-----------------------------
+| variable        | default |
+-----------------------------
+| LAYER_HEIGHT    | 0.162   |
+| NOZZLE_DIAMETER | 0.4     |
+-----------------------------
 
-make head ARGS='-D$fd=0.4 -D$fl=0.162'
-make foot ARGS='-DFOOT_LENGTH=42'
-make body ARGS='-DBODY_HOLES=[[8,21]]'
+make targets
+-----------------------------------------
+| target | description                  |
+-----------------------------------------
+| all    | generate head, body & foot   |
+| head   | generate headjoint stl       |
+| body   | generate body stl            |
+| foot   | generate footjoint stl       |
+| clean  | delete head, body & foot stl |
+-----------------------------------------
+
+example
+-------
+make all ARGS='-DLAYER_HEIGHT=0.32' PREFIX='draft'
+
