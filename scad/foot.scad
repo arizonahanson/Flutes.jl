@@ -3,7 +3,7 @@
  */
 include <lib/index.scad>;
 
-FOOT_LENGTH=TENON_LENGTH;
+FOOT_LENGTH=0;
 FOOT_HOLES=[];
 
 module foot(l=FOOT_LENGTH, holes=FOOT_HOLES) {
