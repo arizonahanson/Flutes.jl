@@ -89,16 +89,6 @@ function optimal(flute)
   end
   #println(result)
   params = Optim.minimizer(result)
-  x = flutelength(flute.𝑓)
-  for h in 1:length(flute.holes)
-    hole = flute.holes[h]
-    l = toneholelength(hole.𝑓, 𝑑=params[h])
-    println("𝑓ₕ: ",   round(hole.𝑓;    digits=2),
-            "\t𝑑ₕ: ", round(params[h]; digits=2),
-            "\t𝑝ₕ: ", round(x-l;       digits=2),
-            "\tℓₕ: ", round(l;         digits=2))
-    x = l
-  end
   # return minimizer
   return map(𝑑->round(𝑑; digits=2), params)
 end
