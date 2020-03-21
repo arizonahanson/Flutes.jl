@@ -1,10 +1,8 @@
 /*
  * Global constants
  */
-// min angle
-$fa=1.0;
-// min segment
-$fs=0.1;
+// circle fragments
+$fn=128;
 // layer height
 LAYER_HEIGHT=0.162;
 // nozzle diameter
