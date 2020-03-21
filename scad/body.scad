@@ -1,5 +1,8 @@
 /*
- * Body
+ * Body section
+ * constants:
+ *   BODY_LENGTH
+ *   BODY_HOLES
  */
 include <lib/index.scad>;
 

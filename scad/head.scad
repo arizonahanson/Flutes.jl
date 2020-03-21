@@ -1,5 +1,5 @@
 /*
- * Headjoint
+ * Headjoint section
  */
 include <lib/index.scad>;
 

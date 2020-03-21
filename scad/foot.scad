@@ -1,5 +1,8 @@
 /*
- * Foot
+ * Footjoint section
+ * constants:
+ *   FOOT_LENGTH
+ *   FOOT_HOLES
  */
 include <lib/index.scad>;
 

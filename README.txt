@@ -13,12 +13,16 @@ environment variables
 ------------------------------------------------------
 
 openscad variables
------------------------------
-| variable        | default |
------------------------------
-| LAYER_HEIGHT    | 0.162   |
-| NOZZLE_DIAMETER | 0.4     |
------------------------------
+----------------------------------------------------------------------
+| variable        | default | description                            |
+----------------------------------------------------------------------
+| LAYER_HEIGHT    | 0.162   | layer height                           |
+| NOZZLE_DIAMETER | 0.4     | nozzle diameter                        |
+| BODY_LENGTH     | 26      | body length                            |
+| BODY_HOLES      | []      | vector of [position, diameter] vectors |
+| FOOT_LENGTH     | 0       | foot length                            |
+| FOOT_HOLES      | []      | vector of [position, diameter] vectors |
+----------------------------------------------------------------------
 
 make targets
 -----------------------------------------
