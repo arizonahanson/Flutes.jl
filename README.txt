@@ -24,7 +24,7 @@ openscad variables
 | FOOT_HOLES      | []      | vector of [position, diameter] vectors |
 ----------------------------------------------------------------------
 
-make targets
+openscad make targets
 -----------------------------------------
 | target | description                  |
 -----------------------------------------

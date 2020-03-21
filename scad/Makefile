@@ -1,6 +1,5 @@
 
-SCAD_PATH=scad
-PREFIX=build
+PREFIX=../build
 
 .PHONY: all
 all: head body foot
@@ -15,8 +14,8 @@ body: $(PREFIX)/body.stl
 foot: $(PREFIX)/foot.stl
 
 # compile stl from scad
-$(PREFIX)/%.stl: $(SCAD_PATH)/%.scad $(SCAD_PATH)/lib/*.scad
-	@echo "making" $@"..."
+$(PREFIX)/%.stl: %.scad lib/*.scad
+	@echo "exporting" $@
 	@mkdir -p $(PREFIX)
 	openscad $< -q -o $@ $(subst $$,\$$,$(value SFLAGS))
 
