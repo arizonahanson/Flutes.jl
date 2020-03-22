@@ -4,11 +4,14 @@
 include <consts.scad>;
 use <tools.scad>;
 
-A=23.55; // mortise inner bore - 0.925-0.927"
-C=23.42; // piston outer diameter - 0.923-0.922"
-F=20.70; // gland outer diameter - 0.815-0.813"
+//A=23.55; // mortise inner bore - 0.925-0.927"
+A=24.25; //+0.7
+//C=23.42; // piston outer diameter - 0.923-0.922"
+C=24.12; //+0.7
+//F=20.70; // gland outer diameter - 0.815-0.813"
+F=21.4; //+0.7
 CS=1.78; // o-ring minor diameter - .067-.073"
-TENON_OUTER=FLUTE_OUTER+NOZZLE_DIAMETER;
+TENON_OUTER=26.65;
 TENON_LIP=A+(TENON_OUTER-A)/3;
 
 module mortise(z=0) {
