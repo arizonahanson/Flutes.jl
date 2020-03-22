@@ -2,7 +2,7 @@
  * Global constants
  */
 // circle fragments
-$fn=128;
+$fn=256;
 // layer height
 LAYER_HEIGHT=0.162;
 // nozzle diameter

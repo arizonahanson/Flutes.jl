@@ -8,23 +8,24 @@ module slide(z=LAYER_HEIGHT) {
   translate([0,0,z]) children();
 }
 
-// rotate x by r, y by 90 and z by -90
-module pivot(r=0) {
-  rotate([r,90,-90]) children();
-}
-
 // translate z, then cylinder d1=b, d2=b2|b, h=l
 module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
   slide(z) cylinder(d1=b, d2=b2, h=l);
 }
 
+// used to correct hole sizes
 function fuzz(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
 
 // like shell, but fuzz the diameter and position
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
   shell(z=z-0.001, b=fuzz(b), b2=fuzz(b2), l=l+0.002);
+}
+
+// rotate x by r, y by 90 and z by -90 (for holes)
+module pivot(r=0) {
+  rotate([r,90,-90]) children();
 }
 
 // tone or embouchure hole
