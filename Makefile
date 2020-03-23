@@ -5,7 +5,8 @@ SFLAGS=
 export
 
 .PHONY: all
-all: head body foot
+all:
+	@$(MAKE) -C $(SCAD_PATH) all
 
 .PHONY: head
 head:
