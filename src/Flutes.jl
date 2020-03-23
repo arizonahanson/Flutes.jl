@@ -1,5 +1,5 @@
 module Flutes
-  include("tones.jl")
-  include("calc.jl")
-  include("search.jl")
+  include("lib/tones.jl")
+  include("lib/calc.jl")
+  include("lib/search.jl")
 end
