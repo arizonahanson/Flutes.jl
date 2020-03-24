@@ -4,49 +4,25 @@
 import Pkg; Pkg.activate(".")
 using Flutes
 
-function getvar(n)
-  if !haskey(ENV, n)
+function getenv(var)
+  if !haskey(ENV, var)
     return ""
   end
-  return ENV[n]
+  return ENV[var]
 end
 
-function mapvars(f, n)
-  if !haskey(ENV, n)
-    return []
-  end
-  return map(f, split(ENV[n]))
+function mapenv(f, var)
+  return map(f, split(getenv(var)))
 end
 
-function mapfloat(n)
-  return mapvars(x->parse(Float64,x), n)
+function floats(var)
+  return mapenv(x->parse(Float64,x), var)
 end
 
-function getscale()
-  return mapvars(note, "FLUTE_SCALE")
+function notes(var)
+  return mapenv(note, var)
 end
 
-function getmindiameters()
-  return mapfloat("FLUTE_MIN_DIAMETERS")
-end
-
-function getmaxdiameters()
-  return mapfloat("FLUTE_MAX_DIAMETERS")
-end
-
-function getminpadding()
-  return mapfloat("FLUTE_MIN_PADDING")
-end
-
-function getmaxpadding()
-  return mapfloat("FLUTE_MAX_PADDING")
-end
-
-scale = getscale()
-println(scale)
-open("config","w") do io
-  write(io, "SFLAGS=-DNOZZLE_DIAMETER=0.4 "*getvar("SFLAGS")*"\n")
-end
 # TODO: write SFLAGS to config
 ## BODY_HOLES
 ## BODY_LENGTH
