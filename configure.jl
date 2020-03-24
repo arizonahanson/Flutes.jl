@@ -23,9 +23,10 @@ function notes(var)
   return mapenv(note, var)
 end
 
+println(notes("FLUTE_SCALE"))
 # TODO: write SFLAGS to config
-## BODY_HOLES
-## BODY_LENGTH
-## FOOT_HOLES
-## FOOT_LENGTH
-#SFLAGS='-DBODY_HOLES=[0.0, 0.0, 0.0] -DBODY_LENGTH=0.0'...
+# BODY_HOLES
+# BODY_LENGTH
+# FOOT_HOLES
+# FOOT_LENGTH
+# SFLAGS='-DBODY_HOLES=[0.0, 0.0, 0.0] -DBODY_LENGTH=0.0'...
