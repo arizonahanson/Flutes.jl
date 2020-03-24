@@ -2,7 +2,7 @@ export 𝐺
 export note
 
 𝐺 =2.0^(1.0/12.0)
-function note(name::String, A₄=440.0)
+function note(name, A₄=440.0)
   wholetone=Int(name[1])-65   # 'A'=0
   octave=Int(name[end])-48 # '0'=0
   semitone = 2*wholetone
