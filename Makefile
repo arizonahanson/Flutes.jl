@@ -11,7 +11,7 @@ include config
 export
 
 .PHONY: all
-all:
+all: config
 	$(MAKE) -C scad all
 
 config:

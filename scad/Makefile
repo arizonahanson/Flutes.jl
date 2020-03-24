@@ -17,7 +17,7 @@ foot: $(PREFIX)/foot.stl
 $(PREFIX)/%.stl: %.scad lib/*.scad
 	@echo "exporting" $@
 	@mkdir -p $(PREFIX)
-	openscad $< -o $@ $(subst $$,\$$,$(value SFLAGS))
+	openscad $< -q -o $@ $(subst $$,\$$,$(value SFLAGS))
 
 # delete stl files
 .PHONY: clean
