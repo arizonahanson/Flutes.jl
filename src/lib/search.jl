@@ -1,5 +1,5 @@
 export FluteConstraint, ToneHoleConstraint
-export optimal, createflute, addtonehole
+export optimal, createflute, addtonehole!
 using Optim
 using Statistics
 
