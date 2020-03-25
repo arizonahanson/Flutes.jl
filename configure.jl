@@ -56,22 +56,20 @@ open("config", "w") do io
     end
   end
   full_length=flutelength(flute.𝑓)
-  # TODO tenon length
-  println(body_holes)
-  println(foot_holes)
+  # TODO tenon length, headjoint length
   brk_spc = max(0, (foot_holes[end][1] - body_holes[1][1] - 26)/2)
   lb = body_holes[1][1] + brk_spc + 26
-  body_length = lb - 156
-  foot_length = full_length - lb
+  body_length = round(lb - 156; digits=2)
+  foot_length = round(full_length - lb; digits=2)
 
   write(io, "-D'FOOT_HOLES=[")
   for hole in map(f->[f[1]-lb, f[2]], foot_holes)
-    write(io, "$hole,")
+    write(io, "["*join(map(s->string(round(s;digits=2)),hole),",")*"],")
   end
   write(io, "]' ")
   write(io, "-D'BODY_HOLES=[")
   for hole in map(b->[b[1]-156, b[2]], body_holes)
-    write(io, "$hole,")
+    write(io, "["*join(map(s->string(round(s;digits=2)),hole),",")*"],")
   end
   write(io, "]' ")
 
