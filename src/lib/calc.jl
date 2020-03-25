@@ -47,7 +47,7 @@ Calculate distance from embouchure hole center to tone hole center
   tone-hole bore diameter ⌀, tone-hole height ℎ, tone-hole diameter 𝑑,
   and interval coefficient 𝑔
 """
-function toneholelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=7.0, ℎ=2.5, 𝑔=(𝐺 - 1))
+function toneholelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=7.0, ℎ=4.3, 𝑔=(𝐺 - 1))
   𝛬 = wavelength(𝑓; ϑ=ϑ)/2
   𝐿 = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
   𝑧 = 𝑔/2 * √(1 + 4𝐿/(𝑔*𝛬)) - 𝑔/2
