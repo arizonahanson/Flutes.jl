@@ -40,7 +40,7 @@ function flutelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0)
 end
 
 """
-  ℓₕ = toneholelength(𝑓=A₄; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, ℎ=2.5, 𝑑=7, 𝑔=(𝐺 - 1))
+  ℓₕ = toneholelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝑔=(𝐺 - 1))
 
 Calculate distance from embouchure hole center to tone hole center
   for supplied frequency 𝑓, temperature ϑ, embouchure correction ℓₑ,
