@@ -90,5 +90,5 @@ function optimal(flute)
   #println(result)
   params = Optim.minimizer(result)
   # return minimizer
-  return map(𝑑->round(𝑑; digits=2), params)
+  return params
 end

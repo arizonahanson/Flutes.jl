@@ -11,7 +11,7 @@ function soundspeed(ϑ=25.0)
   𝑅 = 8.31446261815324 # molar gas constant (J/mol/K)
   𝑀 = 0.028965369      # mean molar mass of air (kg/mol)
   𝑐 = √(𝛾*𝑅/𝑀 *273.15)*√(1.0 + ϑ/273.15)
-  round(𝑐; sigdigits=6)*1000.0 # (to mm/s)
+  return 𝑐*1000.0 # (to mm/s)
 end
 
 """
@@ -22,7 +22,7 @@ calculate wavelength of given frequency 𝑓 in air of temperature ϑ
 function wavelength(𝑓=A₄; ϑ=25.0)
   𝑐 = soundspeed(ϑ)
   𝜆 = 𝑐/𝑓
-  round(𝜆; sigdigits=6)
+  return 𝜆
 end
 
 """
@@ -36,7 +36,7 @@ function flutelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0)
   𝛬 = wavelength(𝑓; ϑ=ϑ)/2
   𝛥ℓₜ = 0.3⌀
   ℓₜ = 𝛬 - ℓₑ - 𝛥ℓₜ
-  round(ℓₜ; digits=2)
+  return ℓₜ
 end
 
 """
