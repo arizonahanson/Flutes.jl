@@ -46,16 +46,18 @@ open("config", "w") do io
   foot_holes = []
   body_holes = []
   write(io, "SFLAGS=")
+  full_length=flutelength(flute.𝑓)
   for h in 1:length(diameters)
     𝑑ₕ = diameters[h]
     ℓₕ = toneholelength(flute.holes[h].𝑓; 𝑑=𝑑ₕ)
+    pair = [ℓₕ, 𝑑ₕ]
+    println(pair)
     if h > brk
-      push!(body_holes, [ℓₕ, 𝑑ₕ])
+      push!(body_holes, pair)
     else
-      push!(foot_holes, [ℓₕ, 𝑑ₕ])
+      push!(foot_holes, pair)
     end
   end
-  full_length=flutelength(flute.𝑓)
   # TODO tenon length, headjoint length
   brk_spc = max(0, (foot_holes[end][1] - body_holes[1][1] - 26)/2)
   lb = body_holes[1][1] + brk_spc + 26
