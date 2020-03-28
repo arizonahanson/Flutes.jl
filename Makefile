@@ -16,6 +16,18 @@ export
 all: config
 	$(MAKE) -C scad all
 
+.PHONY: head
+head: config
+	$(MAKE) -C scad head
+
+.PHONY: body
+body: config
+	$(MAKE) -C scad body
+
+.PHONY: foot
+foot: config
+	$(MAKE) -C scad foot
+
 config:
 	julia ./configure.jl
 
