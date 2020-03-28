@@ -3,6 +3,7 @@ import Pkg; Pkg.activate(".")
 
 using Flutes
 
+# TODO: externalize this?
 function getenv(var)
   if !haskey(ENV, var)
     return ""
@@ -29,6 +30,7 @@ function notes(var)
   return mapenv(note, var)
 end
 
+# input env vars
 scale = notes("FLUTE_SCALE")
 mind = floats("FLUTE_MIN_DIAMETERS")
 maxd = floats("FLUTE_MAX_DIAMETERS")
@@ -36,12 +38,20 @@ minp = floats("FLUTE_MIN_PADDING")
 maxp = floats("FLUTE_MAX_PADDING")
 brk = getint("FLUTE_BREAK")
 
+# all the magic happens here
 flute = createflute(scale[1])
 for h in 2:length(scale)
+  # constrain hole diameters & positions
   addtonehole!(flute, scale[h]; 𝑑₋=mind[h-1], 𝑑₊=maxd[h-1], 𝑝₋=minp[h-1], 𝑝₊=maxp[h-1])
 end
+# find best fit
 diameters = optimal(flute)
+# end magic
 
+# TODO: externalize constants
+tenon_length=26
+head_length=156
+# TODO: uncomplicate communicating results downstream...
 open("config", "w") do io
   foot_holes = []
   body_holes = []
@@ -58,19 +68,19 @@ open("config", "w") do io
       push!(foot_holes, pair)
     end
   end
-  # TODO tenon length, headjoint length
-  brk_spc = max(0, (foot_holes[end][1] - body_holes[1][1] - 26)/2)
-  lb = body_holes[1][1] + brk_spc + 26
-  body_length = round(lb - 156; digits=2)
-  foot_length = round(full_length - lb; digits=2)
+  # calculate breakpoint
+  spare = max((foot_holes[end][1] - body_holes[1][1] - tenon_length)/2, 0)
+  nofoot = body_holes[1][1] + spare + tenon_length
+  body_length = round(nofoot - head_length; digits=2)
+  foot_length = round(full_length - nofoot; digits=2)
 
   write(io, "-D'FOOT_HOLES=[")
-  for hole in map(f->[f[1]-lb, f[2]], foot_holes)
+  for hole in map(f->[f[1]-nofoot, f[2]], foot_holes)
     write(io, "["*join(map(s->string(round(s;digits=2)),hole),",")*"],")
   end
   write(io, "]' ")
   write(io, "-D'BODY_HOLES=[")
-  for hole in map(b->[b[1]-156, b[2]], body_holes)
+  for hole in map(b->[b[1]-head_length, b[2]], body_holes)
     write(io, "["*join(map(s->string(round(s;digits=2)),hole),",")*"],")
   end
   write(io, "]' ")
