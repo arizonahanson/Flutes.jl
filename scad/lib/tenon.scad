@@ -1,16 +1,18 @@
 /*
  * Tenon & mortise using AS568-019 o-rings
+ *  (glands scaled 1.5mm above standard)
  */
 include <consts.scad>;
 use <tools.scad>;
 
-//A=23.55; // mortise inner bore - 0.925-0.927"
-A=25.05; //+1.5
-//C=23.42; // piston outer diameter - 0.923-0.922"
-C=24.92; //+1.5
-//F=20.70; // gland outer diameter - 0.815-0.813"
-F=22.2; //+1.5
-CS=1.78; // o-ring minor diameter - .067-.073"
+// mortise inner bore - 0.925-0.927"
+A=25.05;
+// piston outer diameter - 0.923-0.922"
+C=24.92;
+// gland outer diameter - 0.815-0.813"
+F=22.2;
+// o-ring minor diameter - .067-.073"
+CS=1.78;
 TENON_OUTER=A+3.2;
 TENON_LIP=A+(TENON_OUTER-A)/3;
 
