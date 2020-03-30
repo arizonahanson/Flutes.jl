@@ -14,6 +14,13 @@ module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z) cylinder(d1=b, d2=b2, h=l);
 }
 
+module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
+  b2 = (b2==undef) ? b+NOZZLE_DIAMETER : b2;
+  lz = abs(b2-b)/2;
+  zz = !fromend ? z : z-(2*lz);
+  shell(z=zz, b=b, b2=b2, l=lz);
+}
+
 // used to correct hole sizes
 function fuzz(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
 

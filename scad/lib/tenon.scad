@@ -16,21 +16,15 @@ CS=1.78;
 TENON_OUTER=A+3.2;
 TENON_LIP=A+(TENON_OUTER-A)/3;
 
-module chamfer(z=0, b=0, b2=0) {
-  ll=(b2-b)/2;
-  slide(z) union() {
-    shell(b=b, b2=b2, l=ll);
-    shell(z=ll, b=b2, b2=b, l=ll);
-  }
-}
-
 module mortise(z=0) {
   lz=(A-FLUTE_INNER)/2;
   slide(z) difference() {
     union() {
       shell(b=TENON_OUTER, l=TENON_LENGTH);
       chamfer(b=TENON_OUTER, b2=TENON_OUTER+1);
+      chamfer(z=0.5, b=TENON_OUTER+1, b2=TENON_OUTER);
       chamfer(z=TENON_LENGTH-1, b=TENON_OUTER, b2=TENON_OUTER+1);
+      chamfer(z=TENON_LENGTH-0.5, b=TENON_OUTER+1, b2=TENON_OUTER);
     }
     // bore
     bore(b=A, l=TENON_LENGTH-lz);
@@ -41,29 +35,29 @@ module mortise(z=0) {
   }
 }
 
-module gland(z=0) {
+module gland(z=0, fromend=false) {
   lz=(C-F)/2;
-  slide(z) difference() {
+  zz = !fromend ? z : z-(2*(lz+CS));
+  slide(zz) difference() {
     // piston
     bore(b=C, l=CS+lz);
     // flat
     shell(b=F, l=CS);
     // bevel to piston
-    shell(z=CS, b=F, b2=C, l=lz);
+    chamfer(z=CS, b=F, b2=C);
   }
 }
 
 module tenon(z=0) {
   lz=(C-FLUTE_INNER)/2;
-  lg=(C-F)/2+CS;
   ll=TENON_LENGTH+LAYER_HEIGHT;
   slide(z) difference() {
     union() {
       shell(b=C, l=ll-lz);
-      shell(z=ll-lz, b=C, b2=FLUTE_INNER, l=lz);
+      chamfer(z=ll-lz, b=C, b2=FLUTE_INNER);
     }
     bore(b=FLUTE_INNER, l=ll);
-    gland(z=ll-lz-lg-LAYER_HEIGHT);
+    gland(z=ll, fromend=true);
     gland(z=6);
   }
 }
