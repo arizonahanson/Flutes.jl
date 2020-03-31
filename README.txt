@@ -3,6 +3,7 @@
 ### License: MIT
 
 A work-in-progress parametric flute modeling tool
+**requires 4 AS568-019 o-rings**
 
 environment variables
 ----------------------------------------------------------------------------------
