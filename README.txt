@@ -16,7 +16,7 @@ environment variables (lists ordered foot->head, measurements in mm)
 | FLUTE_BREAK         | 3                     | number of holes on foot          |
 | FLUTE_MIN_DIAMETERS | 2 2 2 2 2 2           | minimum hole diameters           |
 | FLUTE_MAX_DIAMETERS | 9 9 9 9 9 9           | maximum hole diameters           |
-| FLUTE_MIN_PADDING   | 18 18 18 30 18 18     | minimum hole spacing to prev/end |
+| FLUTE_MIN_PADDING   | 18 18 18 44 18 18     | minimum hole spacing to prev/end |
 | FLUTE_MAX_PADDING   | Inf 40 35 Inf 40 35   | maximum hole spacing to prev/end |
 | PREFIX              | build                 | directory to output stl files    |
 | SFLAGS              |                       | extra openscad arguments         |
