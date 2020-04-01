@@ -19,13 +19,7 @@ TENON_LIP=A+(TENON_OUTER-A)/3;
 module mortise(z=0) {
   lz=(A-FLUTE_INNER)/2;
   slide(z) difference() {
-    union() {
-      shell(b=TENON_OUTER, l=TENON_LENGTH);
-      chamfer(b=TENON_OUTER, b2=TENON_OUTER+1);
-      chamfer(z=0.5, b=TENON_OUTER+1, b2=TENON_OUTER);
-      chamfer(z=TENON_LENGTH-1, b=TENON_OUTER, b2=TENON_OUTER+1);
-      chamfer(z=TENON_LENGTH-0.5, b=TENON_OUTER+1, b2=TENON_OUTER);
-    }
+    shell(b=TENON_OUTER, l=TENON_LENGTH);
     // bore
     bore(b=A, l=TENON_LENGTH-lz);
     // bevel to flute bore
