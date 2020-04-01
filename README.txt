@@ -2,10 +2,13 @@
 ### Author: Isaac W Hanson
 ### License: MIT
 
-A work-in-progress parametric flute modeling tool
+A parametric flute modeling tool
 **requires 4 AS568-019 o-rings**
 
-environment variables
+install make, julia, openscad
+then run `make all`
+
+environment variables (lists ordered foot->head, measurements in mm)
 ----------------------------------------------------------------------------------
 | variable            | default               | description                      |
 ----------------------------------------------------------------------------------
@@ -41,4 +44,6 @@ openscad make targets
 example
 -------
 make all PREFIX='cmajr' FLUTE_SCALE='C4 D4 E4 F4 G4 A4 B4'
+-------
+make all PREFIX='draft' SFLAGS='-DLAYER_HEIGHT=0.2'
 
