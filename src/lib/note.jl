@@ -1,8 +1,14 @@
-export 𝐺
 export note
 
-𝐺 =2.0^(1.0/12.0)
-function note(name, A₄=440.0)
+"""
+𝑓 = note(name; A=440.0)
+  convert note name to frequency, equal temperament
+    note("A4")
+    note("C♭0")
+    note("B♯9")
+"""
+function note(name; A=440.0)
+  𝑔=2^(1/12)
   wholetone=Int(name[1])-65   # 'A'=0
   octave=Int(name[end])-48 # '0'=0
   semitone = 2*wholetone
@@ -20,5 +26,5 @@ function note(name, A₄=440.0)
       semitone += 1
     end
   end
-  return round(A₄/16.0 * 𝐺^semitone * 2.0^octave; digits=6)
+  return round(A₄/16.0 * 𝑔^semitone * 2.0^octave; digits=6)
 end
