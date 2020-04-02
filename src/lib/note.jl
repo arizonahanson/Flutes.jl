@@ -26,5 +26,5 @@ function note(name; A=440.0)
       semitone += 1
     end
   end
-  return round(A₄/16.0 * 𝑔^semitone * 2.0^octave; digits=6)
+  return round(A/16.0 * 𝑔^semitone * 2.0^octave; digits=6)
 end
