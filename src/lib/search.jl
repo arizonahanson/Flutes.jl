@@ -24,18 +24,6 @@ function createflute(𝑓)
   return FluteConstraint(𝑓, [])
 end
 
-function createflute()
-  f = createflute(note("D4"))
-  addtonehole!(f, note("E4"); 𝑝₊=Inf, 𝑑₊=7.0)
-  addtonehole!(f, note("F4"); 𝑝₊=24.0)
-  addtonehole!(f, note("G4"))
-  addtonehole!(f, note("A4"))
-  addtonehole!(f, note("B♭4");𝑝₊=Inf)
-  addtonehole!(f, note("C5"))
-  addtonehole!(f, note("D5"))
-  return f
-end
-
 # error function factory (constraints)
 function mkerrfn(flute::FluteConstraint)
   # return error function
