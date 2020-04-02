@@ -46,4 +46,3 @@ example
 make all PREFIX='cmajr' FLUTE_SCALE='C4 D4 E4 F4 G4 A4 B4'
 -------
 make all PREFIX='draft' SFLAGS='-DLAYER_HEIGHT=0.2'
-
