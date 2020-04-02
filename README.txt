@@ -1,6 +1,6 @@
 ## Parametric Flute Modeling Tool
 ### Author: Isaac W Hanson
-### License: MIT
+### License: GPL
 
 A parametric flute modeling tool
 **requires 4 AS568-019 o-rings**
