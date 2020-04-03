@@ -1,27 +1,13 @@
 
 PREFIX=../build
-
-.PHONY: all
-all: head body foot
-
-.PHONY: head
-head: $(PREFIX)/head.stl
-
-.PHONY: body
-body: $(PREFIX)/body.stl
-
-.PHONY: foot
-foot: $(PREFIX)/foot.stl
-
+export
 # compile stl from scad
-$(PREFIX)/%.stl: %.scad lib/*.scad
-	@echo "exporting" $@
+%.stl: %.scad lib/*.scad
 	@mkdir -p $(PREFIX)
-	openscad $< -q -o $@ $(subst $$,\$$,$(value SFLAGS))
+	openscad $< -q -o $(PREFIX)/$@ $(subst $$,\$$,$(value SFLAGS))
 
-# delete stl files
+# must manually clean head.stl
 .PHONY: clean
 clean:
-	@rm -fv $(PREFIX)/head.stl
 	@rm -fv $(PREFIX)/body.stl
 	@rm -fv $(PREFIX)/foot.stl

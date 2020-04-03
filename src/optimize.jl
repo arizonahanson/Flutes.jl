@@ -1,5 +1,5 @@
 #!/usr/bin/env julia
-import Pkg; Pkg.activate(".")
+import Pkg; Pkg.activate("..")
 
 using Flutes
 
@@ -52,7 +52,7 @@ diameters = optimal(flute)
 tenon_length=26
 head_length=156
 # TODO: uncomplicate communicating results downstream...
-open("config", "w") do io
+open(ARGS[1], "w") do io
   foot_holes = []
   body_holes = []
   write(io, "SFLAGS=")
@@ -61,7 +61,6 @@ open("config", "w") do io
     𝑑ₕ = diameters[h]
     ℓₕ = toneholelength(flute.holes[h].𝑓; 𝑑=𝑑ₕ)
     pair = [ℓₕ, 𝑑ₕ]
-    println(pair)
     if h > brk
       push!(body_holes, pair)
     else

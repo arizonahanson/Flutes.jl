@@ -1,38 +1,29 @@
 # build path
-PREFIX=../build
-
-# flute constraints
-FLUTE_BREAK=3
-FLUTE_SCALE=D4  E4 F♯4 G4  A4 B4 C♯5
-FLUTE_MIN_DIAMETERS=2 2 2 2 2 2
-FLUTE_MAX_DIAMETERS=9 9 9 9 9 9
-FLUTE_MIN_PADDING=18 18 18 44 18 18
-FLUTE_MAX_PADDING=Inf 40 35 Inf 40 35
-
-include config
+PREFIX=build
+include $(PREFIX)/flute.mk
 export
 
 .PHONY: all
-all: config
-	$(MAKE) -C scad all
+all: $(PREFIX)/flute.mk
+	@$(MAKE) -C scad head.stl body.stl foot.stl PREFIX=$(abspath $(PREFIX))
 
 .PHONY: head
-head: config
-	$(MAKE) -C scad head
+head: $(PREFIX)/flute.mk
+	@$(MAKE) -C scad head.stl PREFIX=$(abspath $(PREFIX))
 
 .PHONY: body
-body: config
-	$(MAKE) -C scad body
+body: $(PREFIX)/flute.mk
+	@$(MAKE) -C scad body.stl PREFIX=$(abspath $(PREFIX))
 
 .PHONY: foot
-foot: config
-	$(MAKE) -C scad foot
+foot: $(PREFIX)/flute.mk
+	@$(MAKE) -C scad foot.stl PREFIX=$(abspath $(PREFIX))
 
-config:
-	julia ./configure.jl
+$(PREFIX)/flute.mk:
+	@$(MAKE) -C src flute.mk PREFIX=$(abspath $(PREFIX))
 
-# delete stl files
 .PHONY: clean
 clean:
-	@rm -fv config
-	$(MAKE) -C scad clean
+	@$(MAKE) -C src clean PREFIX=$(abspath $(PREFIX))
+	@$(MAKE) -C scad clean PREFIX=$(abspath $(PREFIX))
+
