@@ -6,14 +6,14 @@ A parametric flute modeling tool
 ** NOTE *** requires 4 AS568-019 o-rings ** NOTE **
 
 install make, julia, openscad
-then run `make all`
+then run `make`
 
 Environment variables determine the parameters of the flute, and default to a flute in
 D major if not specified otherwise.
 
-The `configure` step will generate a 'config' file containing flute parameters.
-Deleting or moving this file will cause it to be regenerated. If the STL files already
-exist at path PREFIX, they will only be overwritten if older than the dependencies.
+The `config` target will generate a 'flute.mk' file at path PREFIX, containing flute parameters.
+Deleting or moving this file will cause it to be regenerated. If files already exist at
+path PREFIX, they will only be overwritten if older than the dependencies.
 
 Diameter and padding constraints are per hole. Padding refers to distance to previous hole,
 or the end of the flute, measured from the centers. The FLUTE_MAX_PADDING may use
@@ -43,14 +43,15 @@ openscad variables (supply via SFLAGS)
 | NOZZLE_DIAMETER | 0.4     | nozzle diameter in mm                        |
 ----------------------------------------------------------------------------
 
-openscad make targets
+make targets
 -----------------------------------------
 | target | description                  |
 -----------------------------------------
-| all    | generate head, body & foot   |
+| all    | generate all files           |
+| config | generate flute.mk file       |
 | head   | generate headjoint STL       |
 | body   | generate body STL            |
-| foot   | generate footjoint STL       |
+| foot   | generate foot STL            |
 | clean  | delete generated files       |
 -----------------------------------------
 

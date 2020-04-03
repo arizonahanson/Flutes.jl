@@ -9,6 +9,7 @@ FLUTE_MIN_PADDING=18 18 18 44 18 18
 FLUTE_MAX_PADDING=Inf 40 35 Inf 40 35
 export
 
+.PHONY: flute.mk
 flute.mk:
 	@mkdir -p $(PREFIX)
 	julia optimize.jl $(PREFIX)/flute.mk

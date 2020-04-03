@@ -19,6 +19,10 @@ body: $(PREFIX)/flute.mk
 foot: $(PREFIX)/flute.mk
 	@$(MAKE) -C scad foot.stl PREFIX=$(abspath $(PREFIX))
 
+.PHONY: config
+config:
+	@$(MAKE) -C src flute.mk PREFIX=$(abspath $(PREFIX))
+
 $(PREFIX)/flute.mk:
 	@$(MAKE) -C src flute.mk PREFIX=$(abspath $(PREFIX))
 

@@ -1,6 +1,10 @@
 
 PREFIX=../build
 export
+
+.PHONY: all
+all: head.stl body.stl foot.stl
+
 # compile stl from scad
 %.stl: %.scad lib/*.scad
 	@mkdir -p $(PREFIX)
