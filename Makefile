@@ -4,27 +4,17 @@ include $(PREFIX)/flute.mk
 export
 
 .PHONY: all
-all: $(PREFIX)/flute.mk
-	@$(MAKE) -C scad head.stl body.stl foot.stl PREFIX=$(abspath $(PREFIX))
+all: $(PREFIX)/flute.mk $(PREFIX)/head.stl $(PREFIX)/body.stl $(PREFIX)/foot.stl
 
-.PHONY: head
-head: $(PREFIX)/flute.mk
-	@$(MAKE) -C scad head.stl PREFIX=$(abspath $(PREFIX))
+$(PREFIX)/%.stl:
+	@$(MAKE) -C scad $(notdir $@) PREFIX=$(abspath $(PREFIX))
 
-.PHONY: body
-body: $(PREFIX)/flute.mk
-	@$(MAKE) -C scad body.stl PREFIX=$(abspath $(PREFIX))
-
-.PHONY: foot
-foot: $(PREFIX)/flute.mk
-	@$(MAKE) -C scad foot.stl PREFIX=$(abspath $(PREFIX))
+$(PREFIX)/flute.mk:
+	@$(MAKE) -C src $(notdir flute.mk) PREFIX=$(abspath $(PREFIX))
 
 .PHONY: config
 config:
-	@$(MAKE) -C src flute.mk PREFIX=$(abspath $(PREFIX))
-
-$(PREFIX)/flute.mk:
-	@$(MAKE) -C src flute.mk PREFIX=$(abspath $(PREFIX))
+	@$(MAKE) -B $(PREFIX)/flute.mk
 
 .PHONY: clean
 clean:

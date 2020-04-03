@@ -13,5 +13,6 @@ all: head.stl body.stl foot.stl
 # must manually clean head.stl
 .PHONY: clean
 clean:
+	@rm -fv $(PREFIX)/head.stl
 	@rm -fv $(PREFIX)/body.stl
 	@rm -fv $(PREFIX)/foot.stl
