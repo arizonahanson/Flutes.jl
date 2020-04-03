@@ -6,7 +6,16 @@ export
 .PHONY: all
 all: $(PREFIX)/flute.mk $(PREFIX)/head.stl $(PREFIX)/body.stl $(PREFIX)/foot.stl
 
-$(PREFIX)/%.stl:
+.PHONY: head
+head: $(PREFIX)/flute.mk $(PREFIX)/head.stl
+
+.PHONY: body
+body: $(PREFIX)/flute.mk $(PREFIX)/body.stl
+
+.PHONY: foot
+foot: $(PREFIX)/flute.mk $(PREFIX)/foot.stl
+
+$(PREFIX)/%.stl: $(PREFIX)/flute.mk
 	@$(MAKE) -C scad $(notdir $@) PREFIX=$(abspath $(PREFIX))
 
 $(PREFIX)/flute.mk:
