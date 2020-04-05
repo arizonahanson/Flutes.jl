@@ -43,12 +43,12 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0) {
   oh=rz+h-zo;
   do=d+tan(o)*2*oh;
   di=d+tan(u)*2*zo;
-  zi=sqrt(pow(rz+NOZZLE_DIAMETER/2,2)-pow(di/2,2));
+  zi=sqrt(pow(rz,2)-pow(di/2,2));
   ih=rz+h-zi-oh;
   slide(z) scale([1,1,s/d]) pivot(-r) union() {
     // shoulder cut
-    bore(z=zo, b=d, b2=do, l=oh);
+    shell(z=zo, b=d, b2=do, l=oh);
     // undercut
-    bore(z=zi, b=di, b2=d, l=ih);
+    shell(z=zi+0.001, b=di, b2=d, l=ih);
   }
 }
