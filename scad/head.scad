@@ -11,14 +11,12 @@ module head() {
       tenon(z=HEAD_LENGTH-TENON_LENGTH);
     }
     // reflector->embouchure
-    bore(z=-17, b=17, b2=17.4, l=11);
-    // bore at embouchure
-    bore(z=-6, b=17.4, l=12);
+    bore(z=-17, b=17, b2=17.4, l=17);
     // embouchure->max bore
-    bore(z=6, b=17.4, b2=FLUTE_INNER, l=114);
+    bore(b=17.4, b2=FLUTE_INNER, l=120);
     bore(z=120, b=FLUTE_INNER, l=HEAD_LENGTH-120);
     // embouchure hole
-    hole(b=17.4, h=4.3, d=10, s=12, u=7);
+    hole(b=17.4, h=4.3, d=10, s=12, u=8, o=15);
   }
 }
 
