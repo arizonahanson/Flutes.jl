@@ -40,15 +40,15 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0, sq=0) {
   s = (s==undef) ? d : s;
   rz=b/2;
   zo=sqrt(pow(rz+h,2)-pow(d/2,2));
-  oh=rz+h-zo;
-  do=d+tan(o)*2*oh;
   di=d+tan(u)*2*zo;
   zi=sqrt(pow(rz,2)-pow(di/2,2));
-  ih=rz+h-zi-oh;
+  oh=rz+h-zo;
+  ih=zo-zi;
+  do=d+tan(o)*2*oh;
   slide(z) scale([1,1,s/d]) pivot(-r)
     if (sq>0) {
       minkowski() {
-        cube([sq,sq,0.001], center=true);
+        cube([sq,sq,0.0001], center=true);
         union() {
           // shoulder cut
           shell(z=zo, b=d-sq, b2=do-sq, l=oh, $fn=64);
