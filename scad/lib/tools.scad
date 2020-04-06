@@ -38,13 +38,11 @@ module pivot(r=0) {
 // tone or embouchure hole
 module hole(z=0, b, h, d, s, r=0, u=0, o=0, sq=0) {
   s = (s==undef) ? d : s;
-  rz=b/2;
-  zo=sqrt(pow(rz+h,2)-pow(d/2,2));
-  di=d+tan(u)*2*zo;
-  zi=sqrt(pow(rz,2)-pow(di/2,2));
-  oh=rz+h-zo;
-  ih=zo-zi;
-  do=d+tan(o)*2*oh;
+  rz=b/2;// bore radius
+  zo=sqrt(pow(rz+h,2)-pow(d/2,2));//hole z
+  di=d+tan(u)*2*zo;//d+undercut
+  oh=rz+h-zo;//shoulder height
+  do=d+tan(o)*2*oh;//d+shoulder cut
   slide(z) scale([1,1,s/d]) pivot(-r)
     if (sq>0) {
       minkowski() {
@@ -53,7 +51,7 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0, sq=0) {
           // shoulder cut
           shell(z=zo, b=d-sq, b2=do-sq, l=oh, $fn=64);
           // undercut
-          shell(z=zi+0.001, b=di-sq, b2=d-sq, l=ih, $fn=64);
+          shell(b=di-sq, b2=d-sq, l=zo, $fn=64);
         }
       }
     } else {
@@ -61,7 +59,7 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0, sq=0) {
         // shoulder cut
         shell(z=zo, b=d, b2=do, l=oh);
         // undercut
-        shell(z=zi+0.001, b=di, b2=d, l=ih);
+        shell(b=di, b2=d, l=zo);
       }
     }
 }
