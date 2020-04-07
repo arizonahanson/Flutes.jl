@@ -16,7 +16,7 @@ module head() {
     bore(b=17.4, b2=FLUTE_INNER, l=120);
     bore(z=120, b=FLUTE_INNER, l=HEAD_LENGTH-120);
     // embouchure hole
-    hole(b=17.4, h=4.3, d=10, s=12, u=13, o=13, sq=1.1);
+    hole(b=17.4, h=4.3, d=10, s=12, u=8, o=23, sq=1.2);
   }
 }
 
