@@ -61,7 +61,7 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
       union() {
         // shoulder cut
         shell(z=zo, b=d, b2=do, l=oh);
-        // undercut
+        // angled wall
         shell(b=di, b2=d, l=zo);
       }
     }
