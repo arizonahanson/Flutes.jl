@@ -15,8 +15,8 @@ module head() {
     // embouchure->max bore
     bore(b=17.4, b2=FLUTE_INNER, l=120);
     bore(z=120, b=FLUTE_INNER, l=HEAD_LENGTH-120);
-    // embouchure hole
-    hole(b=17.4, h=4.3, d=10, s=12, u=7, o=45, sq=0.2);
+    // embouchure hole (10x12mm 7°wall 45°shoulder 20%square)
+    hole(b=17.4, h=4.3, d=10, w=12, a=7, s=45, sq=0.2);
   }
 }
 

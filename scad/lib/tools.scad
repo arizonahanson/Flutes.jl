@@ -36,22 +36,24 @@ module pivot(r=0) {
 }
 
 // tone or embouchure hole
-module hole(z=0, b, h, d, s, r=0, u=0, o=0, sq=0) {
-  s = (s==undef) ? d : s;
+// (b)ore (h)eight (d)iameter (w)idth (r)otate° w(a)ll°
+// (s)houlder° (sq)areness
+module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
+  w = (w==undef) ? d : w;
   rz=b/2;// bore radius
   zo=sqrt(pow(rz+h,2)-pow(d/2,2));//hole z
-  di=d+tan(u)*2*zo;//d+undercut
+  di=d+tan(a)*2*zo;//d+wall angle
   oh=rz+h-zo;//shoulder height
-  do=d+tan(o)*2*oh;//d+shoulder cut
+  do=d+tan(s)*2*oh;//d+shoulder cut
   sqx=sq*d;
-  slide(z) scale([1,1,s/d]) pivot(-r)
+  slide(z) scale([1,1,w/d]) pivot(-r)
     if (sqx>=0.01) {
       minkowski() {
         cube([sqx,sqx,0.0001], center=true);
         union() {
           // shoulder cut
           shell(z=zo, b=d-sqx, b2=do-sqx, l=oh, $fn=64);
-          // undercut
+          // angled wall
           shell(b=di-sqx, b2=d-sqx, l=zo, $fn=64);
         }
       }
