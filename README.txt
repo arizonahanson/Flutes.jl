@@ -57,7 +57,6 @@ make targets
 | head   | generate headjoint STL       |
 | body   | generate body STL            |
 | foot   | generate foot STL            |
-| clean  | delete generated files       |
 -----------------------------------------
 
 examples:
