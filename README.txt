@@ -8,6 +8,11 @@ A parametric flute modeling tool
 install make, julia, openscad
 then run `make`
 
+* better to use a tagged release
+* branch `master` should be tested
+* branch `develop` is likely untested
+* any other branch is unstable
+
 Environment variables determine the parameters of the flute, and default to a flute in
 D major if not specified otherwise.
 
