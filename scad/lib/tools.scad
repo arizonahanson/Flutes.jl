@@ -43,15 +43,16 @@ module hole(z=0, b, h, d, s, r=0, u=0, o=0, sq=0) {
   di=d+tan(u)*2*zo;//d+undercut
   oh=rz+h-zo;//shoulder height
   do=d+tan(o)*2*oh;//d+shoulder cut
+  sqx=sq*d;
   slide(z) scale([1,1,s/d]) pivot(-r)
-    if (sq>0) {
+    if (sqx>=0.01) {
       minkowski() {
-        cube([sq,sq,0.0001], center=true);
+        cube([sqx,sqx,0.0001], center=true);
         union() {
           // shoulder cut
-          shell(z=zo, b=d-sq, b2=do-sq, l=oh, $fn=64);
+          shell(z=zo, b=d-sqx, b2=do-sqx, l=oh, $fn=64);
           // undercut
-          shell(b=di-sq, b2=d-sq, l=zo, $fn=64);
+          shell(b=di-sqx, b2=d-sqx, l=zo, $fn=64);
         }
       }
     } else {
