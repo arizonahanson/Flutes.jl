@@ -3,5 +3,3 @@
 * min/max padding from embouchure or previous hole
 * needed to be able to supply closed-tonehole info to future calculations
   to account for flattening
-
-* redo makefiles to be more simple and flexible

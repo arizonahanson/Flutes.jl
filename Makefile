@@ -1,27 +1,23 @@
-# build path
-PREFIX=build
-include flute.mk
+SHELL=/bin/sh
+JULIA=julia
+JULIASRC=src
+SCAD=openscad
+SCADSRC=scad
+DESTDIR=build
 export
 
 .PHONY: all
-all: flute.mk $(PREFIX)/head.3mf $(PREFIX)/body.3mf $(PREFIX)/foot.3mf
+all: $(DESTDIR)/head.3mf $(DESTDIR)/body.3mf $(DESTDIR)/foot.3mf
 
-.PHONY: head
-head: flute.mk $(PREFIX)/head.3mf
+# scad file dependencies (generated)
+include $(wildcard $(DESTDIR)/*.deps)
 
-.PHONY: body
-body: flute.mk $(PREFIX)/body.3mf
+# compile 3mf from scad
+$(DESTDIR)/%.3mf: $(SCADSRC)/%.scad
+	@mkdir -pv $(DESTDIR)
+	$(SCAD) $< -q -m $(MAKE) -d $@.deps -o $@ $(subst $$,\$$,$(value SCADFLAGS))
 
-.PHONY: foot
-foot: flute.mk $(PREFIX)/foot.3mf
-
-.PHONY: $(PREFIX)/%.3mf
-$(PREFIX)/%.3mf: flute.mk
-	@$(MAKE) -C scad $(notdir $@) PREFIX=$(abspath $(PREFIX))
-
-flute.mk:
-	@$(MAKE) -C src flute.mk PREFIX=..
-
-.PHONY: config
-config:
-	@$(MAKE) -B flute.mk
+# clean build
+.PHONY: clean
+clean:
+	@rm $(DESTDIR)/*.deps -fv
