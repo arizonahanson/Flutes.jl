@@ -36,7 +36,7 @@ environment variables (lists ordered foot->head, measurements in mm)
 | FLUTE_MAX_DIAMETERS | 9 9 9 9 9 9            | maximum hole diameters           |
 | FLUTE_MIN_PADDING   | 18 18 18 44 18 18      | minimum hole padding-footward    |
 | FLUTE_MAX_PADDING   | Inf 40 35 Inf 35 40    | maximum hole padding-footward    |
-| PREFIX              | build                  | directory to output STL files    |
+| PREFIX              | build                  | directory to output 3mf files    |
 | SFLAGS              |                        | extra openscad arguments         |
 -----------------------------------------------------------------------------------
 
@@ -54,9 +54,9 @@ make targets
 -----------------------------------------
 | all    | generate all files           |
 | config | generate flute.mk file       |
-| head   | generate headjoint STL       |
-| body   | generate body STL            |
-| foot   | generate foot STL            |
+| head   | generate headjoint 3mf       |
+| body   | generate body 3mf            |
+| foot   | generate foot 3mf            |
 -----------------------------------------
 
 examples:
