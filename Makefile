@@ -16,8 +16,8 @@ SHELL=/bin/sh
 .PHONY: all
 all: $(DESTDIR)/head.3mf $(DESTDIR)/body.3mf $(DESTDIR)/foot.3mf
 
-# scad file dependencies (generated)
-include $(wildcard $(DESTDIR)/*.deps)
+# 3mf scad file dependencies
+include $(wildcard $(DESTDIR)/*.3mf.deps)
 
 # compile scad to 3mf
 $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad
