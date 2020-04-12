@@ -7,7 +7,7 @@ SCADSRC=scad
 # export destination directory
 DESTDIR=build
 # parameter file
-PARAMSFILE=$(DESTDIR)/flute.json
+PARAMSFILE=$(DESTDIR)/params.json
 # extra openscad build arguments
 SCADFLAGS=
 # flute constraints
