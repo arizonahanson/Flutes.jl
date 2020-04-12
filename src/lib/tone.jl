@@ -1,13 +1,13 @@
-export note
+export tone
 
 """
-𝑓 = note(name; A=440.0)
-  convert note name to frequency, equal temperament
-    note("A4")
-    note("C♭0")
-    note("B♯9")
+𝑓 = tone(name; A=440.0)
+  convert tone name to frequency, equal temperament
+    tone("A4")
+    tone("C♭0")
+    tone("B♯9")
 """
-function note(name; A=440.0)
+function tone(name; A=440.0)
   𝑔=2^(1/12)
   wholetone=Int(name[1])-65   # 'A'=0
   octave=Int(name[end])-48 # '0'=0

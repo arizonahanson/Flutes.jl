@@ -4,12 +4,16 @@
  *   BODY_LENGTH
  *   BODY_HOLES
  */
+// slider widget for number
+BODY_LENGTH=0; // [0:400]
+//Text box for vector
+BODY_DIAMETERS=[];
+//Text box for vector
+BODY_POSITIONS=[];
+
 include <lib/index.scad>;
 
-BODY_LENGTH=TENON_LENGTH;
-BODY_HOLES=[];
-
-module body(l=BODY_LENGTH, holes=BODY_HOLES) {
+module body(l=BODY_LENGTH, diameters=BODY_DIAMETERS, positions=BODY_POSITIONS) {
   hh=(FLUTE_OUTER-FLUTE_INNER)/2;
   slide(TENON_LENGTH) difference() {
     union() {
@@ -20,7 +24,7 @@ module body(l=BODY_LENGTH, holes=BODY_HOLES) {
     // bore
     bore(b=FLUTE_INNER, l=l-TENON_LENGTH);
     // holes
-    for(h=holes) let (zh=h[0], dh=h[1]) {
+    for(i=[0:1:len(diameters)]) let (zh=positions[i], dh=diameters[i]) {
       hole(z=zh, b=FLUTE_INNER, h=hh, d=dh);
     }
   }
