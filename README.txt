@@ -8,6 +8,9 @@ A parametric flute modeling tool
 install make, julia, openscad
 then run `make`
 
+Exporting the three 3mf files can take a few minutes each. If you have multiple CPU cores,
+you can speed up the build by running in parallel with the `-j` flag for make: `make -j3`
+
 * better to use a tagged release
 * branch `master` should be tested
 * branch `develop` is likely untested
