@@ -29,10 +29,7 @@ end
 diameters = optimal(flute)
 # end magic
 
-# TODO: externalize constants
-tenon_length=26
-head_length=156
-
+# break holes by foot/body
 foot_diameters = []
 foot_positions = []
 body_diameters = []
@@ -49,6 +46,9 @@ for h in 1:length(diameters)
     push!(foot_positions, ℓₕ)
   end
 end
+# TODO: externalize constants
+tenon_length=26
+head_length=156
 # calculate breakpoint
 spare = max((foot_positions[end] - body_positions[1] - tenon_length)/2, 0)
 nofoot = body_positions[1] + spare + tenon_length
@@ -57,17 +57,16 @@ body_length = round(nofoot - head_length; digits=3)
 foot_length = round(full_length - nofoot; digits=3)
 # export
 params = createscadparameters()
-setscadparameter!(params, "body.3mf.params", "BODY_LENGTH",
-                  body_length)
-setscadparameter!(params, "body.3mf.params", "BODY_DIAMETERS",
-                  map(bd->round(bd; digits=3), body_diameters))
-setscadparameter!(params, "body.3mf.params", "BODY_POSITIONS",
-                  map(bp->round(bp-head_length; digits=3), body_positions))
-setscadparameter!(params, "foot.3mf.params", "FOOT_LENGTH",
-                  foot_length)
-setscadparameter!(params, "foot.3mf.params", "FOOT_DIAMETERS",
-                  map(fd->round(fd, digits=3), foot_diameters))
-setscadparameter!(params, "foot.3mf.params", "FOOT_POSITIONS",
-                  map(fp->round(fp-nofoot; digits=3), foot_positions))
+
+bodyset = "body.3mf.params"
+setscadparameter!(params, bodyset, "BODY_LENGTH", body_length)
+setscadparameter!(params, bodyset, "BODY_DIAMETERS", map(bd->round(bd; digits=3), body_diameters))
+setscadparameter!(params, bodyset, "BODY_POSITIONS", map(bp->round(bp-head_length; digits=3), body_positions))
+
+footset = "foot.3mf.params"
+setscadparameter!(params, footset, "FOOT_LENGTH", foot_length)
+setscadparameter!(params, footset, "FOOT_DIAMETERS", map(fd->round(fd, digits=3), foot_diameters))
+setscadparameter!(params, footset, "FOOT_POSITIONS", map(fp->round(fp-nofoot; digits=3), foot_positions))
+
 writescadparameters(params, ARGS[1])
 

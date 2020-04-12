@@ -2,21 +2,19 @@
 import JSON
 export readvariable, mapvariable
 export createscadparameters, setscadparameter!, writescadparameters
+
 # create JSON parameter set for scad
 function createscadparameters()
-  return Dict(
-              "fileFormatVersion" => "1",
-              "parameterSets" => Dict(
-                                      "head.3mf.params" => Dict{String,String}(),
-                                      "body.3mf.params" => Dict{String,String}(),
-                                      "foot.3mf.params" => Dict{String,String}()
-                                     )
-             )
+  return Dict("fileFormatVersion" => "1", "parameterSets" => Dict())
 end
 
 # set a scad parameter
 function setscadparameter!(parameters::Dict, setname::String, key::String, value)
-  parameters["parameterSets"][setname][key] = JSON.json(value)
+  sets = parameters["parameterSets"]
+  if !haskey(sets, setname)
+    sets[setname] = Dict{String,String}()
+  end
+  sets[setname][key] = JSON.json(value)
 end
 
 # write scad parameters to filename
