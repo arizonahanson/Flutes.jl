@@ -36,19 +36,15 @@ foot: $(DESTDIR)/foot.3mf
 .PHONY: params
 params: $(PARAMSFILE)
 
-# 3mf scad file dependencies
-include $(wildcard $(DESTDIR)/*.3mf.mk)
-# 3mf parameters dependency
-$(DESTDIR)/body.3mf: $(PARAMSFILE)
-$(DESTDIR)/foot.3mf: $(PARAMSFILE)
-
 # run optimization to generate parameters
 $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
-	@mkdir -pv $(DESTDIR)
+	@mkdir -pv $(dir $@)
 	$(JULIA) $(JULIASRC)/optimize.jl $@
 
+# 3mf scad file dependencies
+include $(wildcard $(DESTDIR)/*.3mf.mk)
 # compile scad to 3mf
-$(DESTDIR)/%.3mf: $(SCADSRC)/%.scad
+$(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
 	$(SCAD) $< -q -p $(PARAMSFILE) -P $(notdir $@).params -m $(MAKE) -d $@.mk -o $@ $(subst $$,\$$,$(value SCADFLAGS))
 
@@ -56,4 +52,4 @@ $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad
 .PHONY: clean
 clean:
 	@rm $(DESTDIR)/*.3mf.mk -fv
-	@rm $(PARAMSFLIE) -fv
+	@rm $(PARAMSFILE) -fv
