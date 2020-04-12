@@ -46,7 +46,10 @@ include $(wildcard $(DESTDIR)/*.3mf.mk)
 # compile scad to 3mf
 $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
-	$(SCAD) $< -q -p $(PARAMSFILE) -P $(notdir $@).params -m $(MAKE) -d $@.mk -o $@ $(subst $$,\$$,$(value SCADFLAGS))
+	$(SCAD) $< -q \
+		-m $(MAKE) -d $@.mk \
+		-p $(PARAMSFILE) -P $(notdir $@).params \
+		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 
 # clean build
 .PHONY: clean
