@@ -75,7 +75,7 @@ function optimal(flute)
   if !Optim.converged(result)
     println("warning: unable to converge on a result")
   end
-  #println(result)
+  println(result)
   params = Optim.minimizer(result)
   # return minimizer
   return params
