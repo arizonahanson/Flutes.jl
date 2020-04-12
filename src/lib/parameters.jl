@@ -7,8 +7,9 @@ function createscadparameters()
   return Dict(
               "fileFormatVersion" => "1",
               "parameterSets" => Dict(
-                                      "foot.3mf.p" => Dict{String,String}(),
-                                      "body.3mf.p" => Dict{String,String}()
+                                      "head.3mf.params" => Dict{String,String}(),
+                                      "body.3mf.params" => Dict{String,String}(),
+                                      "foot.3mf.params" => Dict{String,String}()
                                      )
              )
 end
