@@ -53,21 +53,21 @@ end
 spare = max((foot_positions[end] - body_positions[1] - tenon_length)/2, 0)
 nofoot = body_positions[1] + spare + tenon_length
 # lengths
-body_length = round(nofoot - head_length; digits=2)
-foot_length = round(full_length - nofoot; digits=2)
+body_length = round(nofoot - head_length; digits=3)
+foot_length = round(full_length - nofoot; digits=3)
 # export
 params = createscadparameters()
 setscadparameter!(params, "body.3mf.p", "BODY_LENGTH",
                   body_length)
 setscadparameter!(params, "body.3mf.p", "BODY_DIAMETERS",
-                  map(bd->round(bd; digits=2), body_diameters))
+                  map(bd->round(bd; digits=3), body_diameters))
 setscadparameter!(params, "body.3mf.p", "BODY_POSITIONS",
-                  map(bp->round(bp-head_length; digits=2), body_positions))
+                  map(bp->round(bp-head_length; digits=3), body_positions))
 setscadparameter!(params, "foot.3mf.p", "FOOT_LENGTH",
                   foot_length)
 setscadparameter!(params, "foot.3mf.p", "FOOT_DIAMETERS",
-                  map(fd->round(fd, digits=2), foot_diameters))
+                  map(fd->round(fd, digits=3), foot_diameters))
 setscadparameter!(params, "foot.3mf.p", "FOOT_POSITIONS",
-                  map(fp->round(fp-nofoot; digits=2), foot_positions))
+                  map(fp->round(fp-nofoot; digits=3), foot_positions))
 writescadparameters(params, ARGS[1])
 

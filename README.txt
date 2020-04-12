@@ -16,9 +16,9 @@ then run `make`
 Environment variables determine the parameters of the flute, and default to a flute in
 D major if not specified otherwise.
 
-The `config` target will generate a 'flute.mk' file at path PREFIX, containing flute parameters.
+The `params` target will generate a 'params.json' file at path DESTDIR, containing flute parameters.
 Deleting or moving this file will cause it to be regenerated. If files already exist at
-path PREFIX, they will only be overwritten if older than the dependencies.
+path DESTDIR, they will only be overwritten if older than the dependencies.
 
 Diameter and padding constraints are per hole. Padding refers to distance to previous hole,
 or the end of the flute, measured from the centers. The FLUTE_MAX_PADDING may use
@@ -36,11 +36,11 @@ environment variables (lists ordered foot->head, measurements in mm)
 | FLUTE_MAX_DIAMETERS | 9 9 9 9 9 9            | maximum hole diameters           |
 | FLUTE_MIN_PADDING   | 18 18 18 44 18 18      | minimum hole padding-footward    |
 | FLUTE_MAX_PADDING   | Inf 40 35 Inf 35 40    | maximum hole padding-footward    |
-| PREFIX              | build                  | directory to output 3mf files    |
-| SFLAGS              |                        | extra openscad arguments         |
+| DESTDIR             | build                  | directory to output 3mf files    |
+| SCADFLAGS           |                        | extra openscad arguments         |
 -----------------------------------------------------------------------------------
 
-openscad variables (supply via SFLAGS)
+openscad variables (supply via SCADFLAGS)
 ----------------------------------------------------------------------------
 | variable        | default | description                                  |
 ----------------------------------------------------------------------------
@@ -49,15 +49,16 @@ openscad variables (supply via SFLAGS)
 ----------------------------------------------------------------------------
 
 make targets
------------------------------------------
-| target | description                  |
------------------------------------------
-| all    | generate all files           |
-| config | generate flute.mk file       |
-| head   | generate headjoint 3mf       |
-| body   | generate body 3mf            |
-| foot   | generate foot 3mf            |
------------------------------------------
+-------------------------------------------
+| target   | description                  |
+-------------------------------------------
+| all      | generate all files (default) |
+| params   | generate parameters file     |
+| head     | generate headjoint 3mf       |
+| body     | generate body 3mf            |
+| foot     | generate foot 3mf            |
+| clean    | delete temporary files       |
+-------------------------------------------
 
 examples:
 
@@ -65,7 +66,7 @@ examples:
 make all
 
 ----make Cmaj flute in cmajr/ folder----
-make all PREFIX='cmajr' FLUTE_SCALE='C4 D4 E4 F4 G4 A4 B4'
+make all DESTDIR='cmajr' FLUTE_SCALE='C4 D4 E4 F4 G4 A4 B4'
 
 ----Change layer height; output to draft/ folder----
-make all PREFIX='draft' SFLAGS='-DLAYER_HEIGHT=0.2'
+make all DESTDIR='draft' SCADFLAGS='-DLAYER_HEIGHT=0.2'

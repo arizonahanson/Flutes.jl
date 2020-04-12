@@ -6,6 +6,8 @@ JULIASRC=src
 SCADSRC=scad
 # export destination directory
 DESTDIR=build
+# parameter file
+PARAMSFILE=$(DESTDIR)/flute.json
 # extra openscad build arguments
 SCADFLAGS=
 # flute constraints
@@ -20,23 +22,35 @@ SHELL=/bin/sh
 
 # default target "all"
 .PHONY: all
-all: $(DESTDIR)/head.3mf $(DESTDIR)/body.3mf $(DESTDIR)/foot.3mf
+all: head body foot
+
+.PHONY: head
+head: $(DESTDIR)/head.3mf
+
+.PHONY: body
+body: params $(DESTDIR)/body.3mf
+
+.PHONY: foot
+foot: params $(DESTDIR)/foot.3mf
+
+.PHONY: params
+params: $(PARAMSFILE)
+
+# 3mf scad file dependencies
+include $(wildcard $(DESTDIR)/*.3mf.mk)
 
 # run optimization to generate parameters
-$(DESTDIR)/params.json: $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
+$(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 	@mkdir -pv $(DESTDIR)
 	$(JULIA) $(JULIASRC)/optimize.jl $@
 
-# 3mf scad file dependencies
-include $(wildcard $(DESTDIR)/*.3mf.deps)
-
 # compile scad to 3mf
-$(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(DESTDIR)/params.json
+$(DESTDIR)/%.3mf: $(SCADSRC)/%.scad
 	@mkdir -pv $(DESTDIR)
-	$(SCAD) $< -q -p $(DESTDIR)/params.json -P $(notdir $@).p -m $(MAKE) -d $@.deps -o $@ $(subst $$,\$$,$(value SCADFLAGS))
+	$(SCAD) $< -q -p $(PARAMSFILE) -P $(notdir $@).p -m $(MAKE) -d $@.mk -o $@ $(subst $$,\$$,$(value SCADFLAGS))
 
 # clean build
 .PHONY: clean
 clean:
-	@rm $(DESTDIR)/*.deps -fv
-	@rm $(DESTDIR)/params.json -fv
+	@rm $(DESTDIR)/*.3mf.mk -fv
+	@rm $(PARAMSFLIE) -fv

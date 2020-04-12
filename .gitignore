@@ -1,5 +1,4 @@
-**/*.stl
-**/*.3mf
-**/*.deps
-**/*.json
+*.3mf
+*.3mf.mk
+*.json
 
