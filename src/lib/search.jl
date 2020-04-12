@@ -27,12 +27,11 @@ end
 # error function factory (constraints)
 function mkerrfn(flute::FluteConstraint)
   # return error function
-  ℓₜ= flutelength(flute.𝑓)
   𝑯 = 1:length(flute.holes)
   𝒍₊ = map(𝒉->toneholelength(𝒉.𝑓; 𝑑=𝒉.𝑑₊), flute.holes)
   function errfn(𝒅)
     ϵ = 0.0
-    ℓᵩ = ℓₜ # length of last hole, or flute
+    ℓᵩ = 0.0 # length of last hole, or embouchure
     𝑑mean = mean(𝒅)
     for h in 𝑯
       # for each hole calculate error
@@ -41,15 +40,13 @@ function mkerrfn(flute::FluteConstraint)
       # distance from absolute max hole position
       λℓ₊ = abs(𝒍₊[h] - ℓₕ)
       # distance outside reachable range
-      ℓmin = ℓᵩ - ℓₕ - 𝒉.𝑝₊
-      ℓmax = ℓₕ - ℓᵩ - 𝒉.𝑝₋
+      ℓmin = ℓₕ - ℓᵩ - 𝒉.𝑝₊
+      ℓmax = ℓᵩ - ℓₕ - 𝒉.𝑝₋
       λℓout = max(ℓmin, 0.0, ℓmax)
-      # distance from next hole with padding
-      λℓprev = abs(ℓmax)
       # distance from mean hole-size
       λℓmean = abs(toneholelength(𝒉.𝑓; 𝑑=𝑑mean) - ℓₕ)
       # sum weighted errors
-      ϵ += 2λℓout^2 + 0.5λℓ₊ + λℓmean + λℓprev
+      ϵ += 2λℓout^2 + 0.5λℓ₊ + λℓmean
       # next loop use this hole as last hole
       ℓᵩ = ℓₕ
     end

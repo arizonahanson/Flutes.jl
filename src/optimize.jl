@@ -20,10 +20,10 @@ maxp = floats("FLUTE_MAX_PADDING")
 brk = parse(Int, readvariable("FLUTE_BREAK"))
 
 # all the magic happens here
-flute = createflute(scale[1])
-for h in 2:length(scale)
+flute = createflute(scale[end])
+for h in 1:length(scale)-1
   # constrain hole diameters & positions
-  addtonehole!(flute, scale[h]; 𝑑₋=mind[h-1], 𝑑₊=maxd[h-1], 𝑝₋=minp[h-1], 𝑝₊=maxp[h-1])
+  addtonehole!(flute, scale[h]; 𝑑₋=mind[h], 𝑑₊=maxd[h], 𝑝₋=minp[h], 𝑝₊=maxp[h])
 end
 # find best fit
 diameters = optimal(flute)
@@ -38,7 +38,7 @@ full_length=flutelength(flute.𝑓)
 for h in 1:length(diameters)
   𝑑ₕ = diameters[h]
   ℓₕ = toneholelength(flute.holes[h].𝑓; 𝑑=𝑑ₕ)
-  if h > brk
+  if h <= brk
     push!(body_diameters, 𝑑ₕ)
     push!(body_positions, ℓₕ)
   else
@@ -50,8 +50,8 @@ end
 tenon_length=26
 head_length=156
 # calculate breakpoint
-spare = max((foot_positions[end] - body_positions[1] - tenon_length)/2, 0)
-nofoot = body_positions[1] + spare + tenon_length
+spare = max((foot_positions[1] - body_positions[end] - tenon_length)/2, 0)
+nofoot = body_positions[end] + spare + tenon_length
 # lengths
 body_length = round(nofoot - head_length; digits=3)
 foot_length = round(full_length - nofoot; digits=3)
