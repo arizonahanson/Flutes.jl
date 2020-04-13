@@ -46,7 +46,7 @@ function mkerrfn(flute::FluteConstraint)
       # distance from mean hole-size
       λℓmean = abs(toneholelength(𝒉.𝑓; 𝑑=𝑑mean, 𝛥ℓ=𝛥ℓ) - ℓₕ)
       # sum weighted errors
-      ϵ += λℓout^2 + λℓ₊ + 2λℓmean
+      ϵ += 2λℓout^2 + 0.618λℓ₊ + λℓmean
       # next loop use this hole as last hole
       ℓᵩ = ℓₕ
       𝛥ℓ += closedholecorrection(𝒉.𝑓; 𝑑=𝒅[h])

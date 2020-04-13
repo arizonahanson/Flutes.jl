@@ -47,8 +47,8 @@ include $(wildcard $(DESTDIR)/*.3mf.mk)
 $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
 	$(SCAD) $< -q \
-		-d $@.mk -m $(MAKE) \
 		-p $(PARAMSFILE) -P $(notdir $@).params \
+		-d $@.mk -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 
 # clean build
