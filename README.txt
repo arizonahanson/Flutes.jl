@@ -24,21 +24,21 @@ Deleting or moving this file will cause it to be regenerated. If files already e
 path DESTDIR, they will only be overwritten if older than the dependencies.
 
 Diameter and padding constraints are per hole. Padding refers to distance to previous hole,
-or the end of the flute, measured from the centers. The FLUTE_MAX_PADDING may use
+or to the embouchure, measured from the centers. The FLUTE_MAX_PADDING may use
 the value `Inf` to represent infinity (for no maximum).  Holes are referenced in order of
-ascending pitch, starting at the foot.  The FLUTE_SCALE variable starts with the
+descending pitch, left to right as if holding the instrument.  The FLUTE_SCALE variable ends with the
 lowest frequency of the flute, which is not associated with a tone hole.
 
-environment variables (lists ordered foot->head, measurements in mm)
+environment variables (lists ordered head->foot, measurements in mm)
 -----------------------------------------------------------------------------------
 | variable            | default                | description                      |
 -----------------------------------------------------------------------------------
-| FLUTE_SCALE         | D4 E4 F♯4 G4 A4 B4 C♯5 | tones in flute scale # ♯ b ♭     |
-| FLUTE_BREAK         | 3                      | number of holes on foot          |
+| FLUTE_SCALE         | C♯5 B4 A4 G4 F♯4 E4 D4 | tones in flute scale # ♯ b ♭     |
+| FLUTE_BREAK         | 3                      | number of holes on body          |
 | FLUTE_MIN_DIAMETERS | 2 2 2 2 2 2            | minimum hole diameters           |
 | FLUTE_MAX_DIAMETERS | 9 9 9 9 9 9            | maximum hole diameters           |
-| FLUTE_MIN_PADDING   | 18 18 18 44 18 18      | minimum hole padding-footward    |
-| FLUTE_MAX_PADDING   | Inf 40 35 Inf 35 40    | maximum hole padding-footward    |
+| FLUTE_MIN_PADDING   | 174 18 18 44 18 18     | minimum hole left-padding        |
+| FLUTE_MAX_PADDING   | Inf 40 35 Inf 35 35    | maximum hole left-footward       |
 | DESTDIR             | build                  | directory to output 3mf files    |
 | SCADFLAGS           |                        | extra openscad arguments         |
 -----------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ examples:
 make all
 
 ----make Cmaj flute in cmajr/ folder----
-make all DESTDIR='cmajr' FLUTE_SCALE='C4 D4 E4 F4 G4 A4 B4'
+make all DESTDIR='cmajr' FLUTE_SCALE='B4 A4 G4 F4 E4 D4 C4'
 
 ----Change layer height; output to draft/ folder----
 make all DESTDIR='draft' SCADFLAGS='-DLAYER_HEIGHT=0.2'
