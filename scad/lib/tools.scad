@@ -49,7 +49,7 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   slide(z) scale([1,1,w/d]) pivot(-r)
     if (sqx>=0.01) {
       minkowski() {
-        cube([sqx,sqx,0.0001], center=true);
+        cube([sqx,sqx,0.001], center=true);
         union() {
           // shoulder cut
           shell(z=zo, b=d-sqx, b2=do-sqx, l=oh, $fn=64);
@@ -62,7 +62,7 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
         // shoulder cut
         shell(z=zo, b=d, b2=do, l=oh);
         // angled wall
-        shell(b=di, b2=d, l=zo);
+        shell(b=di, b2=d, l=zo+0.001);
       }
     }
 }
