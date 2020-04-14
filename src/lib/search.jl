@@ -36,15 +36,15 @@ function mkerrfn(flute::FluteConstraint)
     for h in 𝑯
       # for each hole calculate error
       𝒉 = flute.holes[h]
-      ℓₕ = toneholelength(𝒉.𝑓; 𝑑=𝒅[h], 𝛥ℓ=𝛥ℓ)
+      ℓₕ = toneholelength(𝒉.𝑓; 𝑑=𝒅[h]) + 𝛥ℓ
       # distance from absolute max hole position
-      λℓ₊ = abs(toneholelength(𝒉.𝑓; 𝑑=𝒉.𝑑₊, 𝛥ℓ=𝛥ℓ) - ℓₕ)
+      λℓ₊ = abs(toneholelength(𝒉.𝑓; 𝑑=𝒉.𝑑₊) + 𝛥ℓ - ℓₕ)
       # distance outside reachable range
       ℓmin = ℓₕ - ℓᵩ - 𝒉.𝑝₊
       ℓmax = ℓᵩ - ℓₕ - 𝒉.𝑝₋
       λℓout = max(ℓmin, 0.0, ℓmax)
       # distance from mean hole-size
-      λℓmean = abs(toneholelength(𝒉.𝑓; 𝑑=𝑑mean, 𝛥ℓ=𝛥ℓ) - ℓₕ)
+      λℓmean = abs(toneholelength(𝒉.𝑓; 𝑑=𝑑mean) + 𝛥ℓ - ℓₕ)
       # sum weighted errors
       ϵ += 2λℓout^2 + 0.618λℓ₊ + λℓmean
       # next loop use this hole as last hole

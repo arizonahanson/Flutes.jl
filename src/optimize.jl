@@ -37,7 +37,7 @@ body_positions = []
 𝛥ℓ = 0.0 # closed-hole correction
 for h in 1:length(diameters)
   𝑑ₕ = diameters[h]
-  ℓₕ = toneholelength(flute.holes[h].𝑓; 𝑑=𝑑ₕ, 𝛥ℓ=𝛥ℓ)
+  ℓₕ = toneholelength(flute.holes[h].𝑓; 𝑑=𝑑ₕ) + 𝛥ℓ
   if h <= brk
     push!(body_diameters, 𝑑ₕ)
     push!(body_positions, ℓₕ)

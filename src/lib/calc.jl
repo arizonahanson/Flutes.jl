@@ -1,4 +1,4 @@
-export soundspeed, wavelength
+export soundspeed, wavelength, wavenumber
 export flutelength, toneholelength, closedholecorrection
 
 """
@@ -56,16 +56,10 @@ end
 calculate correction due to closed hole
 """
 function closedholecorrection(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
-  𝛬 = wavelength(𝑓; ϑ=ϑ)/2
-  𝑘 = wavenumber(𝑓; ϑ=ϑ)
-  𝐿 = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
-  𝑔 = 2^(1/12) - 1
-  𝑧 = 𝑔/2 * √(1 + 4𝐿/(𝑔*𝛬)) - 𝑔/2
-  𝛥ℓₕ = 𝛬 * (𝑧 + 𝑔)
+  # TODO: need better approximation
   𝑉 = π*𝑑*ℎ
   𝑆 = π*⌀
-  ϵ = 0.1*(𝑑/ℎ)
-  𝛥ℓ = (sin(𝑘*𝛥ℓₕ)^2 - ϵ*cos(𝑘*𝛥ℓₕ)^2)*𝑉/𝑆
+  𝛥ℓ = -𝑉/(2𝑆)
   return 𝛥ℓ
 end
 
@@ -74,15 +68,14 @@ end
 
 Calculate distance from embouchure hole center to tone hole center
   for supplied frequency 𝑓, temperature ϑ, embouchure correction ℓₑ,
-  tone-hole bore diameter ⌀, tone-hole height ℎ, tone-hole diameter 𝑑, and
-  additional correction 𝛥ℓ
+  tone-hole bore diameter ⌀, tone-hole height ℎ, tone-hole diameter 𝑑
 """
-function toneholelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓ=0.0)
+function toneholelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
   𝑔 = 2^(1/12) - 1
   𝛬 = wavelength(𝑓; ϑ=ϑ)/2
   𝐿 = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
   𝑧 = 𝑔/2 * √(1 + 4𝐿/(𝑔*𝛬)) - 𝑔/2
   𝛥ℓₕ = 𝑧 * 𝛬
-  ℓₕ = 𝛬 - ℓₑ - 𝛥ℓₕ + 𝛥ℓ
+  ℓₕ = 𝛬 - ℓₑ - 𝛥ℓₕ
   return ℓₕ
 end
