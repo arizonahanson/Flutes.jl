@@ -51,15 +51,16 @@ function flutelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0)
 end
 
 """
-  𝛥ℓ = closedholecorrection(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
+𝛥ℓ = closedholecorrection(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, ℓ𝑟=0.0)
 
 calculate correction due to closed hole
 """
-function closedholecorrection(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
-  # TODO: need better approximation
-  𝑉 = π*𝑑*ℎ
-  𝑆 = π*⌀
-  𝛥ℓ = -𝑉/(2𝑆)
+function closedholecorrection(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, ℓ𝑟=0.0)
+  ϵ = 2/π * atan(2𝑑/13ℎ)
+  𝑘 = wavenumber(𝑓; ϑ=ϑ)
+  𝑉 = π*𝑑^2*ℎ
+  𝑆 = π*⌀^2
+  𝛥ℓ = (sin(𝑘*ℓ𝑟)^2 - ϵ*cos(𝑘*ℓ𝑟)^2) * 𝑉/𝑆
   return 𝛥ℓ
 end
 
