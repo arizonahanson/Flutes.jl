@@ -70,7 +70,7 @@ function optimal(flute)
   errfn = mkerrfn(flute)
   # box-constrained, initial parameters
   minp, maxp, initp = minbox(flute)
-  result = optimize(errfn, minp, maxp, initp, Fminbox(BFGS()))
+  result = optimize(errfn, minp, maxp, initp, Fminbox(LBFGS()))
   # check for convergence
   if !Optim.converged(result)
     println("warning: unable to converge on a result")
