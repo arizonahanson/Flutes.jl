@@ -32,4 +32,4 @@ module foot() {
   }
 }
 
-foot();
+color("silver") foot();

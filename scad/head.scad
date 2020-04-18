@@ -49,4 +49,4 @@ module head() {
   }
 }
 
-head();
+color("silver") head();

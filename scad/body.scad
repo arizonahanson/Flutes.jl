@@ -35,4 +35,4 @@ module body() {
   }
 }
 
-body();
+color("silver") body();

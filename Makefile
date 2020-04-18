@@ -10,6 +10,7 @@ DESTDIR=build
 PARAMSFILE=$(DESTDIR)/data.json
 # extra openscad build arguments
 SCADFLAGS=
+COLORSCHEME=Starnight
 # flute constraints
 FLUTE_BREAK=3
 FLUTE_SCALE=C♯5 B4 A4 G4 F♯4 E4 D4
@@ -69,6 +70,7 @@ $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.png=.data)) \
 		-d $(@:.png=.mk) -m $(MAKE) \
+		--colorscheme=$(COLORSCHEME) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 	@echo -e " * Preview: "$@"\n"
 
