@@ -2,6 +2,7 @@ import Pkg
 Pkg.activate(".")
 
 using Flutes
+using Dates
 
 function floats(var)
   return mapvariable(x->parse(Float64, x), var)
@@ -34,12 +35,12 @@ foot_diameters = []
 foot_positions = []
 body_diameters = []
 body_positions = []
-𝛥ℓ = 0.0 # closed-hole correction
+𝛥ℓᵪ = 0.0 # closed-hole correction
 ℓₜ = flutelength(flute.𝑓)
 for h in 1:length(diameters)
   𝑓ₕ = flute.holes[h].𝑓
   𝑑ₕ = diameters[h]
-  ℓₕ = toneholelength(𝑓ₕ; 𝑑=𝑑ₕ) - 𝛥ℓ
+  ℓₕ = toneholelength(𝑓ₕ; 𝑑=𝑑ₕ) - 𝛥ℓᵪ
   if h <= brk
     push!(body_diameters, 𝑑ₕ)
     push!(body_positions, ℓₕ)
@@ -47,11 +48,12 @@ for h in 1:length(diameters)
     push!(foot_diameters, 𝑑ₕ)
     push!(foot_positions, ℓₕ)
   end
-  global 𝛥ℓ += closedholecorrection(𝑓ₕ; 𝑑=𝑑ₕ, ℓ𝑟=ℓₜ-ℓₕ)
+  global 𝛥ℓᵪ += closedholecorrection(𝑓ₕ; 𝑑=𝑑ₕ, ℓᵣ=ℓₜ-ℓₕ)
 end
-flute_length = ℓₜ - 𝛥ℓ
-tenon_length=26 # TODO: externalize constants
-head_length=156
+flute_length = ℓₜ - 𝛥ℓᵪ
+# TODO: externalize constants
+tenon_length = 26
+head_length = 156
 
 # place body/foot joint
 spare = max((foot_positions[1] - body_positions[end] - tenon_length)/2, 0)
@@ -59,15 +61,17 @@ nofoot = body_positions[end] + spare + tenon_length
 body_length = round(nofoot - head_length; digits=3)
 foot_length = round(flute_length - nofoot; digits=3)
 
-# export parameters to opencad json
+# export parameters to opencad props
 params = createscadparameters()
-bodyset = "body.3mf.params"
-setscadparameter!(params, bodyset, "BODY_LENGTH", body_length)
-setscadparameter!(params, bodyset, "BODY_DIAMETERS", map(bd->round(bd; digits=3), body_diameters))
-setscadparameter!(params, bodyset, "BODY_POSITIONS", map(bp->round(bp-head_length; digits=3), body_positions))
-footset = "foot.3mf.params"
-setscadparameter!(params, footset, "FOOT_LENGTH", foot_length)
-setscadparameter!(params, footset, "FOOT_DIAMETERS", map(fd->round(fd, digits=3), foot_diameters))
-setscadparameter!(params, footset, "FOOT_POSITIONS", map(fp->round(fp-nofoot; digits=3), foot_positions))
+footset = "foot.data"
+setscadparameter!(params, footset, "FootLength", foot_length)
+setscadparameter!(params, footset, "FootDiameters", map(fd->round(fd, digits=3), foot_diameters))
+setscadparameter!(params, footset, "FootPositions", map(fp->round(fp-nofoot; digits=3), foot_positions))
+bodyset = "body.data"
+setscadparameter!(params, bodyset, "BodyLength", body_length)
+setscadparameter!(params, bodyset, "BodyDiameters", map(bd->round(bd; digits=3), body_diameters))
+setscadparameter!(params, bodyset, "BodyPositions", map(bp->round(bp-head_length; digits=3), body_positions))
+headset = "head.data"
+setscadparameter!(params, headset, "CreationDate", now())
 writescadparameters(params, ARGS[1])
 

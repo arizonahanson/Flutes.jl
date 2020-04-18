@@ -44,39 +44,39 @@ Calculate flute length from embouchure-hole to open-end
   and open-end bore diameter ⌀
 """
 function flutelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0)
-  𝛬 = wavelength(𝑓; ϑ=ϑ)/2
+  λₛ = wavelength(𝑓; ϑ=ϑ)/2
   𝛥ℓₜ = 0.3⌀
-  ℓₜ = 𝛬 - ℓₑ - 𝛥ℓₜ
+  ℓₜ = λₛ - ℓₑ - 𝛥ℓₜ
   return ℓₜ
 end
 
 """
-𝛥ℓ = closedholecorrection(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, ℓ𝑟=0.0)
+  𝛥ℓᵪ = closedholecorrection(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, ℓᵣ=0.0)
 
 calculate correction due to closed hole
 """
-function closedholecorrection(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, ℓ𝑟=0.0)
+function closedholecorrection(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, ℓᵣ=0.0)
   ϵ = 2/π * atan(2𝑑/13ℎ)
   𝑘 = wavenumber(𝑓; ϑ=ϑ)
   𝑉 = π*𝑑^2*ℎ
   𝑆 = π*⌀^2
-  𝛥ℓ = (sin(𝑘*ℓ𝑟)^2 - ϵ*cos(𝑘*ℓ𝑟)^2) * 𝑉/𝑆
-  return 𝛥ℓ
+  𝛥ℓᵪ = (sin(𝑘*ℓᵣ)^2 - ϵ*cos(𝑘*ℓᵣ)^2) * 𝑉/𝑆
+  return 𝛥ℓᵪ
 end
 
 """
-ℓₕ = toneholelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝑔=2^(1/12))
+  ℓₕ = toneholelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
 
 Calculate distance from embouchure hole center to tone hole center
   for supplied frequency 𝑓, temperature ϑ, embouchure correction ℓₑ,
   tone-hole bore diameter ⌀, tone-hole height ℎ, tone-hole diameter 𝑑
 """
 function toneholelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
+  λₛ = wavelength(𝑓; ϑ=ϑ)/2
+  𝐿ₕ = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
   𝑔 = 2^(1/12) - 1
-  𝛬 = wavelength(𝑓; ϑ=ϑ)/2
-  𝐿 = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
-  𝑧 = 𝑔/2 * √(1 + 4𝐿/(𝑔*𝛬)) - 𝑔/2
-  𝛥ℓₕ = 𝑧 * 𝛬
-  ℓₕ = 𝛬 - ℓₑ - 𝛥ℓₕ
+  𝑧 = 𝑔/2 * √(1 + 4𝐿ₕ/(𝑔*λₛ)) - 𝑔/2
+  𝛥ℓₕ = 𝑧 * λₛ
+  ℓₕ = λₛ - ℓₑ - 𝛥ℓₕ
   return ℓₕ
 end
