@@ -42,8 +42,8 @@ function mkerrfn(flute::FluteConstraint)
       # distance from absolute max hole position
       𝛬ℓ₊ = abs(toneholelength(𝒉.𝑓; 𝑑=𝒉.𝑑₊)-𝛥ℓᵪ - ℓₕ)
       # distance outside reachable range
-      ℓₕmin = ℓᵩ - ℓₕ + 𝒉.𝑝₋
-      ℓₕmax = ℓₕ - ℓᵩ - 𝒉.𝑝₊
+      ℓₕmin = ℓᵩ - ℓₕ + 𝒉.𝑝₋ # positive if distance below min
+      ℓₕmax = ℓₕ - ℓᵩ - 𝒉.𝑝₊ # positive if distance above max
       𝛬ℓout = max(ℓₕmin, 0.0, ℓₕmax)
       # distance from mean hole-size
       𝛬ℓmean = abs(toneholelength(𝒉.𝑓; 𝑑=𝑑mean)-𝛥ℓᵪ - ℓₕ)
