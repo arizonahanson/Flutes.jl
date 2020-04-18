@@ -55,24 +55,24 @@ include $(wildcard $(DESTDIR)/*.mk)
 # compile scad to 3mf
 $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
-	@echo -e " * Exporting 3D model\n    Output path: "$@"\n"
+	@echo -e " * Exporting 3D model: "$@
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.3mf=.data)) \
 		-d $(@:.3mf=.mk) -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@echo -e " * Complete: "$@"\n"
+	@echo -e " * Complete: "$@
 
 # compile scad to preview png
 $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
-	@echo -e " * Rendering preview image\n    Output path: "$@"\n"
+	@echo -e " * Rendering preview: "$@
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.png=.data)) \
 		-d $(@:.png=.mk) -m $(MAKE) \
 		--colorscheme=$(COLORSCHEME) \
 		--imgsize=960,1080 \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@echo -e " * Preview: "$@"\n"
+	@echo -e " * Preview: "$@
 
 # clean build
 .PHONY: clean
