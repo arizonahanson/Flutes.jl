@@ -5,6 +5,7 @@
 include <consts.scad>;
 use <tools.scad>;
 
+// TODO: externalize all this
 // mortise inner bore - 0.925-0.927"
 A=25.05;
 // piston outer diameter - 0.923-0.922"

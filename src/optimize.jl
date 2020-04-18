@@ -51,6 +51,7 @@ for h in 1:length(diameters)
   global 𝛥ℓᵪ += closedholecorrection(𝑓ₕ; 𝑑=𝑑ₕ, ℓᵣ=ℓₜ-ℓₕ)
 end
 flute_length = ℓₜ - 𝛥ℓᵪ
+
 # TODO: externalize constants
 tenon_length = 26
 head_length = 156
@@ -68,14 +69,15 @@ setscadparameter!(params, headset, "HeadLength", head_length)
 setscadparameter!(params, headset, "TenonLength", tenon_length)
 bodyset = "body.data"
 setscadparameter!(params, bodyset, "BodyLength", body_length)
-setscadparameter!(params, bodyset, "BodyDiameters", map(bd->round(bd; digits=3), body_diameters))
-setscadparameter!(params, bodyset, "BodyPositions", map(bp->round(bp-head_length; digits=3), body_positions))
+setscadparameter!(params, bodyset, "HoleDiameters", map(bd->round(bd; digits=3), body_diameters))
+setscadparameter!(params, bodyset, "HolePositions", map(bp->round(bp-head_length; digits=3), body_positions))
 setscadparameter!(params, bodyset, "TenonLength", tenon_length)
+setscadparameter!(params, bodyset, "MortiseLength", tenon_length)
 footset = "foot.data"
 setscadparameter!(params, footset, "FootLength", foot_length)
-setscadparameter!(params, footset, "FootDiameters", map(fd->round(fd, digits=3), foot_diameters))
-setscadparameter!(params, footset, "FootPositions", map(fp->round(fp-nofoot; digits=3), foot_positions))
-setscadparameter!(params, footset, "TenonLength", tenon_length)
+setscadparameter!(params, footset, "HoleDiameters", map(fd->round(fd, digits=3), foot_diameters))
+setscadparameter!(params, footset, "HolePositions", map(fp->round(fp-nofoot; digits=3), foot_positions))
+setscadparameter!(params, bodyset, "MortiseLength", tenon_length)
 extraset = "extra.data"
 setscadparameter!(params, extraset, "CreationDate", now())
 writescadparameters(params, ARGS[1])

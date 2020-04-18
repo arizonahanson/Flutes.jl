@@ -1,29 +1,33 @@
 /*
  * Footjoint section
  */
-// slider widget for number
-FootLength=0; // [0:400]
+// slider widget for number in range
+FootLength=0; // [0:0.1:999]
 // text box for vector
-FootDiameters=[];
+HoleDiameters=[]; // [1:42]
 // text box for vector
-FootPositions=[];
-// slider widget for number
-TenonLength=26;
+HolePositions=[]; // [1:42]
+// slider widget for number in range
+MortiseLength=26; // [0:1:42]
 
 include <lib/index.scad>;
 
+// TODO: currently fixed
+FluteOuter=26;
+FluteInner=19;
+
 module foot() {
-  hh=(26-19)/2;
-  slide(TenonLength) difference() {
+  hh=(FluteOuter-FluteInner)/2;
+  slide(MortiseLength) difference() {
     union() {
-      mortise(z=-TenonLength, l=TenonLength);
-      shell(b=26, l=FootLength);
+      mortise(z=-MortiseLength, l=MortiseLength);
+      shell(b=FluteOuter, l=FootLength);
     }
     // bore
-    bore(b=19, l=FootLength);
+    bore(b=FluteInner, l=FootLength);
     // holes
-    for(i=[0:1:len(FootDiameters)]) let (zh=FootPositions[i], dh=FootDiameters[i]) {
-      hole(z=zh, b=19, h=hh, d=dh);
+    for(i=[0:1:len(HoleDiameters)]) let (zh=HolePositions[i], dh=HoleDiameters[i]) {
+      hole(z=zh, b=FluteInner, h=hh, d=dh);
     }
   }
 }
