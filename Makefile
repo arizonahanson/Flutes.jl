@@ -53,14 +53,13 @@ $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 # 3mf scad file dependencies
 include $(wildcard $(DESTDIR)/*.mk)
 # compile scad to 3mf
-$(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE) $(DESTDIR)/%.png
+$(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
 	@echo -e " * Exporting 3D model\n    Output path: "$@"\n"
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.3mf=.data)) \
 		-d $(@:.3mf=.mk) -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@zip -q -j $@ $(PARAMSFILE) $(@:.3mf=.png)
 	@echo -e " * Complete: "$@"\n"
 
 # compile scad to preview png
