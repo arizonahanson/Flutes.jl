@@ -19,7 +19,7 @@ you can speed up the build by running in parallel with the `-j` flag for make: `
 Environment variables determine the parameters of the flute, and default to a flute in
 D major if not specified otherwise.
 
-The `params` target will generate a 'params.json' file at path DESTDIR, containing flute parameters.
+The `optimize` target will generate a 'data.json' file at path DESTDIR, containing flute parameters.
 Deleting or moving this file will cause it to be regenerated. If files already exist at
 path DESTDIR, they will only be overwritten if older than the dependencies.
 
@@ -56,10 +56,10 @@ make targets
 | target   | description                  |
 -------------------------------------------
 | all      | generate all files (default) |
-| params   | generate parameters file     |
 | head     | generate headjoint 3mf       |
 | body     | generate body 3mf            |
 | foot     | generate foot 3mf            |
+| optimize | generate parameters file     |
 | clean    | delete temporary files       |
 -------------------------------------------
 

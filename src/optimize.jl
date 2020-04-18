@@ -63,15 +63,20 @@ foot_length = round(flute_length - nofoot; digits=3)
 
 # export parameters to opencad props
 params = createscadparameters()
-footset = "foot.data"
-setscadparameter!(params, footset, "FootLength", foot_length)
-setscadparameter!(params, footset, "FootDiameters", map(fd->round(fd, digits=3), foot_diameters))
-setscadparameter!(params, footset, "FootPositions", map(fp->round(fp-nofoot; digits=3), foot_positions))
+headset = "head.data"
+setscadparameter!(params, headset, "HeadLength", head_length)
+setscadparameter!(params, headset, "TenonLength", tenon_length)
 bodyset = "body.data"
 setscadparameter!(params, bodyset, "BodyLength", body_length)
 setscadparameter!(params, bodyset, "BodyDiameters", map(bd->round(bd; digits=3), body_diameters))
 setscadparameter!(params, bodyset, "BodyPositions", map(bp->round(bp-head_length; digits=3), body_positions))
-headset = "head.data"
-setscadparameter!(params, headset, "CreationDate", now())
+setscadparameter!(params, bodyset, "TenonLength", tenon_length)
+footset = "foot.data"
+setscadparameter!(params, footset, "FootLength", foot_length)
+setscadparameter!(params, footset, "FootDiameters", map(fd->round(fd, digits=3), foot_diameters))
+setscadparameter!(params, footset, "FootPositions", map(fp->round(fp-nofoot; digits=3), foot_positions))
+setscadparameter!(params, footset, "TenonLength", tenon_length)
+extraset = "extra.data"
+setscadparameter!(params, extraset, "CreationDate", now())
 writescadparameters(params, ARGS[1])
 

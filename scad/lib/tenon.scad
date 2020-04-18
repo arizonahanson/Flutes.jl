@@ -13,23 +13,23 @@ C=24.92;
 F=22.2;
 // o-ring minor diameter - .067-.073"
 CS=1.78;
-TENON_OUTER=A+3.2;
-TENON_LIP=A+(TENON_OUTER-A)/3;
+TenonOuter=A+3.2;
+TenonLip=A+(TenonOuter-A)/3;
 
-module mortise(z=0) {
-  lz=(A-FLUTE_INNER)/2;
-  lc=(TENON_OUTER-FLUTE_OUTER)/2;
+module mortise(z=0, l=26) {
+  lz=(A-19)/2;
+  lc=(TenonOuter-26)/2;
   slide(z) difference() {
     union() {
-      shell(b=TENON_OUTER, l=TENON_LENGTH-lc);
-      chamfer(z=TENON_LENGTH, b=TENON_OUTER, b2=FLUTE_OUTER, fromend=true);
+      shell(b=TenonOuter, l=l-lc);
+      chamfer(z=l, b=TenonOuter, b2=26, fromend=true);
     }
     // bore
-    bore(b=A, l=TENON_LENGTH-lz);
+    bore(b=A, l=l-lz);
     // bevel to flute bore
-    bore(z=TENON_LENGTH-lz, b=A, b2=FLUTE_INNER, l=lz);
+    bore(z=l-lz, b=A, b2=19, l=lz);
     // entrance lip
-    bore(b=TENON_LIP, b2=A, l=(TENON_LIP-A)/2);
+    bore(b=TenonLip, b2=A, l=(TenonLip-A)/2);
   }
 }
 
@@ -46,15 +46,15 @@ module gland(z=0, fromend=false) {
   }
 }
 
-module tenon(z=0) {
-  lz=(C-FLUTE_INNER)/2;
-  ll=TENON_LENGTH+LAYER_HEIGHT;
+module tenon(z=0, l=26) {
+  lz=(C-19)/2;
+  ll=l+LAYER_HEIGHT;
   slide(z) difference() {
     union() {
       shell(b=C, l=ll-lz);
-      chamfer(z=ll-lz, b=C, b2=FLUTE_INNER);
+      chamfer(z=ll-lz, b=C, b2=19);
     }
-    bore(b=FLUTE_INNER, l=ll);
+    bore(b=19, l=ll);
     gland(z=ll, fromend=true);
     gland(z=6);
   }

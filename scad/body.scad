@@ -7,22 +7,24 @@ BodyLength=0; // [0:400]
 BodyDiameters=[];
 // text box for vector
 BodyPositions=[];
+// slider widget for number
+TenonLength=26;
 
 include <lib/index.scad>;
 
-module body(l=BodyLength) {
-  hh=(FLUTE_OUTER-FLUTE_INNER)/2;
-  slide(TENON_LENGTH) difference() {
+module body() {
+  hh=(26-19)/2;
+  slide(TenonLength) difference() {
     union() {
-      mortise(z=-TENON_LENGTH);
-      shell(b=FLUTE_OUTER, l=l-TENON_LENGTH);
-      tenon(z=l-TENON_LENGTH);
+      mortise(z=-TenonLength, l=TenonLength);
+      shell(b=26, l=BodyLength-TenonLength);
+      tenon(z=BodyLength-TenonLength, l=TenonLength);
     }
     // bore
-    bore(b=FLUTE_INNER, l=l-TENON_LENGTH);
+    bore(b=19, l=BodyLength-TenonLength);
     // holes
     for(i=[0:1:len(BodyDiameters)]) let (zh=BodyPositions[i], dh=BodyDiameters[i]) {
-      hole(z=zh, b=FLUTE_INNER, h=hh, d=dh);
+      hole(z=zh, b=19, h=hh, d=dh);
     }
   }
 }
