@@ -71,6 +71,7 @@ $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 		-p $(PARAMSFILE) -P $(notdir $(@:.png=.data)) \
 		-d $(@:.png=.mk) -m $(MAKE) \
 		--colorscheme=$(COLORSCHEME) \
+		--imgsize=960,1080 \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 	@echo -e " * Preview: "$@"\n"
 
