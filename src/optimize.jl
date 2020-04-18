@@ -77,7 +77,7 @@ footset = "foot.data"
 setscadparameter!(params, footset, "FootLength", foot_length)
 setscadparameter!(params, footset, "HoleDiameters", map(fd->round(fd, digits=3), foot_diameters))
 setscadparameter!(params, footset, "HolePositions", map(fp->round(fp-nofoot; digits=3), foot_positions))
-setscadparameter!(params, bodyset, "MortiseLength", tenon_length)
+setscadparameter!(params, footset, "MortiseLength", tenon_length)
 extraset = "extra.data"
 setscadparameter!(params, extraset, "CreationDate", now())
 writescadparameters(params, ARGS[1])

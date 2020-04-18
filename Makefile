@@ -39,19 +39,22 @@ optimize: $(PARAMSFILE)
 # run optimization to generate parameters
 $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 	@mkdir -pv $(dir $@)
-	$(JULIA) $(JULIASRC)/optimize.jl $@
+	@echo -e " * Optimizing flute parameters"
+	@echo -e "    Output path: "$@"\n"
+	@$(JULIA) $(JULIASRC)/optimize.jl $@
 
 # 3mf scad file dependencies
 include $(wildcard $(DESTDIR)/*.mk)
 # compile scad to 3mf
 $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
-	$(SCAD) $< -q \
+	@echo -e " * Rendering 3mf model\n    Output path: "$@"\n"
+	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.3mf=.data)) \
 		-d $(@:.3mf=.mk) -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 	@zip -q -j $@ $(PARAMSFILE)
-	@echo $@" done."
+	@echo -e " * Complete: "$@"\n"
 
 # clean build
 .PHONY: clean
