@@ -22,16 +22,22 @@ SHELL=/bin/sh
 
 # default target "all"
 .PHONY: all
-all: head body foot
+all: previews models
+
+.PHONY: previews
+previews: $(DESTDIR)/head.png $(DESTDIR)/body.png $(DESTDIR)/foot.png
+
+.PHONY: models
+models: $(DESTDIR)/head.3mf $(DESTDIR)/body.3mf $(DESTDIR)/foot.3mf
 
 .PHONY: head
-head: $(DESTDIR)/head.3mf
+head: $(DESTDIR)/head.3mf $(DESTDIR)/head.png
 
 .PHONY: body
-body: $(DESTDIR)/body.3mf
+body: $(DESTDIR)/body.3mf $(DESTDIR)/body.png
 
 .PHONY: foot
-foot: $(DESTDIR)/foot.3mf
+foot: $(DESTDIR)/foot.3mf $(DESTDIR)/foot.png
 
 .PHONY: optimize
 optimize: $(PARAMSFILE)
@@ -46,18 +52,28 @@ $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 # 3mf scad file dependencies
 include $(wildcard $(DESTDIR)/*.mk)
 # compile scad to 3mf
-$(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
+$(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE) $(DESTDIR)/%.png
 	@mkdir -pv $(DESTDIR)
-	@echo -e " * Rendering 3mf model\n    Output path: "$@"\n"
+	@echo -e " * Exporting 3D model\n    Output path: "$@"\n"
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.3mf=.data)) \
 		-d $(@:.3mf=.mk) -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@zip -q -j $@ $(PARAMSFILE)
+	@zip -q -j $@ $(PARAMSFILE) $(@:.3mf=.png)
 	@echo -e " * Complete: "$@"\n"
+
+# compile scad to preview png
+$(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
+	@mkdir -pv $(DESTDIR)
+	@echo -e " * Rendering preview image\n    Output path: "$@"\n"
+	@$(SCAD) $< -q \
+		-p $(PARAMSFILE) -P $(notdir $(@:.png=.data)) \
+		-d $(@:.png=.mk) -m $(MAKE) \
+		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
+	@echo -e " * Preview: "$@"\n"
 
 # clean build
 .PHONY: clean
 clean:
-	@rm $(DESTDIR)/*.mk -fv
+	@rm $(DESTDIR)/head.mk $(DESTDIR)/body.mk $(DESTDIR)/foot.mk -fv
 	@rm $(PARAMSFILE) -fv
