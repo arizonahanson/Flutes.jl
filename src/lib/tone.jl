@@ -3,9 +3,9 @@ export tone
 """
 𝑓 = tone(name; A=440.0)
   convert tone name to frequency, equal temperament
-    tone("A4")
-    tone("C♭0")
-    tone("B♯9")
+    tone("A4") == A
+    tone("C♭0") or tone("Cb0")
+    tone("B♯9") or tone("B#9")
 """
 function tone(name; A=440.0)
   𝑔=2^(1/12)

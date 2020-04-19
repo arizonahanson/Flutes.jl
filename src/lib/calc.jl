@@ -44,39 +44,42 @@ Calculate flute length from embouchure-hole to open-end
   and open-end bore diameter ⌀
 """
 function flutelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0)
-  λₛ = wavelength(𝑓; ϑ=ϑ)/2
+  𝜆ₜ = wavelength(𝑓; ϑ=ϑ)/2
   𝛥ℓₜ = 0.3⌀
-  ℓₜ = λₛ - ℓₑ - 𝛥ℓₜ
+  ℓₜ = 𝜆ₜ - ℓₑ - 𝛥ℓₜ
   return ℓₜ
 end
 
 """
-  𝛥ℓᵪ = closedholecorrection(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, ℓᵣ=0.0)
+  ℓₕ = toneholelength(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
 
-calculate correction due to closed hole
+Calculate distance from embouchure hole center to tone hole center
+  for open frequency 𝑓, closed frequency 𝑓ₜ, temperature ϑ, embouchure correction ℓₑ,
+  tone-hole bore diameter ⌀, tone-hole height ℎ, tone-hole diameter 𝑑
 """
-function closedholecorrection(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, ℓᵣ=0.0)
-  ϵ = 2/π * atan(2𝑑/13ℎ)
-  𝑘 = wavenumber(𝑓; ϑ=ϑ)
-  𝑉 = π*𝑑^2*ℎ
-  𝑆 = π*⌀^2
-  𝛥ℓᵪ = (sin(𝑘*ℓᵣ)^2 - ϵ*cos(𝑘*ℓᵣ)^2) * 𝑉/𝑆
-  return 𝛥ℓᵪ
+function toneholelength(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
+  𝜆ₛ = wavelength(𝑓; ϑ=ϑ)/2
+  𝐿ₕ = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
+  𝑔 = 𝑓/𝑓ₜ - 1
+  𝑧 = 𝑔/2 * √(1 + 4𝐿ₕ/(𝑔*𝜆ₛ)) - 𝑔/2
+  𝛥ℓₕ = 𝑧 * 𝜆ₛ
+  ℓₕ = 𝜆ₛ - ℓₑ - 𝛥ℓₕ
+  return ℓₕ
 end
 
 """
-  ℓₕ = toneholelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
+  𝛥ℓᵪ = closedholecorrection(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
 
-Calculate distance from embouchure hole center to tone hole center
-  for supplied frequency 𝑓, temperature ϑ, embouchure correction ℓₑ,
-  tone-hole bore diameter ⌀, tone-hole height ℎ, tone-hole diameter 𝑑
+calculate correction due to closed hole
 """
-function toneholelength(𝑓=440.0; ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
-  λₛ = wavelength(𝑓; ϑ=ϑ)/2
-  𝐿ₕ = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
-  𝑔 = 2^(1/12) - 1
-  𝑧 = 𝑔/2 * √(1 + 4𝐿ₕ/(𝑔*λₛ)) - 𝑔/2
-  𝛥ℓₕ = 𝑧 * λₛ
-  ℓₕ = λₛ - ℓₑ - 𝛥ℓₕ
-  return ℓₕ
+function closedholecorrection(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ℓₑ=52.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5)
+  𝑘 = wavenumber(𝑓; ϑ=ϑ)
+  𝜆ₜ= wavelength(𝑓ₜ; ϑ=ϑ)/2
+  ℓₕ = toneholelength(𝑓; 𝑓ₜ=𝑓ₜ, ϑ=ϑ, ℓₑ=ℓₑ, ⌀=⌀, 𝑑=𝑑, ℎ=ℎ)
+  ℓᵣ = 𝜆ₜ - ℓₕ
+  ϵ = 2/π * atan(2𝑑/13ℎ)
+  𝑉 = 𝑑^2*ℎ
+  𝑆 = ⌀^2
+  𝛥ℓᵪ = (sin(𝑘*ℓᵣ)^2 - ϵ*cos(𝑘*ℓᵣ)^2) * 𝑉/𝑆
+  return 𝛥ℓᵪ
 end
