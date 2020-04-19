@@ -53,7 +53,7 @@ function mkerrfn(flute::FluteConstraint)
       # sum weighted errors
       𝑒 += 2𝛬near^2 + 0.6𝛬big + 𝛬avg
       # calculate increased correction for next loop
-      #𝛥𝜆ᵥ += closedholecorrection(𝒉.𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
+      𝛥𝜆ᵥ += closedholecorrection(𝒉.𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
       # next loop use this hole as previous hole
       ℓₚ = ℓₕ
     end
