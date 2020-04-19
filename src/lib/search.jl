@@ -33,26 +33,27 @@ function mkerrfn(flute::FluteConstraint)
   function errfn(𝒅)
     𝑒 = 0.0 # error
     ℓₚ = 0.0 # position of previous hole, or embouchure
-    #𝛥ℓᵪ = 0.0 # closed-hole correction
+    𝛥𝜆ᵥ = 0.0 # closed-hole correction
     𝑑mean = mean(𝒅)
     for h in 𝑯
       # for each tonehole calculate error
       𝒉 = flute.holes[h]
+      𝑓 = 𝒉.𝑓
       𝑓ₜ = 𝒇[h+1]
       𝑑ₕ = 𝒅[h]
-      ℓₕ = toneholelength(𝒉.𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ)#-𝛥ℓᵪ
-      # distance outside reachable range
-      𝛬ℓₚmin = ℓₚ - ℓₕ + 𝒉.𝑝₋ # positive if distance below min
-      𝛬ℓₚmax = ℓₕ - ℓₚ - 𝒉.𝑝₊ # positive if distance above max
-      𝛬ℓₚ = max(𝛬ℓₚmin, 0.0, 𝛬ℓₚmax)
-      # distance from absolute max hole position
-      𝛬ℓ₊ = abs(toneholelength(𝒉.𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝒉.𝑑₊) - ℓₕ)#-𝛥ℓᵪ)
-      # distance from mean hole-size
-      𝛬ℓmean = abs(toneholelength(𝒉.𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑mean) - ℓₕ)#-𝛥ℓᵪ)
+      ℓₕ = toneholelength(𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
+      # deviation from reachable
+      𝛬min = ℓₚ - ℓₕ + 𝒉.𝑝₋ # positive if position below min
+      𝛬max = ℓₕ - ℓₚ - 𝒉.𝑝₊ # positive if position above max
+      𝛬near = max(𝛬min, 0.0, 𝛬max)
+      # deviation from max hole diameter
+      𝛬big = abs(toneholelength(𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝒉.𝑑₊, 𝛥𝜆ᵥ=𝛥𝜆ᵥ) - ℓₕ)
+      # deviation from mean hole diameter
+      𝛬avg = abs(toneholelength(𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑mean, 𝛥𝜆ᵥ=𝛥𝜆ᵥ) - ℓₕ)
       # sum weighted errors
-      𝑒 += 2𝛬ℓₚ^2 + 0.618𝛬ℓ₊ + 𝛬ℓmean
+      𝑒 += 2𝛬near^2 + 0.6𝛬big + 𝛬avg
       # calculate increased correction for next loop
-      #𝛥ℓᵪ += closedholecorrection(𝒉.𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ)
+      #𝛥𝜆ᵥ += closedholecorrection(𝒉.𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
       # next loop use this hole as previous hole
       ℓₚ = ℓₕ
     end
