@@ -2,23 +2,24 @@
 import JSON
 export readvariable, mapvariable
 export createscadparameters, setscadparameter!, writescadparameters
+using DataStructures
 
 # create JSON parameter set for scad
 function createscadparameters()
-  return Dict("fileFormatVersion" => "1", "parameterSets" => Dict())
+  return OrderedDict("fileFormatVersion" => "1", "parameterSets" => OrderedDict())
 end
 
 # set a scad parameter
-function setscadparameter!(parameters::Dict, setname::String, key::String, value)
+function setscadparameter!(parameters::OrderedDict, setname::String, key::String, value)
   sets = parameters["parameterSets"]
   if !haskey(sets, setname)
-    sets[setname] = Dict{String,String}()
+    sets[setname] = OrderedDict{String,String}()
   end
   sets[setname][key] = JSON.json(value)
 end
 
 # write scad parameters to filename
-function writescadparameters(parameters::Dict, filename::String)
+function writescadparameters(parameters::OrderedDict, filename::String)
   open(filename, "w") do io
     write(io, JSON.json(parameters, 2))
   end
