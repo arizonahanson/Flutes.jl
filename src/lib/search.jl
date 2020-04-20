@@ -27,7 +27,6 @@ end
 # error function factory (constraints)
 function mkerrfn(flute::FluteConstraint)
   # return error function
-  ℓₜ = flutelength(flute.𝑓)
   𝒇 = map(𝒉->𝒉.𝑓, flute.holes); push!(𝒇, flute.𝑓)
   𝑯 = 1:length(flute.holes)
   function errfn(𝒅)
