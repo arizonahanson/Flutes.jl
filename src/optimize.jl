@@ -50,6 +50,7 @@ for h in 1:length(diameters)
     push!(foot_positions, ℓₕ)
   end
   global 𝛥𝜆ᵥ += closedholecorrection(𝑓ₕ; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
+  #println("𝛥𝜆ᵥ=", 𝛥𝜆ᵥ)
 end
 flute_length = flutelength(flute.𝑓; 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
 

@@ -4,31 +4,31 @@ export flutelength, toneholelength, closedholecorrection
 """
   𝑐 = soundspeed(ϑ=25.0)
 
-Calculate the speed of sound in air of temperature ϑ
+Calculate the speed of sound in air of temperature ϑ in m/s
 """
 function soundspeed(ϑ=25.0)
   𝛾 = 1.400            # heat capacity ratio of air
   𝑅 = 8.31446261815324 # molar gas constant (J/mol/K)
   𝑀 = 0.028965369      # mean molar mass of air (kg/mol)
   𝑐 = √(𝛾*𝑅/𝑀 *273.15)*√(1.0 + ϑ/273.15)
-  return 𝑐*1000.0 # (to mm/s)
+  return 𝑐
 end
 
 """
   𝜆 = wavelength(𝑓=440.0; ϑ=25.0)
 
-calculate wavelength of given frequency 𝑓 in air of temperature ϑ
+calculate wavelength of given frequency 𝑓 in air of temperature ϑ in mm
 """
 function wavelength(𝑓=440.0; ϑ=25.0)
   𝑐 = soundspeed(ϑ)
   𝜆 = 𝑐/𝑓
-  return 𝜆
+  return 𝜆 * 1000.0 # (to mm)
 end
 
 """
   𝑘 = wavenumber(𝑓=440.0; 𝜗=25.0)
 
-calculate wavenumber of given frequency 𝑓 in air of temperature 𝜗
+calculate wavenumber of given frequency 𝑓 in air of temperature 𝜗 in m⁻¹
 """
 function wavenumber(𝑓=440.0; ϑ=25.0)
   𝑐 = soundspeed(ϑ)
