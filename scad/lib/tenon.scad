@@ -30,7 +30,7 @@ module mortise(z=0, l=26) {
     // bevel to flute bore
     bore(z=l-lz, b=A, b2=19, l=lz);
     // entrance lip
-    bore(b=TenonLip, b2=A, l=(TenonLip-A)/2);
+    // bore(b=TenonLip, b2=A, l=(TenonLip-A)/2);
   }
 }
 
