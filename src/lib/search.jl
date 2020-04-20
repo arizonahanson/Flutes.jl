@@ -50,7 +50,7 @@ function mkerrfn(flute::FluteConstraint)
       # deviation from mean hole diameter (prefer average diameters)
       𝛬avg = abs(toneholelength(𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑mean, 𝛥𝜆ᵥ=𝛥𝜆ᵥ) - ℓₕ)
       # sum weighted errors (heavy weight on reachable locations)
-      𝑒 += 2𝛬reach^2 + 𝛬big + 𝛬avg/2
+      𝑒 += 2𝛬reach^2 + 𝛬big + 𝛬avg
       # calculate increased correction for next loop
       𝛥𝜆ᵥ += closedholecorrection(𝒉.𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
       # next loop use this hole as the previous hole
@@ -64,7 +64,7 @@ end
 function minbox(flute::FluteConstraint)
   𝒅₋ = map(𝒉->𝒉.𝑑₋, flute.holes)
   𝒅₊ = map(𝒉->𝒉.𝑑₊, flute.holes)
-  𝒅₀ = map(𝒅->𝒅/2, (𝒅₊-𝒅₋)) + 𝒅₋
+  𝒅₀ = map(𝒅->3𝒅/4, (𝒅₊-𝒅₋)) + 𝒅₋
   return (𝒅₋, 𝒅₊, 𝒅₀)
 end
 
