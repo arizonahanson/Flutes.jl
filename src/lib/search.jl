@@ -64,7 +64,7 @@ end
 function minbox(flute::FluteConstraint)
   𝒅₋ = map(𝒉->𝒉.𝑑₋, flute.holes)
   𝒅₊ = map(𝒉->𝒉.𝑑₊, flute.holes)
-  𝒅₀ = map(𝒅->3𝒅/4, (𝒅₊-𝒅₋)) + 𝒅₋
+  𝒅₀ = map(𝒅->.9𝒅, (𝒅₊-𝒅₋)) + 𝒅₋
   return (𝒅₋, 𝒅₊, 𝒅₀)
 end
 

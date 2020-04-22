@@ -14,15 +14,15 @@ function soundspeed(ϑ=25.0)
   return 𝑐
 end
 
-"""
-  𝜆 = wavelength(𝑓=440.0; ϑ=25.0)
 
-calculate wavelength of given frequency 𝑓 in air of temperature ϑ in mm
 """
-function wavelength(𝑓=440.0; ϑ=25.0)
-  𝑐 = soundspeed(ϑ)
-  𝜆 = 𝑐/𝑓
-  return 𝜆 * 1000.0 # (to mm)
+  𝜔 = angularfreq(𝑓=440.0)
+
+calculate angular frequency of 𝑓
+"""
+function angularfreq(𝑓=440.0)
+  𝜔 = 2π*𝑓
+  return 𝜔
 end
 
 """
@@ -32,8 +32,20 @@ calculate wavenumber of given frequency 𝑓 in air of temperature 𝜗 in m⁻�
 """
 function wavenumber(𝑓=440.0; ϑ=25.0)
   𝑐 = soundspeed(ϑ)
-  𝑘 = 2π*𝑓/𝑐
+  𝜔 = angularfreq(𝑓)
+  𝑘 = 𝜔/𝑐
   return 𝑘
+end
+
+"""
+  𝜆 = wavelength(𝑓=440.0; ϑ=25.0)
+
+calculate wavelength of given frequency 𝑓 in air of temperature ϑ in mm
+"""
+function wavelength(𝑓=440.0; ϑ=25.0)
+  𝑐 = soundspeed(ϑ)
+  𝜆 = 𝑐/𝑓
+  return 𝜆 * 1000.0 # (to mm)
 end
 
 """
@@ -58,12 +70,12 @@ Calculate distance from embouchure hole center to tone hole center
   tone-hole bore diameter ⌀, tone-hole height ℎ, tone-hole diameter 𝑑
 """
 function toneholelength(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓₑ=52.0, 𝛥𝜆ᵥ=0.0)
-  𝜆ₛ = wavelength(𝑓; ϑ=ϑ)/2 - 𝛥𝜆ᵥ
+  𝜆ₛ = wavelength(𝑓; ϑ=ϑ)/2
   ℎₛ = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
   𝑔 = 𝑓/𝑓ₜ - 1
   𝑧 = 𝑔/2 * √(1 + 4ℎₛ/(𝑔*𝜆ₛ)) - 𝑔/2
   𝛥ℓₕ = 𝑧 * 𝜆ₛ
-  ℓₕ = 𝜆ₛ - 𝛥ℓₑ - 𝛥ℓₕ
+  ℓₕ = 𝜆ₛ - 𝛥ℓₑ - 𝛥𝜆ᵥ - 𝛥ℓₕ
   return ℓₕ
 end
 
