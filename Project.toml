@@ -1,7 +1,7 @@
 name = "Flutes"
 uuid = "0847320a-19e7-11ea-24cf-eb2f4631c1dc"
 authors = ["Isaac W Hanson <isaac@starlig.ht>"]
-version = "0.1.0"
+version = "1.3.0"
 
 [deps]
 DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
