@@ -8,12 +8,12 @@ function floats(var)
   return mapvariable(x->parse(Float64, x), var)
 end
 
-function tones(var)
-  return mapvariable(tone, var)
+function tones(var, A)
+  return mapvariable(v->tone(v; A=A), var)
 end
 
 # input env vars
-scale = tones("FLUTE_SCALE")
+scale = tones("FLUTE_SCALE", 442.0)
 mind = floats("FLUTE_MIN_DIAMETERS")
 maxd = floats("FLUTE_MAX_DIAMETERS")
 minp = floats("FLUTE_MIN_PADDING")
@@ -50,7 +50,6 @@ for h in 1:length(diameters)
     push!(foot_positions, ℓₕ)
   end
   global 𝛥𝜆ᵥ += closedholecorrection(𝑓ₕ; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
-  #println("𝛥𝜆ᵥ=", 𝛥𝜆ᵥ)
 end
 flute_length = flutelength(flute.𝑓; 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
 
