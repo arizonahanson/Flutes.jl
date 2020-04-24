@@ -29,8 +29,6 @@ module mortise(z=0, l=26) {
     bore(b=A, l=l-lz);
     // bevel to flute bore
     bore(z=l-lz, b=A, b2=19, l=lz);
-    // entrance lip
-    // bore(b=TenonLip, b2=A, l=(TenonLip-A)/2);
   }
 }
 
@@ -55,9 +53,8 @@ module tenon(z=0, l=26) {
       shell(b=C, l=ll-lz);
       chamfer(z=ll-lz, b=C, b2=19);
     }
-    bore(b=19, l=ll);
     gland(z=ll, fromend=true);
-    gland(z=6);
+    gland(z=(ll+lz)/2, fromend=true);
   }
 }
 

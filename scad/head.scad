@@ -78,6 +78,7 @@ module head() {
     bore(z=82, b=18.3, b2=18.4, l=10);
     bore(z=92, b=18.4, b2=18.5, l=10);
     bore(z=102, b=18.5, b2=19, l=17);
+    bore(z=119, b=19, l=TenonLength+LAYER_HEIGHT);
     // embouchure hole
     hole(b=17.4, h=(FluteOuter-17.4)/2, d=EmbouchureDiameter, w=EmbouchureWidth, a=EmbouchureWallAngle, s=EmbouchureShoulderAngle, sq=EmbouchureSquareness);
   }

@@ -12,7 +12,6 @@ MortiseLength=26; // [0:1:42]
 
 include <lib/index.scad>;
 
-// TODO: currently fixed
 FluteOuter=26;
 FluteInner=19;
 
