@@ -60,7 +60,7 @@ $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 		-p $(PARAMSFILE) -P $(notdir $(@:.3mf=.data)) \
 		-d $(@:.3mf=.mk) -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@echo -e " * Complete: "$@
+	@echo -e " * Export Complete: "$@
 
 # compile scad to preview png
 $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
@@ -72,7 +72,7 @@ $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 		--colorscheme=$(COLORSCHEME) \
 		--imgsize=960,1080 \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@echo -e " * Preview: "$@
+	@echo -e " * Preview Complete: "$@
 
 # clean build
 .PHONY: clean
