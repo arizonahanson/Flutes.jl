@@ -55,7 +55,7 @@ flute_length = flutelength(flute.𝑓; 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
 
 # TODO: externalize constants
 tenon_length = 26
-head_length = 156
+head_length = 145
 
 # place body/foot joint
 spare = max((foot_positions[1] - body_positions[end] - tenon_length)/2, 0)
