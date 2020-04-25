@@ -50,7 +50,7 @@ function mkerrfn(flute::FluteConstraint)
       # deviation from mean hole diameter (prefer average diameters)
       𝛬avg = abs(toneholelength(𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑mean, 𝛥ℓᵥ=𝛥ℓᵥ) - ℓₕ)
       # sum weighted errors (heavy weight on reachable locations)
-      𝑒 += 3𝛬reach^2 + 𝛬big/2 + 𝛬avg
+      𝑒 += 2𝛬reach^2 + 𝛬big + 𝛬avg
       # calculate increased correction for next loop
       𝛥ℓᵥ += closedholecorrection(𝒉.𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥ℓᵥ=𝛥ℓᵥ)
       # next loop use this hole as the previous hole
@@ -64,7 +64,7 @@ end
 function minbox(flute::FluteConstraint)
   𝒅₋ = map(𝒉->𝒉.𝑑₋, flute.holes)
   𝒅₊ = map(𝒉->𝒉.𝑑₊, flute.holes)
-  𝒅₀ = map(𝒅->.9𝒅, (𝒅₊-𝒅₋)) + 𝒅₋
+  𝒅₀ = map(𝒅->𝒅*0.9, (𝒅₊-𝒅₋)) + 𝒅₋
   return (𝒅₋, 𝒅₊, 𝒅₀)
 end
 
@@ -72,15 +72,11 @@ function optimal(flute)
   # minimize error function
   errfn = mkerrfn(flute)
   # box-constrained, initial parameters
-  minp, maxp, initp = minbox(flute)
-  result = optimize(errfn, minp, maxp, initp, Fminbox(LBFGS()))
-  # check for convergence
-  if !Optim.converged(result)
-    println("unable to converge on a result")
-  else
-    println(result)
-  end
+  lower, upper, initial = minbox(flute)
+  # particle swarm optimization
+  result = optimize(errfn, initial,
+                    ParticleSwarm(lower, upper, length(initial)),
+                    Optim.Options(iterations=100000))
   params = Optim.minimizer(result)
-  # return minimizer
   return params
 end
