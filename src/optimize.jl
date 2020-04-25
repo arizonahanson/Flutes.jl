@@ -82,5 +82,7 @@ setscadparameter!(params, footset, "HolePositions", map(fp->round(fp-nofoot; dig
 setscadparameter!(params, footset, "MortiseLength", tenon_length)
 extraset = "extra.data"
 setscadparameter!(params, extraset, "CreationDate", now())
+setscadparameter!(params, extraset, "Tuning", tuning)
+setscadparameter!(params, extraset, "Scale", readvariable("FLUTE_SCALE"))
 writescadparameters(params, ARGS[1])
 
