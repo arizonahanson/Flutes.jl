@@ -1,16 +1,3 @@
-# program binaries
-JULIA=julia
-SCAD=openscad
-# source directories
-JULIASRC=src
-SCADSRC=scad
-# export destination directory
-DESTDIR=build
-# scad parameter set file
-PARAMSFILE=$(DESTDIR)/data.json
-# extra openscad build arguments
-SCADFLAGS=
-COLORSCHEME=Starnight
 # flute constraints
 FLUTE_SCALE=C♯5 B4 A4 G4 F♯4 E4 D4
 FLUTE_MIN_DIAMETERS=3 3 3 3 3 3
@@ -20,7 +7,21 @@ FLUTE_MAX_PADDING=Inf 40 35 Inf 35 35
 FLUTE_BREAK=3
 FLUTE_TUNING=442.0
 export
+# program binaries
+JULIA=julia
+SCAD=openscad
 SHELL=/bin/sh
+# source directories
+JULIASRC=src
+SCADSRC=scad
+# export destination directory
+DESTDIR=build
+# optimized openscad parameter set json
+PARAMSFILE=$(DESTDIR)/data.json
+# extra openscad export arguments
+SCADFLAGS=
+# openscad theme for previews
+COLORSCHEME=Starnight
 
 # default target "all"
 .PHONY: all
