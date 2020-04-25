@@ -33,12 +33,12 @@ module plate(z=0, b, h, l, r=0, sq=0.4) {
       hull() {
         shell(b=b);
         slide(h) intersection() {
-          shell(b=od,l=2*l);
           slide(l) pivot() scale([1,od/l,1])
             minkowski() {
               cube(size=[sqx,sqx,0.001], center=true);
               shell(b=b-sqx, b2=2*l-sqx, l=od/2);
             }
+          shell(b=od,l=2*l);
         }
         shell(z=2*l+2*h, b=b);
       }
