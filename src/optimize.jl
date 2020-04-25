@@ -35,13 +35,13 @@ foot_diameters = []
 foot_positions = []
 body_diameters = []
 body_positions = []
-𝛥𝜆ᵥ = 0.0 # closed-hole correction
+𝛥ℓᵥ = 0.0 # closed-hole correction
 𝒇 = map(ℎ->ℎ.𝑓, flute.holes); push!(𝒇, flute.𝑓)
 for h in 1:length(diameters)
   𝑓ₕ = flute.holes[h].𝑓
   𝑑ₕ = diameters[h]
   𝑓ₜ = 𝒇[h+1]
-  ℓₕ = toneholelength(𝑓ₕ; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
+  ℓₕ = toneholelength(𝑓ₕ; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥ℓᵥ=𝛥ℓᵥ)
   if h <= brk
     push!(body_diameters, 𝑑ₕ)
     push!(body_positions, ℓₕ)
@@ -49,9 +49,9 @@ for h in 1:length(diameters)
     push!(foot_diameters, 𝑑ₕ)
     push!(foot_positions, ℓₕ)
   end
-  global 𝛥𝜆ᵥ += closedholecorrection(𝑓ₕ; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
+  global 𝛥ℓᵥ += closedholecorrection(𝑓ₕ; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥ℓᵥ=𝛥ℓᵥ)
 end
-flute_length = flutelength(flute.𝑓; 𝛥𝜆ᵥ=𝛥𝜆ᵥ)
+flute_length = flutelength(flute.𝑓; 𝛥ℓᵥ=𝛥ℓᵥ)
 
 # TODO: externalize constants
 tenon_length = 26
