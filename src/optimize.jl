@@ -13,7 +13,8 @@ function tones(var, A)
 end
 
 # input env vars
-scale = tones("FLUTE_SCALE", 442.0)
+tuning = parse(Float64, readvariable("FLUTE_TUNING"))
+scale = tones("FLUTE_SCALE", tuning)
 mind = floats("FLUTE_MIN_DIAMETERS")
 maxd = floats("FLUTE_MAX_DIAMETERS")
 minp = floats("FLUTE_MIN_PADDING")
@@ -53,7 +54,6 @@ for h in 1:length(diameters)
 end
 flute_length = flutelength(flute.𝑓; 𝛥ℓᵥ=𝛥ℓᵥ)
 
-# TODO: externalize constants
 tenon_length = 26
 head_length = 145
 

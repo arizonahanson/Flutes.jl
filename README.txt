@@ -34,6 +34,7 @@ environment variables (lists ordered head->foot, measurements in mm)
 | variable            | default                | description                      |
 -----------------------------------------------------------------------------------
 | FLUTE_SCALE         | C♯5 B4 A4 G4 F♯4 E4 D4 | tones in flute scale # ♯ b ♭     |
+| FLUTE_TUNING        | 442.0                  | tuning of A4                     |
 | FLUTE_BREAK         | 3                      | number of holes on body          |
 | FLUTE_MIN_DIAMETERS | 2 2 2 2 2 2            | minimum hole diameters           |
 | FLUTE_MAX_DIAMETERS | 9 9 9 9 9 9            | maximum hole diameters           |
