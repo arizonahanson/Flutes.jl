@@ -29,6 +29,7 @@ end
 # find best fit
 # all the magic happens here
 diameters = optimal(flute)
+println(" * Result: ", map(d->round(d; digits=3), diameters))
 # end magic
 
 # break holes by foot/body

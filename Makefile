@@ -47,8 +47,7 @@ optimize: $(PARAMSFILE)
 # run optimization to generate parameters
 $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 	@mkdir -pv $(dir $@)
-	@echo -e " * Optimizing flute parameters"
-	@echo -e "    Output path: "$@"\n"
+	@echo -e " * Optimizing flute parameters: "$@
 	@$(JULIA) $(JULIASRC)/optimize.jl $@
 
 # 3mf scad file dependencies
