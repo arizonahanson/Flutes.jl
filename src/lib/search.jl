@@ -76,7 +76,7 @@ function optimal(flute)
   # particle swarm optimization
   result = optimize(errfn, initial,
                     ParticleSwarm(lower, upper, length(initial)),
-                    Optim.Options(iterations=100000))
+                    Optim.Options(iterations=50000))
   params = Optim.minimizer(result)
   return params
 end
