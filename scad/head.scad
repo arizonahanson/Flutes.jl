@@ -2,7 +2,7 @@
  * Headjoint section
  */
 // slider widget for number in range
-HeadLength=144.674; // [1:0.1:999]
+HeadLength=144.674; // [128:0.1:999]
 // slider widget for number in range
 CrownLength=52; // [1:1:42]
 // slider widget for number in range
@@ -52,7 +52,7 @@ module head() {
       shell(z=-17, b=24, b2=24.4, l=17);
 			// lip plate
 			plate(b=17.4, h=4.3, l=24, r=atan(10/26));
-      // embouchure->max bore
+      // embouchure->max shell
       shell(b=24.4, b2=24.6, l=22);
       shell(z=22, b=24.6, b2=24.7, l=10);
       shell(z=32, b=24.7, b2=24.9, l=10);
@@ -62,8 +62,8 @@ module head() {
       shell(z=72, b=25.2, b2=25.3, l=10);
       shell(z=82, b=25.3, b2=25.4, l=10);
       shell(z=92, b=25.4, b2=25.5, l=10);
-      shell(z=102, b=25.5, b2=26, l=16.674);
-      tenon(z=118.674, l=TenonLength);
+      shell(z=102, b=25.5, b2=26, l=HeadLength-TenonLength-102);
+      tenon(z=HeadLength-TenonLength, l=TenonLength);
     }
     // reflector->embouchure
     bore(z=-17, b=17, b2=17.4, l=17);
@@ -77,8 +77,8 @@ module head() {
     bore(z=72, b=18.2, b2=18.3, l=10);
     bore(z=82, b=18.3, b2=18.4, l=10);
     bore(z=92, b=18.4, b2=18.5, l=10);
-    bore(z=102, b=18.5, b2=19, l=16.674);
-    bore(z=118.674, b=19, l=TenonLength+LAYER_HEIGHT);
+    bore(z=102, b=18.5, b2=19, l=18);
+    bore(z=120, b=19, l=HeadLength-120+LAYER_HEIGHT);
     // embouchure hole
     hole(b=17.4, h=(FluteOuter-17.4)/2, d=EmbouchureDiameter, w=EmbouchureWidth, a=EmbouchureWallAngle, s=EmbouchureShoulderAngle, sq=EmbouchureSquareness);
   }
