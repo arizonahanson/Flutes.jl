@@ -38,7 +38,7 @@ environment variables (lists ordered head->foot, measurements in mm)
 | FLUTE_BREAK         | 3                      | number of holes on body          |
 | FLUTE_MIN_DIAMETERS | 2 2 2 2 2 2            | minimum hole diameters           |
 | FLUTE_MAX_DIAMETERS | 9 9 9 9 9 9            | maximum hole diameters           |
-| FLUTE_MIN_PADDING   | 174 18 18 44 18 18     | minimum hole left-padding        |
+| FLUTE_MIN_PADDING   | 163 18 18 44 18 18     | minimum hole left-padding        |
 | FLUTE_MAX_PADDING   | Inf 40 35 Inf 35 35    | maximum hole left-footward       |
 | DESTDIR             | build                  | directory to output 3mf files    |
 | SCADFLAGS           |                        | extra openscad arguments         |
