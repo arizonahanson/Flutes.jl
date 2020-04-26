@@ -64,7 +64,7 @@ end
 function minbox(flute::FluteConstraint)
   𝒅₋ = map(𝒉->𝒉.𝑑₋, flute.holes)
   𝒅₊ = map(𝒉->𝒉.𝑑₊, flute.holes)
-  𝒅₀ = map(𝒅->𝒅*0.9, (𝒅₊-𝒅₋)) + 𝒅₋
+  𝒅₀ = map(𝒅->𝒅*rand(), (𝒅₊-𝒅₋)) + 𝒅₋
   return (𝒅₋, 𝒅₊, 𝒅₀)
 end
 
@@ -75,7 +75,7 @@ function optimal(flute)
   lower, upper, initial = minbox(flute)
   # particle swarm optimization
   result = optimize(errfn, initial,
-                    ParticleSwarm(lower, upper, length(initial)),
+                    ParticleSwarm(lower, upper, length(initial)+3),
                     Optim.Options(iterations=50000))
   params = Optim.minimizer(result)
   return params
