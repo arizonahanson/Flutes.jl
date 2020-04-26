@@ -20,6 +20,7 @@ maxd = floats("FLUTE_MAX_DIAMETERS")
 minp = floats("FLUTE_MIN_PADDING")
 maxp = floats("FLUTE_MAX_PADDING")
 brk = parse(Int, readvariable("FLUTE_BREAK"))
+trace = parse(Bool, readvariable("TRACE"))
 
 flute = createflute(scale[end])
 for h in 1:length(scale)-1
@@ -28,7 +29,7 @@ for h in 1:length(scale)-1
 end
 # find best fit
 # all the magic happens here
-diameters = optimal(flute)
+diameters = optimal(flute; trace=trace)
 println(" * Result: ", map(d->round(d; digits=3), diameters))
 # end magic
 
