@@ -42,6 +42,7 @@ environment variables (lists ordered head->foot, measurements in mm)
 | FLUTE_BREAK         | 3                      | number of holes on body          |
 | DESTDIR             | build                  | directory to output 3mf files    |
 | SCADFLAGS           |                        | extra openscad arguments         |
+| TRACE               | false                  | show tracing of merit function   |
 -----------------------------------------------------------------------------------
 
 openscad variables (supply via SCADFLAGS)
