@@ -60,7 +60,7 @@ $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@echo -e " * Exporting 3D model: "$@
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.3mf=.data)) \
-		-d $(@:.3mf=.mk) -m $(MAKE) \
+		-d $@.mk -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 	@echo -e " * Export Complete: "$@
 
@@ -70,7 +70,7 @@ $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@echo -e " * Rendering preview: "$@
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.png=.data)) \
-		-d $(@:.png=.mk) -m $(MAKE) \
+		-d $@.mk -m $(MAKE) \
 		--colorscheme=$(COLORSCHEME) \
 		--imgsize=960,1080 \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
@@ -79,5 +79,5 @@ $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 # clean build
 .PHONY: clean
 clean:
-	@rm $(DESTDIR)/head.mk $(DESTDIR)/body.mk $(DESTDIR)/foot.mk -fv
+	@rm $(DESTDIR)/head*.mk $(DESTDIR)/body*.mk $(DESTDIR)/foot*.mk -fv
 	@rm $(PARAMSFILE) -fv
