@@ -20,7 +20,7 @@ EmbouchureWallAngle=7; // [1:0.1:42]
 // slider widget for number in range
 EmbouchureShoulderAngle=45; // [1:1:42]
 // slider widget for number in range
-EmbouchureSquareness=0.15; // [0:0.01:1]
+EmbouchureSquareness=0.1; // [0:0.01:1]
 
 include <lib/index.scad>;
 
