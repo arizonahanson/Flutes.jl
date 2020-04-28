@@ -77,7 +77,7 @@ function optimal(flute; trace=false)
   # particle swarm optimization
   result = optimize(errfn, initial,
                     ParticleSwarm(lower, upper, n_particles),
-                    Optim.Options(iterations=50000, show_trace=trace, show_every=5000))
+                    Optim.Options(iterations=100000, show_trace=trace, show_every=10000))
   params = Optim.minimizer(result)
   return params
 end
