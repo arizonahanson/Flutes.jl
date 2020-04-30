@@ -49,15 +49,18 @@ function wavelength(𝑓=440.0; ϑ=25.0)
 end
 
 """
-  ℓₜ = flutelength(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝛥ℓₑ=52.0, 𝛥ℓᵥ=0.0)
+  ℓₜ = flutelength(𝑓=440.0; ϑ=25.0, ⌀=19.0, ℎ=3.5, 𝛥ℓₑ=52.0, 𝛥ℓᵥ=0.0)
 
 Calculate flute length from embouchure-hole to open-end
   for fundamental frequency 𝑓, temperature ϑ, open-end bore diameter ⌀,
-  embouchure correction 𝛥ℓₑ and closed-hole correction 𝛥ℓᵥ
+  wall thickness ℎ, embouchure correction 𝛥ℓₑ and closed-hole correction 𝛥ℓᵥ
 """
-function flutelength(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝛥ℓₑ=52.0, 𝛥ℓᵥ=0.0)
+function flutelength(𝑓=440.0; ϑ=25.0, ⌀=19.0, ℎ=3.5, 𝛥ℓₑ=52.0, 𝛥ℓᵥ=0.0)
   𝜆ₜ = wavelength(𝑓; ϑ=ϑ)/2
-  𝛥ℓₜ = 0.6133⌀/2
+  ⌀₊ = ⌀+2ℎ
+  𝛿ᵩ = 0.8216⌀/2
+  𝛿₀ = 0.6133⌀/2
+  𝛥ℓₜ = 𝛿ᵩ + ⌀/⌀₊ * (𝛿₀-𝛿ᵩ) + 0.057⌀/⌀₊ * (1-(⌀/⌀₊)^5)
   ℓₜ = 𝜆ₜ - 𝛥ℓₑ - 𝛥ℓᵥ - 𝛥ℓₜ
   return ℓₜ
 end
