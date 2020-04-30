@@ -1,4 +1,4 @@
-export soundspeed, wavelength, wavenumber
+export soundspeed, halfwavelength, wavenumber
 export flutelength, toneholelength, closedholecorrection
 
 """
@@ -38,13 +38,13 @@ function wavenumber(𝑓=440.0; ϑ=25.0)
 end
 
 """
-  𝜆 = wavelength(𝑓=440.0; ϑ=25.0)
+  𝜆 = halfwavelength(𝑓=440.0; ϑ=25.0)
 
-calculate wavelength of given frequency 𝑓 in air of temperature ϑ in mm
+calculate half-wavelength of given frequency 𝑓 in air of temperature ϑ in mm
 """
-function wavelength(𝑓=440.0; ϑ=25.0)
+function halfwavelength(𝑓=440.0; ϑ=25.0)
   𝑐 = soundspeed(ϑ)
-  𝜆 = 𝑐/𝑓
+  𝜆 = 𝑐/2𝑓
   return 𝜆 * 1000.0 # (to mm)
 end
 
@@ -56,12 +56,12 @@ Calculate flute length from embouchure-hole to open-end
   wall thickness ℎ, embouchure correction 𝛥ℓₑ and closed-hole correction 𝛥ℓᵥ
 """
 function flutelength(𝑓=440.0; ϑ=25.0, ⌀=19.0, ℎ=3.5, 𝛥ℓₑ=52.0, 𝛥ℓᵥ=0.0)
-  𝜆ₜ = wavelength(𝑓; ϑ=ϑ)/2
+  𝜆 = halfwavelength(𝑓; ϑ=ϑ)
   ⌀₊ = ⌀+2ℎ
-  𝛿ᵩ = 0.8216⌀/2
   𝛿₀ = 0.6133⌀/2
-  𝛥ℓₜ = 𝛿ᵩ + ⌀/⌀₊ * (𝛿₀-𝛿ᵩ) + 0.057⌀/⌀₊ * (1-(⌀/⌀₊)^5)
-  ℓₜ = 𝜆ₜ - 𝛥ℓₑ - 𝛥ℓᵥ - 𝛥ℓₜ
+  𝛿₁ = 0.8216⌀/2
+  𝛥ℓₜ = 𝛿₁ + ⌀/⌀₊ * (𝛿₀-𝛿₁) + 0.057⌀/⌀₊ * (1-(⌀/⌀₊)^5)
+  ℓₜ = 𝜆 - 𝛥ℓₑ - 𝛥ℓᵥ - 𝛥ℓₜ
   return ℓₜ
 end
 
@@ -73,12 +73,12 @@ Calculate distance from embouchure hole center to tone hole center
   tone-hole height ℎ, tone-hole diameter 𝑑, embouchure correction 𝛥ℓₑ and closed-hole correction 𝛥ℓᵥ
 """
 function toneholelength(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓₑ=52.0, 𝛥ℓᵥ=0.0)
-  𝜆ₜ = wavelength(𝑓; ϑ=ϑ)/2
-  ℎₕ = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
+  𝜆 = halfwavelength(𝑓; ϑ=ϑ)
   𝑔 = 𝑓/𝑓ₜ - 1
-  𝑧 = 𝑔/2 * √(1 + 4ℎₕ/(𝑔*𝜆ₜ)) - 𝑔/2
-  𝛥ℓₕ = 𝑧 * 𝜆ₜ
-  ℓₕ = 𝜆ₜ - 𝛥ℓₑ - 𝛥ℓᵥ - 𝛥ℓₕ
+  𝜙 = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
+  𝑧 = 𝑔/2 * √(1 + 4𝜙/(𝑔*𝜆)) - 𝑔/2
+  𝛥ℓₕ = 𝑧 * 𝜆
+  ℓₕ = 𝜆 - 𝛥ℓₑ - 𝛥ℓᵥ - 𝛥ℓₕ
   return ℓₕ
 end
 
@@ -91,12 +91,11 @@ Calculate correction due to closed hole
 """
 function closedholecorrection(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓₑ=52.0, 𝛥ℓᵥ=0.0)
   𝑘 = wavenumber(𝑓; ϑ=ϑ)
-  𝜆ₜ= wavelength(𝑓ₜ; ϑ=ϑ)/2
+  𝜆ₜ= halfwavelength(𝑓ₜ; ϑ=ϑ)
   ℓₕ = toneholelength(𝑓; 𝑓ₜ=𝑓ₜ, ϑ=ϑ, ⌀=⌀, 𝑑=𝑑, ℎ=ℎ, 𝛥ℓₑ=𝛥ℓₑ, 𝛥ℓᵥ=𝛥ℓᵥ)
-  ℓᵣ = 𝜆ₜ - 𝛥ℓₑ - ℓₕ
+  𝜙 = 𝑑^2*ℎ / ⌀^2
   ϵ = 2/π * atan(2𝑑/13ℎ)
-  𝑉ₕ = 𝑑^2*ℎ
-  𝑆ₜ = ⌀^2
-  𝛥𝜆ₕ = (sin(𝑘*ℓᵣ)^2 - ϵ*cos(𝑘*ℓᵣ)^2) * 𝑉ₕ/𝑆ₜ
+  𝛿 = 𝜆ₜ - 𝛥ℓₑ - ℓₕ
+  𝛥𝜆ₕ = (sin(𝑘*𝛿)^2 - ϵ*cos(𝑘*𝛿)^2) * 𝜙
   return 𝛥𝜆ₕ
 end
