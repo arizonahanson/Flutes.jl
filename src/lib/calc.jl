@@ -57,7 +57,7 @@ Calculate flute length from embouchure-hole to open-end
 """
 function flutelength(𝑓=440.0; ϑ=25.0, ⌀=19.0, 𝛥ℓₑ=52.0, 𝛥ℓᵥ=0.0)
   𝜆ₜ = wavelength(𝑓; ϑ=ϑ)/2
-  𝛥ℓₜ = 0.3⌀
+  𝛥ℓₜ = 0.6133⌀/2
   ℓₜ = 𝜆ₜ - 𝛥ℓₑ - 𝛥ℓᵥ - 𝛥ℓₜ
   return ℓₜ
 end
