@@ -51,7 +51,7 @@ module head() {
       shell(z=-CrownLength, b=24, l=CrownLength-17);
       shell(z=-17, b=24, b2=24.4, l=17);
 			// lip plate
-			plate(b=17.4, h=4.3, l=26, r=atan(10/26));
+			plate(b=17.4, h=4.3, l=24, r=atan(10/26));
       // embouchure->max shell
       shell(b=24.4, b2=24.6, l=22);
       shell(z=22, b=24.6, b2=24.7, l=10);
