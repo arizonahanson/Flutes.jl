@@ -3,6 +3,9 @@
  */
 include <consts.scad>;
 
+// used to calculate number of segments
+function fn(b) = floor(PI*b/4/(NOZZLE_DIAMETER-0.01))*4;
+
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
   translate([0,0,z]) children();
@@ -11,7 +14,7 @@ module slide(z=LAYER_HEIGHT) {
 // translate z, then cylinder d1=b, d2=b2|b, h=l
 module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
-  slide(z) cylinder(d1=b, d2=b2, h=l);
+  slide(z) cylinder(d1=b, d2=b2, h=l, $fn=fn(max(b,b2)));
 }
 
 module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
@@ -22,7 +25,7 @@ module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
 }
 
 // used to correct hole sizes
-function fuzz(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
+function fuzz(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/fn(b))*b/2,2));
 
 // like shell, but fuzz the diameter and position
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
@@ -52,9 +55,9 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
         cube([sqx,sqx,0.001], center=true);
         union() {
           // shoulder cut
-          shell(z=zo, b=d-sqx, b2=do-sqx, l=oh, $fn=64);
+          shell(z=zo, b=d-sqx, b2=do-sqx, l=oh);
           // angled wall
-          shell(b=di-sqx, b2=d-sqx, l=zo, $fn=64);
+          shell(b=di-sqx, b2=d-sqx, l=zo);
         }
       }
     } else {
