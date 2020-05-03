@@ -14,7 +14,8 @@ module slide(z=LAYER_HEIGHT) {
 // translate z, then cylinder d1=b, d2=b2|b, h=l
 module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
-  slide(z) cylinder(d1=b, d2=b2, h=l, $fn=fn(max(b,b2)));
+  maxfn = fn(max(b, b2));
+  slide(z) cylinder(d1=b, d2=b2, h=l, $fn=maxfn);
 }
 
 module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
@@ -25,12 +26,13 @@ module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
 }
 
 // used to correct hole sizes
-function fuzz(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/fn(b))*b/2,2));
+function fuzz(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
 
 // like shell, but fuzz the diameter and position
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
-  shell(z=z-0.001, b=fuzz(b), b2=fuzz(b2), l=l+0.002);
+  maxfn = fn(max(b, b2));
+  slide(z-0.001) cylinder(d1=fuzz(b, $fn=maxfn), d2=fuzz(b2, $fn=maxfn), h=l+0.002, $fn=maxfn);
 }
 
 // rotate x by r, y by 90 and z by -90 (for holes)
