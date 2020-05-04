@@ -3,12 +3,20 @@
  */
 include <consts.scad>;
 
-// used to calculate number of segments
-function fn(b) = floor(PI*b/4/(NOZZLE_DIAMETER-0.01))*4;
+// used to calculate number of segments ($fn)
+function fn(b) = floor(PI*b/NOZZLE_DIAMETER/4)*4;
+
+// used to correct hole sizes
+function fuzz(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
 
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
   translate([0,0,z]) children();
+}
+
+// rotate x by r, y by 90 and z by -90 (for holes)
+module pivot(r=0) {
+  rotate([r,90,-90]) children();
 }
 
 // translate z, then cylinder d1=b, d2=b2|b, h=l
@@ -18,16 +26,6 @@ module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z) cylinder(d1=b, d2=b2, h=l, $fn=maxfn);
 }
 
-module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
-  b2 = (b2==undef) ? b+NOZZLE_DIAMETER : b2;
-  lz = abs(b2-b)/2;
-  zz = !fromend ? z : z-lz;
-  shell(z=zz, b=b, b2=b2, l=lz);
-}
-
-// used to correct hole sizes
-function fuzz(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
-
 // like shell, but fuzz the diameter and position
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
@@ -35,9 +33,11 @@ module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z-0.001) cylinder(d1=fuzz(b, $fn=maxfn), d2=fuzz(b2, $fn=maxfn), h=l+0.002, $fn=maxfn);
 }
 
-// rotate x by r, y by 90 and z by -90 (for holes)
-module pivot(r=0) {
-  rotate([r,90,-90]) children();
+module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
+  b2 = (b2==undef) ? b+NOZZLE_DIAMETER : b2;
+  lz = abs(b2-b)/2;
+  zz = !fromend ? z : z-lz;
+  shell(z=zz, b=b, b2=b2, l=lz);
 }
 
 // tone or embouchure hole
