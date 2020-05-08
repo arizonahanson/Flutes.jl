@@ -20,11 +20,9 @@ module mortise(z=0, l=26) {
   slide(z) difference() {
     hull() {
       shell(b=A+3.8);
-      shell(z=1, b=A+4.8);
-      shell(z=l/2-1, b=A+6);
-      shell(z=l/2, b=A+7);
-      shell(z=l/2+1, b=A+6);
-      shell(z=l-LAYER_HEIGHT-1, b=27);
+      shell(z=1, b=A+5.8);
+      shell(z=l/2, b=A+8);
+      shell(z=l-LAYER_HEIGHT-1, b=28);
       shell(z=l-LAYER_HEIGHT, b=26);
     }
     // bore
