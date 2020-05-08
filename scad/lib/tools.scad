@@ -7,7 +7,7 @@ include <consts.scad>;
 function fn(b) = floor(PI*b/NOZZLE_DIAMETER/4)*4;
 
 // used to calculate diameter of inscribed polygon
-function inscribe(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
+function ins(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
 
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
@@ -30,7 +30,7 @@ module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
   maxfn = fn(max(b, b2));
-  slide(z-0.001) cylinder(d1=inscribe(b, $fn=maxfn), d2=inscribe(b2, $fn=maxfn), h=l+0.002, $fn=maxfn);
+  slide(z-0.001) cylinder(d1=ins(b, $fn=maxfn), d2=ins(b2, $fn=maxfn), h=l+0.002, $fn=maxfn);
 }
 
 module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
