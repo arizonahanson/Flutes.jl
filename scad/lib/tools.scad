@@ -3,11 +3,11 @@
  */
 include <consts.scad>;
 
-// used to calculate number of segments ($fn)
+// used to calculate number of polygon segments ($fn)
 function fn(b) = floor(PI*b/NOZZLE_DIAMETER/4)*4;
 
-// used to correct hole sizes
-function fuzz(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
+// used to calculate diameter of inscribed polygon
+function inscribe(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
 
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
@@ -26,11 +26,11 @@ module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z) cylinder(d1=b, d2=b2, h=l, $fn=maxfn);
 }
 
-// like shell, but fuzz the diameter and position
+// like shell, but inscribed polygon and micron z variance
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
   maxfn = fn(max(b, b2));
-  slide(z-0.001) cylinder(d1=fuzz(b, $fn=maxfn), d2=fuzz(b2, $fn=maxfn), h=l+0.002, $fn=maxfn);
+  slide(z-0.001) cylinder(d1=inscribe(b, $fn=maxfn), d2=inscribe(b2, $fn=maxfn), h=l+0.002, $fn=maxfn);
 }
 
 module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
@@ -65,9 +65,9 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
     } else {
       union() {
         // shoulder cut
-        shell(z=zo, b=d, b2=do, l=oh);
+        bore(z=zo, b=d, b2=do, l=oh);
         // angled wall
-        shell(b=di, b2=d, l=zo+0.001);
+        bore(b=di, b2=d, l=zo);
       }
     }
 }
