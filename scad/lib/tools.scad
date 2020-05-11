@@ -7,7 +7,7 @@ include <consts.scad>;
 function fn(b) = floor(PI*b/NOZZLE_DIAMETER/4)*4;
 
 // used to calculate diameter of inscribed polygon
-function ins(b) = NOZZLE_DIAMETER + sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
+function ins(b) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
 
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
@@ -30,7 +30,8 @@ module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
   maxfn = fn(max(b, b2));
-  slide(z-0.001) cylinder(d1=ins(b, $fn=maxfn), d2=ins(b2, $fn=maxfn), h=l+0.002, $fn=maxfn);
+  ex = NOZZLE_DIAMETER;
+  slide(z-0.001) cylinder(d1=ins(b+ex, $fn=maxfn), d2=ins(b2+ex, $fn=maxfn), h=l+0.002, $fn=maxfn);
 }
 
 module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
@@ -45,29 +46,31 @@ module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   w = (w==undef) ? d : w;
+  maxfn = fn(max(d, w));
   rb=b/2;// bore radius
   ih=sqrt(pow(rb+h,2)-pow(d/2,2));//hole z
   oh=rb+h-ih;//shoulder height
   di=d+tan(a)*2*ih;//d+wall angle
   do=d+tan(s)*2*oh;//d+shoulder cut
   sqx=sq*d;
+  ex = NOZZLE_DIAMETER/2;
   slide(z) scale([1,1,w/d]) pivot(-r)
     if (sqx>=0.01) {
       minkowski() {
         cube([sqx,sqx,0.001], center=true);
         union() {
           // shoulder cut
-          shell(z=ih, b=d-sqx, b2=do-sqx, l=oh);
+          shell(z=ih, b=ins(d-sqx+ex, $fn=maxfn), b2=ins(do-sqx+ex, $fn=maxfn), l=oh);
           // angled wall
-          shell(b=di-sqx, b2=d-sqx, l=ih);
+          shell(b=ins(di-sqx+ex, $fn=maxfn), b2=ins(d-sqx+ex, $fn=maxfn), l=ih+0.001);
         }
       }
     } else {
       union() {
         // shoulder cut
-        bore(z=ih, b=d, b2=do, l=oh);
+        shell(z=ih, b=ins(d+ex, $fn=maxfn), b2=ins(do+ex, $fn=maxfn), l=oh);
         // angled wall
-        bore(b=di, b2=d, l=ih);
+        shell(b=ins(di+ex, $fn=maxfn), b2=ins(d+ex, $fn=maxfn), l=ih+0.001);
       }
     }
 }
