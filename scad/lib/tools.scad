@@ -62,7 +62,7 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
           // shoulder cut
           shell(z=ih, b=ins(d-sqx+ex, $fn=maxfn), b2=ins(do-sqx+ex, $fn=maxfn), l=oh);
           // angled wall
-          shell(b=ins(di-sqx+ex, $fn=maxfn), b2=ins(d-sqx+ex, $fn=maxfn), l=ih+0.001);
+          shell(b=ins(di-sqx+ex, $fn=maxfn), b2=ins(d-sqx+ex, $fn=maxfn), l=ih);
         }
       }
     } else {
