@@ -4,7 +4,7 @@
 include <consts.scad>;
 
 // used to calculate number of polygon segments ($fn)
-function fn(b) = floor(PI*b/NOZZLE_DIAMETER/4)*4;
+function fn(b) = ceil(PI*b/NOZZLE_DIAMETER/4)*4;
 
 // used to calculate diameter of inscribed polygon
 function ins(b) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
@@ -30,7 +30,7 @@ module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
   ex = NOZZLE_DIAMETER;
-  maxfn = fn(max(b, b2)); // adaptive resolution
+  maxfn = fn(max(b, b2)+ex); // adaptive resolution
   slide(z-0.001) cylinder(d1=ins(b+ex, $fn=maxfn), d2=ins(b2+ex, $fn=maxfn), h=l+0.002, $fn=maxfn);
 }
 
@@ -46,7 +46,6 @@ module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   w = (w==undef) ? d : w;
-  maxfn = fn(max(d, w));
   rb = b/2; // bore radius
   ih = sqrt(pow(rb+h,2)-pow(d/2,2));// hole z
   oh = rb+h-ih; // shoulder height
@@ -54,6 +53,7 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   do = d+tan(s)*2*oh; // d+shoulder cut
   sqx = sq*d;
   ex = NOZZLE_DIAMETER/2;
+  maxfn = fn(max(d, w)+ex);
   slide(z) scale([1,1,w/d]) pivot(-r)
     if (sqx >= 0.01) {
       minkowski() { // squarish hole
