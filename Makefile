@@ -9,7 +9,7 @@ FLUTE_TUNING=442.0
 TRACE=false
 export
 # program binaries
-JULIA=julia
+JULIA=docker run -it --rm -v "$(PWD)":/flutes -w /flutes julia julia
 SCAD=openscad
 SHELL=/bin/sh
 # source directories
