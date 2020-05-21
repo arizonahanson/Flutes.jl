@@ -9,7 +9,7 @@ FLUTE_TUNING=442.0
 TRACE=false
 export
 # program binaries
-JULIA=docker run -it --rm -v "$(PWD)":/flutes -w /flutes julia julia
+JULIA=docker run -it --rm -v "$(PWD)":/Flutes.jl -w /Flutes.jl julia:1.4 julia
 SCAD=openscad
 SHELL=/bin/sh
 # source directories
@@ -81,3 +81,7 @@ $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 clean:
 	@rm $(DESTDIR)/head*.mk $(DESTDIR)/body*.mk $(DESTDIR)/foot*.mk -fv
 	@rm $(PARAMSFILE) -fv
+
+.PHONY: julia
+julia:
+	@$(JULIA)

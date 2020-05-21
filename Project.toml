@@ -4,6 +4,7 @@ authors = ["Isaac W Hanson <isaac@starlig.ht>"]
 version = "2.3.0"
 
 [deps]
+ArgParse = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
 DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 Optim = "429524aa-4258-5aef-a3af-852621145aeb"
