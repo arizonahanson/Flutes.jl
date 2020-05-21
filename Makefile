@@ -90,4 +90,5 @@ clean:
 
 .PHONY: julia
 julia: workshop
+	@docker build . -t workshop:latest
 	@$(JULIA) $(ARGS)
