@@ -12,6 +12,8 @@ export
 JULIA=docker run -it --rm -v "$(PWD)":/Flutes.jl -w /Flutes.jl julia:1.4 julia
 SCAD=openscad
 SHELL=/bin/sh
+# julia args
+ARGS=
 # source directories
 JULIASRC=src
 SCADSRC=scad
@@ -84,4 +86,4 @@ clean:
 
 .PHONY: julia
 julia:
-	@$(JULIA)
+	@$(JULIA) $(ARGS)
