@@ -52,7 +52,7 @@ optimize: $(PARAMSFILE)
 $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 	@mkdir -pv $(dir $@)
 	@echo -e " * Optimizing flute parameters: "$@
-	@$(JULIA) $(JULIASRC)/optimize.jl $@
+	@$(JULIA) $(JULIASRC)/main.jl $@
 
 # 3mf scad file dependencies
 include $(wildcard $(DESTDIR)/*.mk)
