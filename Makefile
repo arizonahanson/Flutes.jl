@@ -9,7 +9,16 @@ FLUTE_TUNING=442.0
 TRACE=false
 export
 # program binaries
-JULIA=docker run -it --rm -v "$(PWD)":/Flutes.jl -w /Flutes.jl workshop:latest julia
+JULIA=docker run -it --rm \
+			-e FLUTE_BREAK \
+			-e FLUTE_TUNING \
+			-e TRACE \
+			-e FLUTE_MIN_DIAMETERS \
+			-e FLUTE_MAX_DIAMETERS \
+			-e FLUTE_MIN_PADDING \
+			-e FLUTE_MAX_PADDING \
+			-e FLUTE_SCALE \
+			-v "$(PWD)":/Flutes.jl -w /Flutes.jl workshop:latest julia
 SCAD=openscad
 SHELL=/bin/sh
 # julia args
@@ -90,5 +99,4 @@ clean:
 
 .PHONY: julia
 julia: workshop
-	@docker build . -t workshop:latest
 	@$(JULIA) $(ARGS)
