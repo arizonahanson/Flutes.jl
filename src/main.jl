@@ -1,6 +1,6 @@
 import Pkg
 Pkg.activate(".")
-Pkg.update()
+Pkg.instantiate()
 
 using Flutes
 using Dates
