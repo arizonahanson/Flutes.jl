@@ -47,8 +47,6 @@ module plate(z=0, b, h, l, r=0, sq=0.4) {
 module head() {
   slide(CrownLength) difference() {
     union() {
-      shell(z=-CrownLength, b=24, b2=25, l=1);
-      shell(z=-CrownLength+1, b=25, b2=24, l=1);
       // reflector->embouchure
       shell(z=-CrownLength, b=24, l=CrownLength-17);
       shell(z=-17, b=24, b2=24.4, l=17);
