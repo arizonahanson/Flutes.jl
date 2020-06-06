@@ -35,9 +35,9 @@ SCADFLAGS=
 # openscad theme for previews
 COLORSCHEME=Starnight
 
-# default target "all"
-.PHONY: all
-all: previews models
+# default target "flute"
+.PHONY: flute
+flute: previews models
 
 .PHONY: previews
 previews: $(DESTDIR)/head.png $(DESTDIR)/body.png $(DESTDIR)/foot.png
