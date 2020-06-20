@@ -49,13 +49,13 @@ function halfwavelength(𝑓=440.0; ϑ=25.0)
 end
 
 """
-  ℓₜ = flutelength(𝑓=440.0; ϑ=25.0, ⌀=19.0, ℎ=3.5, 𝛥ℓₑ=42.0, 𝛥ℓᵥ=0.0)
+  ℓₜ = flutelength(𝑓=440.0; ϑ=25.0, ⌀=19.0, ℎ=3.5, 𝛥ℓₑ=62.0, 𝛥ℓᵥ=0.0)
 
 Calculate flute length from embouchure-hole to open-end
   for fundamental frequency 𝑓, temperature ϑ, open-end bore diameter ⌀,
   wall thickness ℎ, embouchure correction 𝛥ℓₑ and closed-hole correction 𝛥ℓᵥ
 """
-function flutelength(𝑓=440.0; ϑ=25.0, ⌀=19.0, ℎ=3.5, 𝛥ℓₑ=42.0, 𝛥ℓᵥ=0.0)
+function flutelength(𝑓=440.0; ϑ=25.0, ⌀=19.0, ℎ=3.5, 𝛥ℓₑ=62.0, 𝛥ℓᵥ=0.0)
   𝜆 = halfwavelength(𝑓; ϑ=ϑ)
   ⌀₊ = ⌀ + 2ℎ
   𝜍 = 0.6133⌀/2
@@ -66,13 +66,13 @@ function flutelength(𝑓=440.0; ϑ=25.0, ⌀=19.0, ℎ=3.5, 𝛥ℓₑ=42.0, �
 end
 
 """
-  ℓₕ = toneholelength(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓₑ=42.0, 𝛥ℓᵥ=0.0)
+  ℓₕ = toneholelength(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓₑ=62.0, 𝛥ℓᵥ=0.0)
 
 Calculate distance from embouchure hole center to tone hole center
   for open frequency 𝑓, closed frequency 𝑓ₜ, temperature ϑ, tone-hole bore diameter ⌀,
   tone-hole height ℎ, tone-hole diameter 𝑑, embouchure correction 𝛥ℓₑ and closed-hole correction 𝛥ℓᵥ
 """
-function toneholelength(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓₑ=42.0, 𝛥ℓᵥ=0.0)
+function toneholelength(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓₑ=62.0, 𝛥ℓᵥ=0.0)
   𝜆 = halfwavelength(𝑓; ϑ=ϑ)
   𝑔 = 𝑓/𝑓ₜ - 1
   𝜙 = (ℎ+𝑑) * (⌀/𝑑)^2 - 0.45⌀
@@ -83,13 +83,13 @@ function toneholelength(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0
 end
 
 """
-  𝛥𝜆ₕ = closedholecorrection(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓₑ=42.0, 𝛥ℓᵥ=0.0)
+  𝛥𝜆ₕ = closedholecorrection(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓₑ=62.0, 𝛥ℓᵥ=0.0)
 
 Calculate correction due to closed hole
   for open frequency 𝑓, closed frequency 𝑓ₜ, temperature ϑ, tone-hole bore diameter ⌀,
   tone-hole height ℎ, tone-hole diameter 𝑑, embouchure correction 𝛥ℓₑ and closed-hole correction 𝛥ℓᵥ
 """
-function closedholecorrection(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓₑ=42.0, 𝛥ℓᵥ=0.0)
+function closedholecorrection(𝑓=440.0; 𝑓ₜ=415.305, ϑ=25.0, ⌀=19.0, 𝑑=9.0, ℎ=3.5, 𝛥ℓₑ=62.0, 𝛥ℓᵥ=0.0)
   𝑘 = wavenumber(𝑓; ϑ=ϑ)
   𝜆ₜ= halfwavelength(𝑓ₜ; ϑ=ϑ)
   ℓₕ = toneholelength(𝑓; 𝑓ₜ=𝑓ₜ, ϑ=ϑ, ⌀=⌀, 𝑑=𝑑, ℎ=ℎ, 𝛥ℓₑ=𝛥ℓₑ, 𝛥ℓᵥ=𝛥ℓᵥ)
