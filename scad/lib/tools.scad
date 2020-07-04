@@ -45,32 +45,36 @@ module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
 // (b)ore (h)eight (d)iameter (w)idth (r)otate° w(a)ll°
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
-  w = (w==undef) ? d : w;
-  rb = b/2; // bore radius
-  ih = sqrt(pow(rb+h,2)-pow(d/2,2));// hole z
-  oh = rb+h-ih; // shoulder height
-  di = d+tan(a)*2*ih; // d+wall angle
-  do = d+tan(s)*2*oh; // d+shoulder cut
-  sqx = sq*d;
-  ex = NOZZLE_DIAMETER/2;
-  maxfn = fn(max(d, w)+ex);
-  slide(z) scale([1,1,w/d]) pivot(-r)
-    if (sqx >= 0.01) {
-      minkowski() { // squarish hole
+  dx = d + NOZZLE_DIAMETER;
+  wx = (w==undef) ? dx : (w + NOZZLE_DIAMETER);
+  sqx = sq*dx; // square part
+  rh = b/2 + h; // bore radius + height
+  ih = sqrt(pow(rh,2)-pow(dx/2,2)); // inner hole depth
+  oh = rh-ih; // outer hole height
+  di = dx+tan(a)*2*ih; // inner hole diameter
+  do = dx+tan(s)*2*oh; // outer hole diameter
+  ofn = fn(max(dx-sqx, do-sqx)); // outer segments
+  ifn = fn(max(dx-sqx, di-sqx)); // inner segments
+  // position/scale/rotate
+  slide(z) scale([1,1,wx/dx]) pivot(-r)
+    if (sqx >= 0.001) {
+      // squarish hole
+      minkowski() {
         cube([sqx,sqx,0.001], center=true);
         union() {
           // shoulder cut
-          shell(z=ih, b=ins(d-sqx+ex, $fn=maxfn), b2=ins(do-sqx+ex, $fn=maxfn), l=oh);
+          shell(z=ih, b=ins(dx-sqx, $fn=ofn), b2=ins(do-sqx, $fn=ofn), l=oh);
           // angled wall
-          shell(b=ins(di-sqx+ex, $fn=maxfn), b2=ins(d-sqx+ex, $fn=maxfn), l=ih);
+          shell(b=ins(di-sqx, $fn=ifn), b2=ins(dx-sqx, $fn=ifn), l=ih);
         }
       }
     } else {
-      union() { // round hole
+      // round hole
+      union() {
         // shoulder cut
-        shell(z=ih, b=ins(d+ex, $fn=maxfn), b2=ins(do+ex, $fn=maxfn), l=oh);
+        shell(z=ih, b=ins(dx, $fn=ofn), b2=ins(do, $fn=ofn), l=oh);
         // angled wall
-        shell(b=ins(di+ex, $fn=maxfn), b2=ins(d+ex, $fn=maxfn), l=ih+0.001);
+        shell(b=ins(di, $fn=ifn), b2=ins(dx, $fn=ifn), l=ih+0.001);
       }
     }
 }
