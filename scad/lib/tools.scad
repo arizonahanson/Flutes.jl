@@ -35,7 +35,7 @@ module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
 }
 
 module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
-  b2 = (b2==undef) ? b+NOZZLE_DIAMETER : b2;
+  b2 = (b2==undef) ? b : b2;
   lz = abs(b2-b)/2;
   zz = !fromend ? z : z-lz;
   shell(z=zz, b=b, b2=b2, l=lz);

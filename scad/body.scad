@@ -27,7 +27,7 @@ module body() {
       tenon(z=BodyLength-TenonLength, l=TenonLength);
     }
     // bore
-    bore(b=FluteInner, l=BodyLength+LAYER_HEIGHT);
+    bore(b=FluteInner, l=BodyLength);
     // holes
     for(i=[0:1:len(HoleDiameters)]) let (zh=HolePositions[i], dh=HoleDiameters[i]) {
       hole(z=zh, b=FluteInner, h=hh, d=dh);

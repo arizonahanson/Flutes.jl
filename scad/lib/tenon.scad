@@ -22,7 +22,7 @@ module mortise(z=0, l=26) {
       shell(b=A+3.8);
       shell(z=1, b=A+5.8);
       shell(z=l/2, b=A+8);
-      shell(z=l-LAYER_HEIGHT-1, b=28);
+      shell(z=l-1-LAYER_HEIGHT, b=28);
       shell(z=l-LAYER_HEIGHT, b=26);
     }
     // bore
@@ -32,9 +32,9 @@ module mortise(z=0, l=26) {
   }
 }
 
-module gland(z=0, fromend=false) {
+module gland(z=0) {
   lz=(C-F)/2;
-  zz = !fromend ? z : z-(2*(lz+CS));
+  zz = z-(2*(lz+CS));
   slide(zz) difference() {
     // piston
     bore(b=C, l=CS+lz);
@@ -47,16 +47,20 @@ module gland(z=0, fromend=false) {
 
 module tenon(z=0, l=26) {
   lz=(C-19)/2;
-  ll=l+LAYER_HEIGHT;
   slide(z) difference() {
     union() {
-      shell(b=C, l=ll-lz);
-      chamfer(z=ll-lz, b=C, b2=19);
+      shell(b=C, l=l-lz);
+      chamfer(z=l-lz, b=C, b2=19);
     }
-    gland(z=ll, fromend=true);
-    gland(z=(ll+lz)/2, fromend=true);
+    gland(z=l);
+    gland(z=(l+lz)/2);
   }
 }
 
-tenon();
-mortise();
+difference() {
+  union() {
+    tenon();
+    mortise();
+  }
+  bore(b=19, l=26);
+}
