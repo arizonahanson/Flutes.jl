@@ -2,31 +2,32 @@ export optimal
 using Optim
 using Statistics
 
+
+# sum of elementwise differences
+function ΣΔ(𝒍ₓ, 𝒍)
+  return sum(map((ℓₓ, ℓ)->abs(ℓₓ-ℓ), 𝒍ₓ, 𝒍))
+end
+
+# sum of distance outside box
+function Σ∇(𝒍₋, 𝒍₊, 𝒍)
+  return sum(map((ℓ₋, ℓ₊, ℓ)->max(ℓ₋-ℓ, 0.0, ℓ-ℓ₊), 𝒍₋, 𝒍₊, 𝒍))
+end
+
+# all but last element
+function plop(𝒍)
+  return 𝒍[1:end-1]
+end
+
 # error function factory (constraints)
 function mkerrfn(flute::FluteConstraint)
-  # list of frequencies in descending pitch
-  H = length(flute.holes)
-  𝒍big = mapflute(flute, map(𝒉->𝒉.𝑑₊, flute.holes))
+  𝒍max = plop(mapflute(flute, map(𝒉->𝒉.𝑑₊, flute.holes))) # positions of max diameters
   function errfn(𝒅)
-    𝑒 = 0.0 # error result
-    𝒍 = mapflute(flute, 𝒅) # hole positions
-    𝒍avg = mapflute(flute, fill(mean(𝒅), H))
-    for h in 1:H # body->foot order
-      # for each tonehole calculate error based on preferences
-      ℓₕ = 𝒍[h] # resulting location
-      # deviation from reachable
-      𝒉 = flute.holes[h]
-      ℓₚ = h > 1 ? 𝒍[h-1] : 0.0 # previous hole position
-      𝛬crowd = ℓₚ - ℓₕ + 𝒉.𝑝₋ # positive if location below min
-      𝛬stretch = ℓₕ - ℓₚ - 𝒉.𝑝₊ # positive if location above max
-      𝛬reach = max(𝛬crowd, 0.0, 𝛬stretch)
-      # deviation from max hole diameter (prefer larger diameters)
-      𝛬big = abs(𝒍big[h] - ℓₕ)
-      # deviation from mean hole diameter (prefer average diameters)
-      𝛬avg = abs(𝒍avg[h] - ℓₕ)
-      # sum weighted errors (heavy weight on reachable locations)
-      𝑒 += 2𝛬reach^2 + 𝛬big + 2𝛬avg
-    end
+    𝒍 = plop(mapflute(flute, 𝒅)) # hole positions
+    𝒍mean = plop(mapflute(flute, fill(mean(𝒅), length(flute.holes))) # positions of mean diameters
+    𝒍prev = prepend!(plop(𝒍), 0.0)
+    𝒍close = map((ℓₚ, 𝒉)->ℓₚ+𝒉.𝑝₋, 𝒍prev, flute.holes)
+    𝒍far = map((ℓₚ, 𝒉)->ℓₚ+𝒉.𝑝₊, 𝒍prev, flute.holes)
+    𝑒 = ΣΔ(𝒍max, 𝒍) + ΣΔ(𝒍mean, 𝒍) + 2*Σ∇(𝒍close, 𝒍far, 𝒍)^2
     return 𝑒
   end
   return errfn
