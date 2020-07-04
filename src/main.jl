@@ -28,38 +28,23 @@ for h in 1:length(scale)-1
   # constrain hole diameters & positions
   addtonehole!(flute, scale[h]; 𝑑₋=mind[h], 𝑑₊=maxd[h], 𝑝₋=minp[h], 𝑝₊=maxp[h])
 end
+
 # find best fit
 # all the magic happens here
 diameters = optimal(flute; trace=trace)
+flute_lengths = mapflute(flute, diameters)
 println(" * Result: ", map(d->round(d; digits=3), diameters))
 # end magic
 
 # break holes by foot/body
-foot_diameters = []
-foot_positions = []
-body_diameters = []
-body_positions = []
-𝛥ℓᵥ = 0.0 # closed-hole correction
-𝒇 = map(ℎ->ℎ.𝑓, flute.holes); push!(𝒇, flute.𝑓)
-for h in 1:length(diameters)
-  𝑓ₕ = flute.holes[h].𝑓
-  𝑑ₕ = diameters[h]
-  𝑓ₜ = 𝒇[h+1]
-  ℓₕ = toneholelength(𝑓ₕ; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥ℓᵥ=𝛥ℓᵥ)
-  if h <= brk
-    push!(body_diameters, 𝑑ₕ)
-    push!(body_positions, ℓₕ)
-  else
-    push!(foot_diameters, 𝑑ₕ)
-    push!(foot_positions, ℓₕ)
-  end
-  global 𝛥ℓᵥ += closedholecorrection(𝑓ₕ; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥ℓᵥ=𝛥ℓᵥ)
-end
-flute_length = flutelength(flute.𝑓; 𝛥ℓᵥ=𝛥ℓᵥ)
+body_diameters = diameters[1:brk]
+body_positions = flute_lengths[1:brk]
+foot_diameters = diameters[brk+1:end]
+foot_positions = flute_lengths[brk+1:end-1]
+flute_length = flute_lengths[end]
 
 tenon_length = 26
 head_length = 156.369
-
 # place body/foot joint
 spare = max((foot_positions[1] - body_positions[end] - tenon_length)/2, 0)
 nofoot = body_positions[end] + spare + tenon_length
