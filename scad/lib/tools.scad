@@ -34,13 +34,6 @@ module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z-0.001) cylinder(d1=ins(b+ex, $fn=maxfn), d2=ins(b2+ex, $fn=maxfn), h=l+0.002, $fn=maxfn);
 }
 
-module chamfer(z=0, b=NOZZLE_DIAMETER, b2, fromend=false) {
-  b2 = (b2==undef) ? b : b2;
-  lz = abs(b2-b)/2;
-  zz = !fromend ? z : z-lz;
-  shell(z=zz, b=b, b2=b2, l=lz);
-}
-
 // tone or embouchure hole
 // (b)ore (h)eight (d)iameter (w)idth (r)otate° w(a)ll°
 // (s)houlder° (sq)areness

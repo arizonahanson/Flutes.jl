@@ -33,27 +33,27 @@ module mortise(z=0, l=26) {
 }
 
 module gland(z=0) {
-  lz=(C-F)/2;
-  zz = z-(2*(lz+CS));
-  slide(zz) difference() {
+  lz = (C-F)/2;
+  slide(z-CS-lz) difference() {
     // piston
     bore(b=C, l=CS+lz);
     // flat
     shell(b=F, l=CS);
     // bevel to piston
-    chamfer(z=CS, b=F, b2=C);
+    shell(z=CS, b=F, b2=C, l=lz);
   }
 }
 
 module tenon(z=0, l=26) {
-  lz=(C-19)/2;
+  bb=19+NOZZLE_DIAMETER;
+  lz=(C-bb)/2;
   slide(z) difference() {
     union() {
       shell(b=C, l=l-lz);
-      chamfer(z=l-lz, b=C, b2=19);
+      shell(z=l-lz, b=C, b2=bb, l=lz);
     }
-    gland(z=l);
-    gland(z=(l+lz)/2);
+    gland(z=l-lz-LAYER_HEIGHT);
+    gland(z=(l-lz)/2);
   }
 }
 
