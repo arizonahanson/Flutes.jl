@@ -21,6 +21,8 @@ EmbouchureWallAngle=7; // [1:0.1:42]
 EmbouchureShoulderAngle=45; // [1:1:42]
 // slider widget for number in range
 EmbouchureSquareness=0.1; // [0:0.01:1]
+// slider widget for number in range
+CorkPosition=17.4; // [0:0.1;42]
 
 include <lib/index.scad>;
 
@@ -48,8 +50,8 @@ module head() {
   slide(CrownLength) difference() {
     union() {
       // reflector->embouchure
-      shell(z=-CrownLength, b=24, l=CrownLength-17);
-      shell(z=-17, b=24, b2=24.4, l=17);
+      shell(z=-CrownLength, b=24, l=CrownLength-CorkPosition);
+      shell(z=-CorkPosition, b=24, b2=24.4, l=CorkPosition);
 			// lip plate
 			plate(b=17.4, h=4.3, l=24, r=atan(10/26));
       // embouchure->max shell
@@ -67,7 +69,7 @@ module head() {
       tenon(z=HeadLength-TenonLength, l=TenonLength);
     }
     // reflector->embouchure
-    bore(z=-17, b=17, b2=17.4, l=17);
+    bore(z=-CorkPosition, b=17, b2=17.4, l=CorkPosition);
     // embouchure->max bore
     bore(b=17.4, b2=17.6, l=22);
     bore(z=22, b=17.6, b2=17.7, l=10);
