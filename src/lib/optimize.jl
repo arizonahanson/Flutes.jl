@@ -21,10 +21,11 @@ end
 # error function factory (constraints)
 function mkerrfn(flute::FluteConstraint)
   ⇴ = lop ∘ mapflute
-  ħ = length(flute.holes)
-  𝒑₋ = map(𝒉->𝒉.𝑝₋, flute.holes)
-  𝒑₊ = map(𝒉->𝒉.𝑝₊, flute.holes)
-  𝒅₊ = map(𝒉->𝒉.𝑑₊, flute.holes)
+  𝒉 = flute.holes
+  ħ = length(𝒉)
+  𝒑₋ = map(ℎ->ℎ.𝑝₋, 𝒉)
+  𝒑₊ = map(ℎ->ℎ.𝑝₊, 𝒉)
+  𝒅₊ = map(ℎ->ℎ.𝑑₊, 𝒉)
   𝒍max = flute⇴ 𝒅₊
   function errfn(𝒅)
     𝒅mean = fill(mean(𝒅), ħ)
