@@ -47,7 +47,7 @@ function optimal(flute; trace=false)
   errfn = mkerrfn(flute)
   # box-constrained, initial parameters
   lower, upper, initial = minbox(flute)
-  n_particles = length(initial)+3
+  n_particles = length(initial)*2
   # particle swarm optimization
   result = optimize(errfn, initial,
                     ParticleSwarm(lower, upper, n_particles),
