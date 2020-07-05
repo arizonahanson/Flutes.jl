@@ -1,6 +1,0 @@
-* operate on flute structs. structs.jl
-  * initialize to flute struct
-  * optimize flute struct directly
-  * export flute struct -> scad parameter file
-    * set of maps would be easiest to export
-  * scad model interprets flute struct (parameter file)
