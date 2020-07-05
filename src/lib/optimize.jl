@@ -33,7 +33,7 @@ function mkerrfn(flute::FluteConstraint)
     𝛬max = ΣΔ(𝒍max, 𝒍)
     𝛬mean = ΣΔ(𝒍mean, 𝒍)
     𝛬stretch = Σ∇(𝒍prev+𝒑₋, 𝒍prev+𝒑₊, 𝒍)
-    𝑒 = 𝛬max + 2𝛬mean + 2𝛬stretch^2
+    𝑒 = 𝛬max + 3𝛬mean + 2𝛬stretch^2
     return 𝑒
   end
   return errfn
