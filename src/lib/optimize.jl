@@ -27,11 +27,13 @@ function mkerrfn(flute::FluteConstraint)
   𝒍max = flute⇴ 𝒅₊ # positions of max diameters
   function errfn(𝒅)
     𝒍 = flute⇴ 𝒅 # hole positions
-    𝒍mean = flute⇴ fill(mean(𝒅), length(flute.holes)) # positions of mean diameters
+    𝒅mean = fill(mean(𝒅), length(flute.holes))
+    𝒍mean = flute⇴ 𝒅mean # positions of mean diameters
     𝒍prev = [0.0; lop(𝒍)]
-    𝒍close = 𝒍prev + 𝒑₋
-    𝒍far = 𝒍prev + 𝒑₊
-    𝑒 = ΣΔ(𝒍max, 𝒍) + 2ΣΔ(𝒍mean, 𝒍) + 2*Σ∇(𝒍close, 𝒍far, 𝒍)^2
+    𝛬max = ΣΔ(𝒍max, 𝒍)
+    𝛬mean = ΣΔ(𝒍mean, 𝒍)
+    𝛬stretch = Σ∇(𝒍prev+𝒑₋, 𝒍prev+𝒑₊, 𝒍)
+    𝑒 = 𝛬max + 2𝛬mean + 2𝛬stretch^2
     return 𝑒
   end
   return errfn
