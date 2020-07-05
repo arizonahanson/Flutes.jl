@@ -20,15 +20,17 @@ end
 
 # error function factory (constraints)
 function mkerrfn(flute::FluteConstraint)
-  𝒍max = lop(mapflute(flute, map(𝒉->𝒉.𝑑₊, flute.holes))) # positions of max diameters
+  ⇴ = lop ∘ mapflute
   𝒑₋ = map(𝒉->𝒉.𝑝₋, flute.holes)
   𝒑₊ = map(𝒉->𝒉.𝑝₊, flute.holes)
+  𝒅₊ = map(𝒉->𝒉.𝑑₊, flute.holes)
+  𝒍max = flute⇴ 𝒅₊ # positions of max diameters
   function errfn(𝒅)
-    𝒍 = lop(mapflute(flute, 𝒅)) # hole positions
-    𝒍mean = lop(mapflute(flute, fill(mean(𝒅), length(flute.holes)))) # positions of mean diameters
-    𝒍prev = prepend!(lop(𝒍), 0.0)
-    𝒍close = map(+, 𝒍prev, 𝒑₋)
-    𝒍far = map(+, 𝒍prev, 𝒑₊)
+    𝒍 = flute⇴ 𝒅 # hole positions
+    𝒍mean = flute⇴ fill(mean(𝒅), length(flute.holes)) # positions of mean diameters
+    𝒍prev = [0.0; lop(𝒍)]
+    𝒍close = 𝒍prev + 𝒑₋
+    𝒍far = 𝒍prev + 𝒑₊
     𝑒 = ΣΔ(𝒍max, 𝒍) + 2ΣΔ(𝒍mean, 𝒍) + 2*Σ∇(𝒍close, 𝒍far, 𝒍)^2
     return 𝑒
   end
