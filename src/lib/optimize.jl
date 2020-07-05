@@ -26,8 +26,8 @@ function mkerrfn(flute::FluteConstraint)
   𝒅₊ = map(𝒉->𝒉.𝑑₊, flute.holes)
   𝒍max = flute⇴ 𝒅₊
   function errfn(𝒅)
-    𝒍 = flute⇴ 𝒅
     𝒅mean = fill(mean(𝒅), length(flute.holes))
+    𝒍 = flute⇴ 𝒅
     𝒍mean = flute⇴ 𝒅mean
     𝒍prev = [0.0; lop(𝒍)]
     𝛬max = ΣΔ(𝒍max, 𝒍)
@@ -55,7 +55,7 @@ function optimal(flute; trace=false)
   # particle swarm optimization
   result = optimize(errfn, initial,
                     ParticleSwarm(lower, upper, n_particles),
-                    Optim.Options(iterations=100000, show_trace=trace, show_every=10000))
+                    Optim.Options(iterations=50000, show_trace=trace, show_every=2500))
   params = Optim.minimizer(result)
   return params
 end
