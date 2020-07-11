@@ -35,7 +35,7 @@ function mkerrfn(flute::FluteConstraint)
     𝛬max = ΣΔ(𝒍max, 𝒍)
     𝛬mean = ΣΔ(𝒍mean, 𝒍)
     𝛬box = Σ∇(𝒍prev+𝒑₋, 𝒍prev+𝒑₊, 𝒍) # location box
-    𝑒 = 𝛬max + 3𝛬mean + 2𝛬box^2
+    𝑒 = 𝛬max + 3𝛬mean + (𝛬box + 1)^3
     return 𝑒
   end
   return errfn
