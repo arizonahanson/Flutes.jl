@@ -44,7 +44,7 @@ end
 function minbox(flute::FluteConstraint)
   𝒅₋ = map(𝒉->𝒉.𝑑₋, flute.holes)
   𝒅₊ = map(𝒉->𝒉.𝑑₊, flute.holes)
-  𝒅₀ = map((𝑑₊, 𝑑₋)->0.8(𝑑₊-𝑑₋)+𝑑₋, 𝒅₊, 𝒅₋)
+  𝒅₀ = map((𝑑₊, 𝑑₋)->0.9(𝑑₊-𝑑₋)+𝑑₋, 𝒅₊, 𝒅₋)
   return (𝒅₋, 𝒅₊, 𝒅₀)
 end
 
@@ -54,10 +54,10 @@ function optimal(flute; trace=false)
   # box-constrained, initial parameters
   lower, upper, initial = minbox(flute)
   n_particles = 2*length(initial)
-  # particle swarm optimization
-  result = optimize(errfn, initial,
-                    ParticleSwarm(lower, upper, n_particles),
-                    Optim.Options(iterations=100000, show_trace=trace, show_every=10000))
+  # simulated annealing
+  result = optimize(errfn, lower, upper, initial,
+                    SAMIN(rt=0.95),
+                    Optim.Options(iterations=10^6, show_trace=trace, show_every=10^4))
   params = Optim.minimizer(result)
   return params
 end
