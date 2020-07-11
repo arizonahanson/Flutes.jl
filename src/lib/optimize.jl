@@ -44,7 +44,7 @@ end
 function minbox(flute::FluteConstraint)
   𝒅₋ = map(𝒉->𝒉.𝑑₋, flute.holes)
   𝒅₊ = map(𝒉->𝒉.𝑑₊, flute.holes)
-  𝒅₀ = map((𝑑₊, 𝑑₋)->0.75(𝑑₊-𝑑₋)+𝑑₋, 𝒅₊, 𝒅₋)
+  𝒅₀ = map((𝑑₊, 𝑑₋)->0.9(𝑑₊-𝑑₋)+𝑑₋, 𝒅₊, 𝒅₋)
   return (𝒅₋, 𝒅₊, 𝒅₀)
 end
 
@@ -53,7 +53,7 @@ function optimal(flute; trace=false)
   errfn = mkerrfn(flute)
   # box-constrained, initial parameters
   lower, upper, initial = minbox(flute)
-  n_particles = length(initial)+3
+  n_particles = 2*length(initial)
   # particle swarm optimization
   result = optimize(errfn, initial,
                     ParticleSwarm(lower, upper, n_particles),
