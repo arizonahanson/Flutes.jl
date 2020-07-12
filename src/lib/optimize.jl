@@ -53,11 +53,10 @@ function optimal(flute; trace=false)
   errfn = mkerrfn(flute)
   # box-constrained, initial parameters
   lower, upper, initial = minbox(flute)
-  n_particles = 2*length(initial)
   # simulated annealing
   result = optimize(errfn, lower, upper, initial,
                     SAMIN(rt=0.96),
-                    Optim.Options(iterations=10^6, show_trace=trace, show_every=10^4))
+                    Optim.Options(iterations=Int(2e5), show_trace=trace, show_every=Int(2e4)))
   params = Optim.minimizer(result)
   return params
 end
