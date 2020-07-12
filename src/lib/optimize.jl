@@ -14,13 +14,13 @@ function Σ∇(𝒍₋, 𝒍₊, 𝒍)
 end
 
 # return all but last element
-function lop(𝒍)
+function drop(𝒍)
   return 𝒍[1:end-1]
 end
 
 # error function factory (constraints)
 function mkerrfn(flute::FluteConstraint)
-  ⇴ = lop ∘ mapflute
+  ⇴ = drop ∘ mapflute
   𝒉 = flute.holes
   ħ = length(𝒉)
   𝒑₋ = map(ℎ->ℎ.𝑝₋, 𝒉)
@@ -30,7 +30,7 @@ function mkerrfn(flute::FluteConstraint)
   function errfn(𝒅)
     𝒍 = flute⇴ 𝒅
     𝒍mean = flute⇴ fill(mean(𝒅), ħ)
-    𝒍prev = [0.0; lop(𝒍)]
+    𝒍prev = [0.0; drop(𝒍)]
     𝛬max = ΣΔ(𝒍max, 𝒍) + 1
     𝛬mean = ΣΔ(𝒍mean, 𝒍) + 1
     𝛬box = Σ∇(𝒍prev+𝒑₋, 𝒍prev+𝒑₊, 𝒍) + 1

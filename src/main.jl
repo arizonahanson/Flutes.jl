@@ -33,7 +33,6 @@ end
 # all the magic happens here
 diameters = optimal(flute; trace=trace)
 flute_lengths = mapflute(flute, diameters)
-#println(" * Result: ", map(d->round(d; digits=3), diameters))
 # end magic
 
 # break holes by foot/body
