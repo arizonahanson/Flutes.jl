@@ -56,7 +56,7 @@ function optimal(flute; trace=false)
   n_particles = 2*length(initial)
   # simulated annealing
   result = optimize(errfn, lower, upper, initial,
-                    SAMIN(rt=0.95),
+                    SAMIN(rt=0.96),
                     Optim.Options(iterations=10^6, show_trace=trace, show_every=10^4))
   params = Optim.minimizer(result)
   return params
