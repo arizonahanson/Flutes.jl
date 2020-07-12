@@ -26,15 +26,17 @@ function mkerrfn(flute::FluteConstraint)
   𝒑₋ = map(ℎ->ℎ.𝑝₋, 𝒉)
   𝒑₊ = map(ℎ->ℎ.𝑝₊, 𝒉)
   𝒅₊ = map(ℎ->ℎ.𝑑₊, 𝒉)
-  𝒍max = flute⇴ 𝒅₊
+  𝒍dmax = flute⇴ 𝒅₊
   function errfn(𝒅)
     𝒍 = flute⇴ 𝒅
     𝒍mean = flute⇴ fill(mean(𝒅), ħ)
     𝒍prev = [0.0; drop(𝒍)]
-    𝛬max = ΣΔ(𝒍max, 𝒍) + 1
-    𝛬mean = ΣΔ(𝒍mean, 𝒍) + 1
-    𝛬box = Σ∇(𝒍prev+𝒑₋, 𝒍prev+𝒑₊, 𝒍) + 1
-    𝑒 = 𝛬max + 𝛬mean + 𝛬box^2
+    𝒍pmax = 𝒍prev+𝒑₊
+    𝒍pmin = 𝒍prev+𝒑₋
+    𝛬mean = ΣΔ(𝒍mean, 𝒍)
+    𝛬max = ΣΔ(min(𝒍pmax, 𝒍dmax), 𝒍)
+    𝛬box = Σ∇(𝒍pmin, 𝒍pmax, 𝒍)
+    𝑒 = 2𝛬mean + 3𝛬max + 4𝛬box^2
     return 𝑒
   end
   return errfn
