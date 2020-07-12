@@ -28,9 +28,8 @@ function mkerrfn(flute::FluteConstraint)
   𝒅₊ = map(ℎ->ℎ.𝑑₊, 𝒉)
   𝒍max = flute⇴ 𝒅₊
   function errfn(𝒅)
-    𝒅mean = fill(mean(𝒅), ħ)
     𝒍 = flute⇴ 𝒅
-    𝒍mean = flute⇴ 𝒅mean
+    𝒍mean = flute⇴ fill(mean(𝒅), ħ)
     𝒍prev = [0.0; lop(𝒍)]
     𝛬max = ΣΔ(𝒍max, 𝒍) + 1
     𝛬mean = ΣΔ(𝒍mean, 𝒍) + 1
