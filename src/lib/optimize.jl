@@ -32,10 +32,10 @@ function mkerrfn(flute::FluteConstraint)
     𝒍 = flute⇴ 𝒅
     𝒍mean = flute⇴ 𝒅mean
     𝒍prev = [0.0; lop(𝒍)]
-    𝛬max = ΣΔ(𝒍max, 𝒍)
-    𝛬mean = ΣΔ(𝒍mean, 𝒍)
-    𝛬box = Σ∇(𝒍prev+𝒑₋, 𝒍prev+𝒑₊, 𝒍) # location box
-    𝑒 = 𝛬max + 2𝛬mean + (𝛬box + 1)^2
+    𝛬max = ΣΔ(𝒍max, 𝒍) + 1
+    𝛬mean = ΣΔ(𝒍mean, 𝒍) + 1
+    𝛬box = Σ∇(𝒍prev+𝒑₋, 𝒍prev+𝒑₊, 𝒍) + 1
+    𝑒 = 𝛬max + 2𝛬mean + 𝛬box^2
     return 𝑒
   end
   return errfn
