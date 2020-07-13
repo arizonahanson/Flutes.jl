@@ -18,9 +18,15 @@ function drop(𝒍)
   return 𝒍[1:end-1]
 end
 
+# return 𝒍 with ℓ as first element inserted
+function push(ℓ, 𝒍)
+  return [ℓ; 𝒍]
+end
+
 # error function factory (constraints)
 function mkerrfn(flute::FluteConstraint)
   ⇴ = drop ∘ mapflute
+  ⬰ = drop ∘ push
   𝒉 = flute.holes
   ħ = length(𝒉)
   𝒑₋ = map(ℎ->ℎ.𝑝₋, 𝒉)
@@ -30,7 +36,7 @@ function mkerrfn(flute::FluteConstraint)
   function errfn(𝒅)
     𝒍 = flute⇴ 𝒅
     𝒍mean = flute⇴ fill(mean(𝒅), ħ)
-    𝒍prev = [0.0; drop(𝒍)]
+    𝒍prev = 0.0⬰ 𝒍
     𝒍pmax = 𝒍prev+𝒑₊
     𝒍pmin = 𝒍prev+𝒑₋
     𝛬mean = ΣΔ(𝒍mean, 𝒍)
