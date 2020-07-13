@@ -18,23 +18,28 @@ function addtonehole!(flute::FluteConstraint, 𝑓; 𝑑₋=2.0, 𝑑₊=9.0, �
   push!(flute.holes, ToneHoleConstraint(𝑓, 𝑑₋, 𝑑₊, 𝑝₋, 𝑝₊))
 end
 
-function createflute(𝑓)
-  return FluteConstraint(𝑓, [])
+function createflute(𝒇, 𝒅₋, 𝒅₊, 𝒑₋, 𝒑₊)
+  flute = FluteConstraint(𝒇[end], [])
+  ħ = length(𝒇)-1
+  for h in 1:ħ
+    # constrain hole diameters & positions
+    addtonehole!(flute, 𝒇[h]; 𝑑₋=𝒅₋[h], 𝑑₊=𝒅₊[h], 𝑝₋=𝒑₋[h], 𝑝₊=𝒑₊[h])
+  end
+  return flute
 end
 
-function mapflute(flute::FluteConstraint, 𝒅)
-  result = []
-  𝒇 = map(h->h.𝑓, flute.holes); push!(𝒇, flute.𝑓)
-  𝛥ℓᵥ = 0.0 # closed-hole correction
-  for h in 1:length(flute.holes)
-    𝑓 = 𝒇[h] # open hole frequency
-    𝑓ₜ = 𝒇[h+1] # closed hole frequency
-    𝑑ₕ = 𝒅[h] # hole diameter
-    ℓₕ = toneholelength(𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥ℓᵥ=𝛥ℓᵥ) # resulting location
-    push!(result, ℓₕ)
+function mapflute(𝒇, 𝒅)
+  𝒍 = []
+  ħ = length(𝒇)-1
+  𝛥ℓᵥ = 0.0
+  for h in 1:ħ
+    𝑓 = 𝒇[h]
+    𝑓ₜ = 𝒇[h+1]
+    𝑑ₕ = 𝒅[h]
+    ℓₕ = toneholelength(𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥ℓᵥ=𝛥ℓᵥ)
+    𝒍 = [𝒍; ℓₕ]
     𝛥ℓᵥ += closedholecorrection(𝑓; 𝑓ₜ=𝑓ₜ, 𝑑=𝑑ₕ, 𝛥ℓᵥ=𝛥ℓᵥ)
   end
-  ℓₜ = flutelength(flute.𝑓; 𝛥ℓᵥ=𝛥ℓᵥ)
-  push!(result, ℓₜ)
-  return result
+  ℓₜ = flutelength(𝒇[end]; 𝛥ℓᵥ=𝛥ℓᵥ)
+  return [𝒍; ℓₜ]
 end

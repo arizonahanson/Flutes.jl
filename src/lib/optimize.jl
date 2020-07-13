@@ -23,26 +23,31 @@ function push(ℓ, 𝒍)
   return [ℓ; 𝒍]
 end
 
+function norm(𝒅, ħ)
+  return fill(mean(𝒅), ħ)
+end
+
 # error function factory (constraints)
 function mkerrfn(flute::FluteConstraint)
   ⇴ = drop ∘ mapflute
   ⬰ = drop ∘ push
   𝒉 = flute.holes
   ħ = length(𝒉)
+  𝒇 = [map(ℎ->ℎ.𝑓, 𝒉); flute.𝑓]
   𝒑₋ = map(ℎ->ℎ.𝑝₋, 𝒉)
   𝒑₊ = map(ℎ->ℎ.𝑝₊, 𝒉)
   𝒅₊ = map(ℎ->ℎ.𝑑₊, 𝒉)
-  𝒍dmax = flute⇴ 𝒅₊
+  𝒍dmax = 𝒇⇴ 𝒅₊
   function errfn(𝒅)
-    𝒍 = flute⇴ 𝒅
-    𝒍mean = flute⇴ fill(mean(𝒅), ħ)
+    𝒍 = 𝒇⇴ 𝒅
+    𝒍mean = 𝒇⇴ norm(𝒅, ħ)
     𝒍prev = 0.0⬰ 𝒍
     𝒍pmax = 𝒍prev+𝒑₊
     𝒍pmin = 𝒍prev+𝒑₋
     𝛬mean = ΣΔ(𝒍mean, 𝒍)
-    𝛬max = ΣΔ(min(𝒍pmax, 𝒍dmax), 𝒍)
+    𝛬max = ΣΔ(𝒍dmax, 𝒍)
     𝛬box = Σ∇(𝒍pmin, 𝒍pmax, 𝒍)
-    𝑒 = 2𝛬mean + 3𝛬max + 4𝛬box^2
+    𝑒 = 𝛬mean + 2𝛬max + 3𝛬box^2
     return 𝑒
   end
   return errfn
