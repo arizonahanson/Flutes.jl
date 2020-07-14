@@ -1,6 +1,6 @@
 
 import JSON
-export readvariable, mapvariable
+export readvariable, mapvariable, floats, tones
 export createscadparameters, setscadparameter!, writescadparameters
 using DataStructures
 
@@ -42,4 +42,12 @@ function mapvariable(fn::Function, name::String)
     return nothing
   end
   map(fn, split(readvariable(name)))
+end
+
+function floats(var)
+  return mapvariable(x->parse(Float64, x), var)
+end
+
+function tones(var, A)
+  return mapvariable(v->tone(v; A=A), var)
 end

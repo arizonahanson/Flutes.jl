@@ -5,14 +5,6 @@ Pkg.instantiate()
 using Flutes
 using Dates
 
-function floats(var)
-  return mapvariable(x->parse(Float64, x), var)
-end
-
-function tones(var, A)
-  return mapvariable(v->tone(v; A=A), var)
-end
-
 # input env vars
 tuning = parse(Float64, readvariable("FLUTE_TUNING"))
 scale = tones("FLUTE_SCALE", tuning)
