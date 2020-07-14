@@ -19,13 +19,16 @@ trace = parse(Bool, readvariable("TRACE"))
 # all the magic happens here
 flute = createflute(scale, mind, maxd, minp, maxp)
 diameters = optimal(flute; trace=trace)
-lengths = mapflute(scale, diameters)
+lengths = map(l->round(l; digits=3), mapflute(scale, diameters))
 # end magic
-
+for h in 1:length(diameters)
+  print(" ∘ ", round(lengths[h+1]-lengths[h]; digits=2))
+end
+println(" |")
 # break holes by foot/body
-body_diameters = diameters[1:brk]
+body_diameters = map(d->round(d; digits=3), diameters[1:brk])
 body_positions = lengths[1:brk]
-foot_diameters = diameters[brk+1:end]
+foot_diameters = map(d->round(d; digits=3), diameters[brk+1:end])
 foot_positions = lengths[brk+1:end-1]
 flute_length = lengths[end]
 
@@ -44,13 +47,13 @@ setscadparameter!(params, headset, "HeadLength", head_length)
 setscadparameter!(params, headset, "TenonLength", tenon_length)
 bodyset = "body.data"
 setscadparameter!(params, bodyset, "BodyLength", body_length)
-setscadparameter!(params, bodyset, "HoleDiameters", map(bd->round(bd; digits=3), body_diameters))
+setscadparameter!(params, bodyset, "HoleDiameters", body_diameters)
 setscadparameter!(params, bodyset, "HolePositions", map(bp->round(bp-head_length; digits=3), body_positions))
 setscadparameter!(params, bodyset, "TenonLength", tenon_length)
 setscadparameter!(params, bodyset, "MortiseLength", tenon_length)
 footset = "foot.data"
 setscadparameter!(params, footset, "FootLength", foot_length)
-setscadparameter!(params, footset, "HoleDiameters", map(fd->round(fd, digits=3), foot_diameters))
+setscadparameter!(params, footset, "HoleDiameters", foot_diameters)
 setscadparameter!(params, footset, "HolePositions", map(fp->round(fp-nofoot; digits=3), foot_positions))
 setscadparameter!(params, footset, "MortiseLength", tenon_length)
 extraset = "extra.data"
