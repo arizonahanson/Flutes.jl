@@ -46,7 +46,7 @@ function mkerrfn(flute::FluteConstraint)
     𝒍pmin = 𝒍prev+𝒑₋
     𝛬mean = ΣΔ(𝒍mean, 𝒍)
     𝛬max = ΣΔ(𝒍dmax, 𝒍)
-    𝛬box = Σ∇(𝒍pmin, 𝒍pmax, 𝒍)
+    𝛬box = Σ∇(𝒍pmin, 𝒍pmax, 𝒍) + 1
     𝑒 = 𝛬mean + 2𝛬max + 3𝛬box^2
     return 𝑒
   end
@@ -67,7 +67,7 @@ function optimal(flute; trace=false)
   lower, upper, initial = minbox(flute)
   # simulated annealing
   result = optimize(errfn, lower, upper, initial,
-                    SAMIN(rt=0.97, x_tol=1e-4, f_tol=1e-6),
+                    SAMIN(rt=0.97),
                     Optim.Options(iterations=Int(2e5), show_trace=trace, show_every=Int(2e4)))
   params = Optim.minimizer(result)
   return params
