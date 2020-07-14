@@ -4,13 +4,13 @@ using Statistics
 
 
 # sum of elementwise differences
-function ΣΔ(𝒍ₓ, 𝒍)
-  return sum(map((ℓₓ, ℓ)->abs(ℓₓ-ℓ), 𝒍ₓ, 𝒍))
+function Δ⃯(𝒍₁, 𝒍₂)
+  return sum(map(abs, 𝒍₂- 𝒍₁))
 end
 
 # sum of distance outside box
-function Σ∇(𝒍₋, 𝒍₊, 𝒍)
-  return sum(map((ℓ₋, ℓ₊, ℓ)->max(ℓ₋-ℓ, 0.0, ℓ-ℓ₊), 𝒍₋, 𝒍₊, 𝒍))
+function Δ͍(𝒍, 𝒍₋, 𝒍₊)
+  return (sum(map((ℓ₋, ℓ₊, ℓ)->max(ℓ₋-ℓ, 0.0, ℓ-ℓ₊), 𝒍₋, 𝒍₊, 𝒍)) + 1)^2 - 1
 end
 
 # return all but last element
@@ -23,8 +23,8 @@ function push(ℓ, 𝒍)
   return [ℓ; 𝒍]
 end
 
-function norm(𝒅, ħ)
-  return fill(mean(𝒅), ħ)
+function avg(𝒅)
+  return fill(mean(𝒅), length(𝒅))
 end
 
 # error function factory (constraints)
@@ -32,22 +32,24 @@ function mkerrfn(flute::FluteConstraint)
   ⇴ = drop ∘ mapflute
   ⬰ = drop ∘ push
   𝒉 = flute.holes
-  ħ = length(𝒉)
   𝒇 = [map(ℎ->ℎ.𝑓, 𝒉); flute.𝑓]
   𝒑₋ = map(ℎ->ℎ.𝑝₋, 𝒉)
   𝒑₊ = map(ℎ->ℎ.𝑝₊, 𝒉)
   𝒅₊ = map(ℎ->ℎ.𝑑₊, 𝒉)
-  𝒍dmax = 𝒇⇴ 𝒅₊
+  𝒍⃯ = 𝒇⇴ 𝒅₊
   function errfn(𝒅)
-    𝒍 = 𝒇⇴ 𝒅
-    𝒍mean = 𝒇⇴ norm(𝒅, ħ)
-    𝒍prev = 0.0⬰ 𝒍
-    𝒍pmax = 𝒍prev+𝒑₊
-    𝒍pmin = 𝒍prev+𝒑₋
-    𝛬mean = ΣΔ(𝒍mean, 𝒍)
-    𝛬max = ΣΔ(𝒍dmax, 𝒍)
-    𝛬bound = (Σ∇(𝒍pmin, 𝒍pmax, 𝒍) + 1)^2 - 1
-    𝑒 = 𝛬mean + 2𝛬max + 3𝛬bound
+    # locations
+    𝒍  = 𝒇⇴ 𝒅
+    𝒍ᵪ̅ = 𝒇⇴ avg(𝒅)
+    𝒍⃮  = 0.0⬰ 𝒍
+    𝒍͍₋ = 𝒍⃮+𝒑₋
+    𝒍͍₊ = 𝒍⃮+𝒑₊
+    # error terms
+    𝑒ᵪ̅ = Δ⃯(𝒍, 𝒍ᵪ̅)
+    𝑒⃯  = Δ⃯(𝒍, 𝒍⃯)
+    𝑒͍  = Δ͍(𝒍, 𝒍͍₋, 𝒍͍₊)
+    # sum and weigh
+    𝑒  = 𝑒ᵪ̅ + 2𝑒⃯ + 3𝑒͍
     return 𝑒
   end
   return errfn
