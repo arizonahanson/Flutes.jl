@@ -46,8 +46,8 @@ function mkerrfn(flute::FluteConstraint)
     𝒍pmin = 𝒍prev+𝒑₋
     𝛬mean = ΣΔ(𝒍mean, 𝒍)
     𝛬max = ΣΔ(𝒍dmax, 𝒍)
-    𝛬box = Σ∇(𝒍pmin, 𝒍pmax, 𝒍) + 1
-    𝑒 = 𝛬mean + 2𝛬max + 2𝛬box^2
+    𝛬bound = (Σ∇(𝒍pmin, 𝒍pmax, 𝒍) + 1)^2 - 1
+    𝑒 = 𝛬mean + 2𝛬max + 3𝛬bound
     return 𝑒
   end
   return errfn
