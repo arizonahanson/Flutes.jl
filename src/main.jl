@@ -21,8 +21,10 @@ flute = createflute(scale, mind, maxd, minp, maxp)
 diameters = optimal(flute; trace=trace)
 lengths = map(l->round(l; digits=3), mapflute(scale, diameters))
 # end magic
-for h in 1:length(diameters)
-  print(" ∘ ", round(lengths[h+1]-lengths[h]; digits=2))
+all_lengths = [0.0; lengths]
+print("|")
+for h in 1:length(lengths)
+  print(" ∘ ", round(all_lengths[h+1]-all_lengths[h]; digits=2))
 end
 println(" |")
 # break holes by foot/body

@@ -3,30 +3,30 @@ using Optim
 using Statistics
 
 
-# sum of elementwise differences
+# sum of absolute differences (element-wise)
 function Δ⃯(𝒄₁, 𝒄₂)
   return sum(map(abs, 𝒄₁- 𝒄₂))
 end
 
-# sum of distance outside box
+# sum of distances outside bounding box (element-wise)
 function Δ͍(𝒄, 𝒄₋, 𝒄₊)
   return sum(max.(𝒄₋-𝒄, 0.0, 𝒄-𝒄₊))
 end
 
-# return all but last element
-function front(𝒄)
+# collection 𝒄 with last element dropped
+function drop(𝒄)
   return 𝒄[1:end-1]
 end
 
-# same-length collection of average value
+# fill collection with length of 𝒄 with average of 𝒄
 function avg(𝒄)
   return fill(mean(𝒄), length(𝒄))
 end
 
-# error function factory (constraints)
+# generate error function with scoped constants
 function mkerrfn(flute::FluteConstraint)
-  ⇴ = front ∘ mapflute
-  ⬰ = front ∘ vcat
+  ⇴ = drop ∘ mapflute
+  ⥆ = drop ∘ vcat
   𝒉 = flute.holes
   𝒇 = [map(ℎ->ℎ.𝑓, 𝒉); flute.𝑓]
   𝒑₋ = map(ℎ->ℎ.𝑝₋, 𝒉)
@@ -37,7 +37,7 @@ function mkerrfn(flute::FluteConstraint)
     # locations
     𝒍 = 𝒇⇴ 𝒅
     𝒍̲ = 𝒇⇴ avg(𝒅)
-    𝒍⃮ = 0.0⬰ 𝒍
+    𝒍⃮ = 0.0⥆ 𝒍
     𝒍⃭ = 𝒍⃮+𝒑₋
     𝒍⃬ = 𝒍⃮+𝒑₊
     # error terms
@@ -66,7 +66,7 @@ function optimal(flute; trace=false)
   # simulated annealing
   result = optimize(errfn, lower, upper, initial,
                     SAMIN(rt=0.97),
-                    Optim.Options(iterations=Int(2e5), show_trace=trace, show_every=Int(2e4)))
+                    Optim.Options(iterations=Int(3e5), show_trace=trace, show_every=Int(2e4)))
   params = Optim.minimizer(result)
   return params
 end
