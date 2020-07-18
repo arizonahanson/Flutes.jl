@@ -18,24 +18,26 @@ trace = parse(Bool, readvariable("TRACE"))
 # find best fit
 # all the magic happens here
 diameters = optimal(scale, mind, maxd, minp, maxp; trace=trace)
-lengths = map(l->round(l; digits=3), mapflute(scale, diameters))
+lengths = round.(mapflute(scale, diameters); digits=3)
 # end magic
-all_lengths = [0.0; lengths]
+
+# display hole separations
+with_origin = [0.0; lengths]
 print("|")
 for h in 1:length(lengths)
-  print(" ∘ ", round(all_lengths[h+1]-all_lengths[h]; digits=2))
+  print(" ∘ ", round(with_origin[h+1]-with_origin[h]; digits=2))
 end
 println(" |")
+
 # break holes by foot/body
-body_diameters = map(d->round(d; digits=3), diameters[1:brk])
+body_diameters = round.(diameters[1:brk]; digits=3)
 body_positions = lengths[1:brk]
-foot_diameters = map(d->round(d; digits=3), diameters[brk+1:end])
+foot_diameters = round.(diameters[brk+1:end]; digits=3)
 foot_positions = lengths[brk+1:end-1]
 flute_length = lengths[end]
-
+# place body/foot joint
 tenon_length = 26
 head_length = 156.369
-# place body/foot joint
 spare = max((foot_positions[1] - body_positions[end] - tenon_length)/2, 0)
 nofoot = body_positions[end] + spare + tenon_length
 body_length = round(nofoot - head_length; digits=3)

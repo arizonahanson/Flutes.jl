@@ -5,7 +5,7 @@ using Statistics
 
 # sum of absolute differences (element-wise)
 function Δ⃯(𝒄₁, 𝒄₂)
-  return sum(map(abs, 𝒄₁- 𝒄₂))
+  return sum(abs.(𝒄₁- 𝒄₂))
 end
 
 # sum of distances outside bounding box (element-wise)
