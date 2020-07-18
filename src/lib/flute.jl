@@ -1,31 +1,11 @@
-export FluteConstraint, ToneHoleConstraint
-export createflute, addtonehole!, mapflute
+export FluteConstraint, mapflute
 
 struct FluteConstraint
-  𝑓  # lowest frequency
-  holes
-end
-
-struct ToneHoleConstraint
-  𝑓  # hole frequency
-  𝑑₋ # min diameter
-  𝑑₊ # max diameter
-  𝑝₋ # min separation
-  𝑝₊ # max separation
-end
-
-function addtonehole!(flute::FluteConstraint, 𝑓; 𝑑₋=2.0, 𝑑₊=9.0, 𝑝₋=15.0, 𝑝₊=40.0)
-  push!(flute.holes, ToneHoleConstraint(𝑓, 𝑑₋, 𝑑₊, 𝑝₋, 𝑝₊))
-end
-
-function createflute(𝒇, 𝒅₋, 𝒅₊, 𝒑₋, 𝒑₊)
-  flute = FluteConstraint(𝒇[end], [])
-  ħ = length(𝒇)-1
-  for h in 1:ħ
-    # constrain hole diameters & positions
-    addtonehole!(flute, 𝒇[h]; 𝑑₋=𝒅₋[h], 𝑑₊=𝒅₊[h], 𝑝₋=𝒑₋[h], 𝑝₊=𝒑₊[h])
-  end
-  return flute
+  𝒇  # frequencies
+  𝒅₋ # min diameters
+  𝒅₊ # max diameters
+  𝒑₋ # min separation
+  𝒑₊ # max separation
 end
 
 function mapflute(𝒇, 𝒅)

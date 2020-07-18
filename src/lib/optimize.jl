@@ -27,11 +27,10 @@ end
 function mkerrfn(flute::FluteConstraint)
   ⇴ = drop ∘ mapflute
   ⥆ = drop ∘ vcat
-  𝒉 = flute.holes
-  𝒇 = [map(ℎ->ℎ.𝑓, 𝒉); flute.𝑓]
-  𝒑₋ = map(ℎ->ℎ.𝑝₋, 𝒉)
-  𝒑₊ = map(ℎ->ℎ.𝑝₊, 𝒉)
-  𝒅₊ = map(ℎ->ℎ.𝑑₊, 𝒉)
+  𝒇 = flute.𝒇
+  𝒑₋ = flute.𝒑₋
+  𝒑₊ = flute.𝒑₊
+  𝒅₊ = flute.𝒅₊
   𝒍⃯ = 𝒇⇴ 𝒅₊
   function errfn(𝒅)
     # locations
@@ -52,8 +51,8 @@ function mkerrfn(flute::FluteConstraint)
 end
 
 function minbox(flute::FluteConstraint)
-  𝒅₋ = map(𝒉->𝒉.𝑑₋, flute.holes)
-  𝒅₊ = map(𝒉->𝒉.𝑑₊, flute.holes)
+  𝒅₋ = flute.𝒅₋
+  𝒅₊ = flute.𝒅₊
   𝒅₀ = map((𝑑₊, 𝑑₋)->0.9(𝑑₊-𝑑₋)+𝑑₋, 𝒅₊, 𝒅₋)
   return (𝒅₋, 𝒅₊, 𝒅₀)
 end
