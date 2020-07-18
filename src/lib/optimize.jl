@@ -23,14 +23,11 @@ function avg(𝒄)
   return fill(mean(𝒄), length(𝒄))
 end
 
+⇴ = drop ∘ mapflute
+⥆ = drop ∘ vcat
+
 # generate error function with scoped constants
-function mkerrfn(flute::FluteConstraint)
-  ⇴ = drop ∘ mapflute
-  ⥆ = drop ∘ vcat
-  𝒇 = flute.𝒇
-  𝒑₋ = flute.𝒑₋
-  𝒑₊ = flute.𝒑₊
-  𝒅₊ = flute.𝒅₊
+function mkerrfn(𝒇, 𝒅₋, 𝒅₊, 𝒑₋, 𝒑₊)
   𝒍⃯ = 𝒇⇴ 𝒅₊
   function errfn(𝒅)
     # locations
@@ -50,20 +47,13 @@ function mkerrfn(flute::FluteConstraint)
   return errfn
 end
 
-function minbox(flute::FluteConstraint)
-  𝒅₋ = flute.𝒅₋
-  𝒅₊ = flute.𝒅₊
-  𝒅₀ = map((𝑑₊, 𝑑₋)->0.9(𝑑₊-𝑑₋)+𝑑₋, 𝒅₊, 𝒅₋)
-  return (𝒅₋, 𝒅₊, 𝒅₀)
-end
-
-function optimal(flute; trace=false)
+function optimal(𝒇, 𝒅₋, 𝒅₊, 𝒑₋, 𝒑₊; trace=false)
   # minimize error function
-  errfn = mkerrfn(flute)
+  errfn = mkerrfn(𝒇, 𝒅₋, 𝒅₊, 𝒑₋, 𝒑₊)
   # box-constrained, initial parameters
-  lower, upper, initial = minbox(flute)
+  𝒅₁ = map((𝑑₊, 𝑑₋)->0.9(𝑑₊-𝑑₋)+𝑑₋, 𝒅₊, 𝒅₋)
   # simulated annealing
-  result = optimize(errfn, lower, upper, initial,
+  result = optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₁,
                     SAMIN(rt=0.97),
                     Optim.Options(iterations=Int(3e5), show_trace=trace, show_every=Int(2e4)))
   params = Optim.minimizer(result)

@@ -1,12 +1,4 @@
-export FluteConstraint, mapflute
-
-struct FluteConstraint
-  𝒇  # frequencies
-  𝒅₋ # min diameters
-  𝒅₊ # max diameters
-  𝒑₋ # min separation
-  𝒑₊ # max separation
-end
+export mapflute
 
 function mapflute(𝒇, 𝒅)
   𝒍 = []

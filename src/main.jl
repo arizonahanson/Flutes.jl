@@ -17,8 +17,7 @@ trace = parse(Bool, readvariable("TRACE"))
 
 # find best fit
 # all the magic happens here
-flute = FluteConstraint(scale, mind, maxd, minp, maxp)
-diameters = optimal(flute; trace=trace)
+diameters = optimal(scale, mind, maxd, minp, maxp; trace=trace)
 lengths = map(l->round(l; digits=3), mapflute(scale, diameters))
 # end magic
 all_lengths = [0.0; lengths]
