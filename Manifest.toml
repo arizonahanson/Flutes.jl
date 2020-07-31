@@ -76,9 +76,9 @@ version = "0.8.13"
 
 [[FiniteDiff]]
 deps = ["ArrayInterface", "LinearAlgebra", "Requires", "SparseArrays", "StaticArrays"]
-git-tree-sha1 = "43b397bf66d07d113cc2cc012dd2029d336c3894"
+git-tree-sha1 = "ed5d92cc9a84b9f5f9d65d3559b22d4b3b824b7e"
 uuid = "6a86dc24-6348-571c-b903-95158fe2bd41"
-version = "2.5.1"
+version = "2.5.2"
 
 [[ForwardDiff]]
 deps = ["CommonSubexpressions", "DiffResults", "DiffRules", "NaNMath", "Random", "SpecialFunctions", "StaticArrays"]
