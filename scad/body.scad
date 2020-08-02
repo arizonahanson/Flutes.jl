@@ -14,23 +14,19 @@ MortiseLength=26; // [0:1:42]
 
 include <lib/index.scad>;
 
-// TODO: currently fixed
-FluteOuter=26;
 FluteInner=19;
+FluteWall=3.5;
 
 module body() {
-  hh=(FluteOuter-FluteInner)/2;
   slide(MortiseLength) difference() {
     union() {
       mortise(z=-MortiseLength, l=MortiseLength);
-      shell(b=FluteOuter, l=BodyLength-TenonLength);
+      tube(b=FluteInner, l=BodyLength-TenonLength, h=FluteWall);
       tenon(z=BodyLength-TenonLength, l=TenonLength);
     }
-    // bore
-    bore(b=FluteInner, l=BodyLength);
     // holes
     for(i=[0:1:len(HoleDiameters)]) let (zh=HolePositions[i], dh=HoleDiameters[i]) {
-      hole(z=zh, b=FluteInner, h=hh, d=dh);
+      hole(z=zh, b=FluteInner, h=FluteWall, d=dh);
     }
   }
 }

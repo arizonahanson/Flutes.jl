@@ -34,6 +34,16 @@ module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z-0.001) cylinder(d1=ins(b+ex, $fn=maxfn), d2=ins(b2+ex, $fn=maxfn), h=l+0.002, $fn=maxfn);
 }
 
+// tube: shell with a bore
+module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
+  b2 = (b2==undef) ? b : b2;
+  h2 = (h2==undef) ? h : h2;
+  difference() {
+    shell(z=z, b=b+2*h, b2=b2+2*h2, l=l);
+    bore(z=z, b=b, b2=b2, l=l);
+  }
+}
+
 // tone or embouchure hole
 // (b)ore (h)eight (d)iameter (w)idth (r)otate° w(a)ll°
 // (s)houlder° (sq)areness

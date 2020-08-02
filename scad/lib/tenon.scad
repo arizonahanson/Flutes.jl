@@ -54,13 +54,9 @@ module tenon(z=0, l=26) {
     }
     gland(z=l-lz-LAYER_HEIGHT);
     gland(z=(l-lz)/2);
+    bore(b=19, l=26);
   }
 }
 
-difference() {
-  union() {
-    tenon();
-    mortise();
-  }
-  bore(b=19, l=26);
-}
+tenon();
+mortise();
