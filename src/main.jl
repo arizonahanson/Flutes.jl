@@ -37,7 +37,7 @@ foot_positions = lengths[brk+1:end-1]
 flute_length = lengths[end]
 # place body/foot joint
 tenon_length = 26
-head_length = 154.6
+head_length = 154.6 # TODO lose the constant
 spare = max((foot_positions[1] - body_positions[end] - tenon_length)/2, 0)
 nofoot = body_positions[end] + spare + tenon_length
 body_length = round(nofoot - head_length; digits=3)
