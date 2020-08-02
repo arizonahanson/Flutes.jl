@@ -4,7 +4,7 @@
 // slider widget for number in range
 HeadLength=156.369; // [128:0.1:999]
 // slider widget for number in range
-CrownLength=52; // [1:1:42]
+CrownLength=42; // [1:1:42]
 // slider widget for number in range
 TenonLength=26; // [0:1:42]
 // slider widget for number in range
@@ -47,41 +47,42 @@ module plate(z=0, b, h, l, r=0, sq=0.4) {
 }
 
 module head() {
+  wh=7.0;
   slide(CrownLength) difference() {
     union() {
+      // crown/cork
+      shell(z=-CrownLength,  b=17+wh, l=CrownLength-CorkPosition);
       // reflector->embouchure
-      shell(z=-CrownLength, b=24, l=CrownLength-CorkPosition);
-      shell(z=-CorkPosition, b=24, b2=24.4, l=CorkPosition);
-			// lip plate
-			plate(b=17.4, h=4.3, l=24, r=atan(10/26));
+      shell(z=-CorkPosition, b=17+wh, b2=17.4+wh, l=CorkPosition);
+			plate(z=0.0, b=17.4, h=4.3, l=24, r=atan(10/26));
       // embouchure->max shell
-      shell(b=24.4, b2=24.6, l=22);
-      shell(z=22, b=24.6, b2=24.7, l=10);
-      shell(z=32, b=24.7, b2=24.9, l=10);
-      shell(z=42, b=24.9, b2=24.9, l=10);
-      shell(z=52, b=24.9, b2=25.1, l=10);
-      shell(z=62, b=25.1, b2=25.2, l=10);
-      shell(z=72, b=25.2, b2=25.3, l=10);
-      shell(z=82, b=25.3, b2=25.4, l=10);
-      shell(z=92, b=25.4, b2=25.5, l=10);
-      shell(z=102, b=25.5, b2=26, l=18);
-      shell(z=120, b=26, l=HeadLength-TenonLength-120);
+      shell(z=0.0, b=17.4+wh, b2=17.6+wh, l=22);
+      shell(z=22,  b=17.6+wh, b2=17.7+wh, l=10);
+      shell(z=32,  b=17.7+wh, b2=17.9+wh, l=10);
+      shell(z=42,  b=17.9+wh, b2=17.9+wh, l=10);
+      shell(z=52,  b=17.9+wh, b2=18.1+wh, l=10);
+      shell(z=62,  b=18.1+wh, b2=18.2+wh, l=10);
+      shell(z=72,  b=18.2+wh, b2=18.3+wh, l=10);
+      shell(z=82,  b=18.3+wh, b2=18.4+wh, l=10);
+      shell(z=92,  b=18.4+wh, b2=18.5+wh, l=10);
+      shell(z=102, b=18.5+wh, b2=19.0+wh, l=18);
+      shell(z=120, b=19.0+wh, l=HeadLength-TenonLength-120);
       tenon(z=HeadLength-TenonLength, l=TenonLength);
     }
     // reflector->embouchure
     bore(z=-CorkPosition, b=17, b2=17.4, l=CorkPosition);
     // embouchure->max bore
-    bore(b=17.4, b2=17.6, l=22);
-    bore(z=22, b=17.6, b2=17.7, l=10);
-    bore(z=32, b=17.7, b2=17.9, l=10);
-    bore(z=42, b=17.9, b2=17.9, l=10);
-    bore(z=52, b=17.9, b2=18.1, l=10);
-    bore(z=62, b=18.1, b2=18.2, l=10);
-    bore(z=72, b=18.2, b2=18.3, l=10);
-    bore(z=82, b=18.3, b2=18.4, l=10);
-    bore(z=92, b=18.4, b2=18.5, l=10);
-    bore(z=102, b=18.5, b2=19, l=18);
-    bore(z=120, b=19, l=HeadLength-120);
+    bore(z=0.0,   b=17.4, b2=17.6, l=22);
+    bore(z=22.0,  b=17.6, b2=17.7, l=10);
+    bore(z=32.0,  b=17.7, b2=17.9, l=10);
+    bore(z=42.0,  b=17.9, b2=17.9, l=10);
+    bore(z=52.0,  b=17.9, b2=18.1, l=10);
+    bore(z=62.0,  b=18.1, b2=18.2, l=10);
+    bore(z=72.0,  b=18.2, b2=18.3, l=10);
+    bore(z=82.0,  b=18.3, b2=18.4, l=10);
+    bore(z=92.0,  b=18.4, b2=18.5, l=10);
+    bore(z=102.0, b=18.5, b2=19.0, l=18);
+    bore(z=120.0, b=19.0, l=HeadLength-120);
     // embouchure hole
     hole(b=17.4, h=(FluteOuter-17.4)/2, d=EmbouchureDiameter, w=EmbouchureWidth, a=EmbouchureWallAngle, s=EmbouchureShoulderAngle, sq=EmbouchureSquareness);
   }
