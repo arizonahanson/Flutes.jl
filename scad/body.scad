@@ -8,9 +8,9 @@ HoleDiameters=[]; // [1:42]
 // text box for vector
 HolePositions=[]; // [1:42]
 // slider widget for number in range
-TenonLength=26; // [0:1:42]
-// slider widget for number in range
 MortiseLength=26; // [0:1:42]
+// slider widget for number in range
+TenonLength=26; // [0:1:42]
 
 include <lib/index.scad>;
 
