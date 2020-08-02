@@ -2,9 +2,9 @@
  * Headjoint section
  */
 // slider widget for number in range
-HeadLength=156.369; // [128:0.1:999]
+HeadLength=154.6; // [128:0.1:999]
 // slider widget for number in range
-CrownLength=42; // [1:1:42]
+CrownLength=57; // [1:1:99]
 // slider widget for number in range
 TenonLength=26; // [0:1:42]
 // slider widget for number in range
@@ -67,8 +67,8 @@ module head() {
       tube(z=72.0,  b=18.2, b2=18.3, l=10, h=FluteWall);
       tube(z=82.0,  b=18.3, b2=18.4, l=10, h=FluteWall);
       tube(z=92.0,  b=18.4, b2=18.5, l=10, h=FluteWall);
-      tube(z=102.0, b=18.5, b2=19.0, l=18, h=FluteWall);
-      tube(z=120.0, b=19.0, l=HeadLength-TenonLength-120, h=FluteWall);
+      tube(z=102.0, b=18.5, b2=19.0, l=14.6, h=FluteWall);
+      tube(z=116.6, b=19.0, l=HeadLength-TenonLength-116.6, h=FluteWall);
       // tenon connector
       tenon(z=HeadLength-TenonLength, l=TenonLength);
     }
