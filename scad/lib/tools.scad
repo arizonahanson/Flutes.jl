@@ -3,8 +3,8 @@
  */
 include <consts.scad>;
 
-// used to calculate number of polygon segments ($fn)
-function fn(b) = ceil(PI*b/NOZZLE_DIAMETER/4)*4;
+// used to calculate number of polygon segments ($fn) multiple of 4
+function fn(b) = ceil(PI*b/NOZZLE_DIAMETER/2)*4;
 
 // used to calculate diameter of inscribed polygon
 function ins(b) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
@@ -34,7 +34,7 @@ module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z-0.001) cylinder(d1=ins(b+ex, $fn=maxfn), d2=ins(b2+ex, $fn=maxfn), h=l+0.002, $fn=maxfn);
 }
 
-// tube: shell with a bore
+// tube: bore with a shell wall
 module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
   b2 = (b2==undef) ? b : b2;
   h2 = (h2==undef) ? h : h2;
