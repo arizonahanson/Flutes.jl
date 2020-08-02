@@ -52,7 +52,7 @@ module head() {
       // reflector->embouchure
       tube(z=-CorkPosition, b=17, b2=17.4, l=CorkPosition, h=FluteWall);
       // lip plate
-			plate(z=0.0,  b=17.4, l=24, h=4.3, r=atan(10/26));
+			plate(z=0.0,  b=17.4, l=24, h=4.3, r=atan(EmbouchureDiameter/26.0));
       // embouchure -> tenon
       tube(z=0.0,   b=17.4, b2=17.6, l=22, h=FluteWall);
       tube(z=22.0,  b=17.6, b2=17.7, l=10, h=FluteWall);
