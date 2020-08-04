@@ -1,5 +1,5 @@
 #FROM debian:buster-slim
-FROM julia:1.4
+FROM julia:1.5
 #RUN set -eux; \
 #   apt-get update; \
 # apt-get install -y --no-install-recommends \
