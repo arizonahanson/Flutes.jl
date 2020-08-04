@@ -51,13 +51,13 @@ module head() {
   slide(CrownLength) difference() {
     union() {
       // crown/cork
-      shell(z=-CrownLength,  b=17.0+2*FluteWall, l=CrownLength-CorkPosition);
+      shell(z=-CrownLength,  b=17+2*FluteWall, l=CrownLength-CorkPosition);
       // reflector->embouchure
       tube(z=-CorkPosition, b=17, b2=17.4, l=CorkPosition, h=FluteWall);
       // lip plate
-      plate(z=0.0,  b=18.0, l=24, h=4.0, r=atan(EmbouchureDiameter/26.0));
+      plate(z=0,  b=18, l=24, h=4, r=atan(EmbouchureDiameter/26));
       // embouchure -> tenon
-      tube(z=0.0,  b=17.4, b2=17.8, l=26.5, h=FluteWall);
+      tube(z=0,    b=17.4, b2=17.8, l=26.5, h=FluteWall);
       tube(z=26.5, b=17.8, b2=17.9, l=10.0, h=FluteWall);
       tube(z=36.5, b=17.9, b2=18.1, l=10.0, h=FluteWall);
       tube(z=46.5, b=18.1, b2=18.3, l=10.0, h=FluteWall);
