@@ -70,9 +70,9 @@ uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[FillArrays]]
 deps = ["LinearAlgebra", "Random", "SparseArrays"]
-git-tree-sha1 = "be4180bdb27a11188d694ee3773122f4921f1a62"
+git-tree-sha1 = "4863cbb7910079369e258dee4add9d06ead5063a"
 uuid = "1a297f60-69ca-5386-bcde-b61e274b549b"
-version = "0.8.13"
+version = "0.8.14"
 
 [[FiniteDiff]]
 deps = ["ArrayInterface", "LinearAlgebra", "Requires", "SparseArrays", "StaticArrays"]
@@ -137,9 +137,9 @@ uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 
 [[NLSolversBase]]
 deps = ["DiffResults", "Distributed", "FiniteDiff", "ForwardDiff"]
-git-tree-sha1 = "7c4e66c47848562003250f28b579c584e55becc0"
+git-tree-sha1 = "ae1cbe7f1de1c443f44a5a3404140f11fe0d2610"
 uuid = "d41bc354-129a-5804-8e4c-c37616107c6c"
-version = "7.6.1"
+version = "7.6.2"
 
 [[NaNMath]]
 git-tree-sha1 = "c84c576296d0e2fbb3fc134d3e09086b3ea617cd"
