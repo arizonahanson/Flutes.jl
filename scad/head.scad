@@ -8,7 +8,7 @@ CorkPosition=17.4; // [0:0.1;42]
 // slider widget for number in range
 FluteWall=3.5; // [0:0.1;10]
 // slider widget for number in range
-HeadLength=154.6; // [128:0.1:999]
+HeadLength=156; // [128:0.1:999]
 // slider widget for number in range
 TenonLength=26; // [0:1:42]
 // slider widget for number in range
