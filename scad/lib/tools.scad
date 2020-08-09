@@ -9,8 +9,11 @@ function fn(b) = ceil(max(PI*b/NOZZLE_DIAMETER,4)/4)*4;
 // segments for maximum of two diameters
 function maxfn(b, b2) = fn(max(b, b2));
 
-// used to calculate diameter of circumscribed polygon with arc compensation
-function cir(b, n) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/n)*b/2,2));
+// used to calculate diameter of circumscribed polygon
+function cir(b, n) = 1/cos(180/n)*b;
+
+// used to calculate circumscribed polygon with arc compensation
+function arc(b, n) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(cir(b, n)/2,2));
 
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
@@ -28,7 +31,7 @@ module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   bx = b + NOZZLE_DIAMETER;
   bx2 = (b2==undef ? b : b2) + NOZZLE_DIAMETER;
   fn = maxfn(bx, bx2); // adaptive resolution
-  slide(z-0.001) cylinder(d1=cir(bx, fn), d2=cir(bx2, fn), h=l+0.002, $fn=fn);
+  slide(z-0.001) cylinder(d1=arc(bx, fn), d2=arc(bx2, fn), h=l+0.002, $fn=fn);
 }
 
 // tube: bore with a shell wall
