@@ -44,9 +44,9 @@ module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
   }
 }
 
-// rotate x by 90, and z by -r (for holes)
+// rotate x by 90, and z by r (for holes)
 module pivot(r=0) {
-  rotate([90,0,-r]) children();
+  rotate([90,0,r]) children();
 }
 
 // scale into an oval with speciied diameter and width
