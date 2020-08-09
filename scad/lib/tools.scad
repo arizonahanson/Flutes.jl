@@ -4,10 +4,10 @@
 include <consts.scad>;
 
 // used to calculate number of polygon segments ($fn) multiple of 4
-function fn(b) = ceil(PI*b/NOZZLE_DIAMETER/2)*4;
+function fn(b) = ceil(max(PI*b/NOZZLE_DIAMETER,4)/4)*4;
 
-// used to calculate diameter of inscribed polygon
-function ins(b) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/$fn)*b/2,2));
+// used to calculate diameter of circumscribed polygon with arc compensation
+function cir(b, n) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/n)*(b/2),2));
 
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
@@ -26,12 +26,12 @@ module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z) cylinder(d1=b, d2=b2, h=l, $fn=maxfn);
 }
 
-// like shell, but inscribed polygon and micron z variance
+// like shell, but circumscribed polygon and micron z variance
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
   ex = NOZZLE_DIAMETER;
   maxfn = fn(max(b, b2)+ex); // adaptive resolution
-  slide(z-0.001) cylinder(d1=ins(b+ex, $fn=maxfn), d2=ins(b2+ex, $fn=maxfn), h=l+0.002, $fn=maxfn);
+  slide(z-0.001) cylinder(d1=cir(b+ex, maxfn), d2=cir(b2+ex, maxfn), h=l+0.002, $fn=maxfn);
 }
 
 // tube: bore with a shell wall
@@ -66,18 +66,18 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
         cube([sqx,sqx,0.001], center=true);
         union() {
           // shoulder cut
-          shell(z=ih, b=ins(dx-sqx, $fn=ofn), b2=ins(do-sqx, $fn=ofn), l=oh);
+          shell(z=ih, b=cir(dx-sqx, ofn), b2=cir(do-sqx, ofn), l=oh);
           // angled wall
-          shell(b=ins(di-sqx, $fn=ifn), b2=ins(dx-sqx, $fn=ifn), l=ih);
+          shell(b=cir(di-sqx, ifn), b2=cir(dx-sqx, ifn), l=ih);
         }
       }
     } else {
       // round hole
       union() {
         // shoulder cut
-        shell(z=ih, b=ins(dx, $fn=ofn), b2=ins(do, $fn=ofn), l=oh);
+        shell(z=ih, b=cir(dx, ofn), b2=cir(do, ofn), l=oh);
         // angled wall
-        shell(b=ins(di, $fn=ifn), b2=ins(dx, $fn=ifn), l=ih+0.001);
+        shell(b=cir(di, ifn), b2=cir(dx, ifn), l=ih+0.001);
       }
     }
 }
