@@ -7,7 +7,7 @@ include <consts.scad>;
 function fn(b) = ceil(max(PI*b/NOZZLE_DIAMETER,4)/4)*4;
 
 // used to calculate diameter of circumscribed polygon with arc compensation
-function cir(b, n) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/n)*(b/2),2));
+function cir(b, n) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(1/cos(180/n)*b/2,2));
 
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
@@ -49,7 +49,7 @@ module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   dx = d + NOZZLE_DIAMETER;
-  wx = (w==undef) ? dx : (w + NOZZLE_DIAMETER);
+  wx = (w==undef ? d : w) + NOZZLE_DIAMETER;
   sqx = sq*dx; // square part
   rh = b/2 + h; // bore radius + height
   ih = sqrt(pow(rh,2)-pow(dx/2,2)); // inner hole depth
