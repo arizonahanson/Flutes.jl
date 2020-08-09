@@ -44,9 +44,26 @@ module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
   }
 }
 
-// rotate x by r, y by 90 and z by -90 (for holes)
+// rotate x by 90, and z by -r (for holes)
 module pivot(r=0) {
-  rotate([r,90,-90]) children();
+  rotate([90,0,-r]) children();
+}
+
+// scale into an oval with speciied diameter and width
+module ovalize(d, w) {
+  scale([1,w/d,1]) children();
+}
+
+// minkowski sum children with a square of width sq
+module squarish(sq) {
+  if (sq>0.001) {
+    minkowski() {
+      cube([sq,sq,0.001], center=true);
+      children();
+    }
+  } else {
+    children();
+  }
 }
 
 // tone or embouchure hole
@@ -64,25 +81,11 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   ofn = maxfn(dx-sqx, do-sqx); // outer segments
   ifn = maxfn(dx-sqx, di-sqx); // inner segments
   // position/scale/rotate
-  slide(z) scale([1,1,w/dx]) pivot(-r)
-    if (sqx >= 0.001) {
-      // squarish hole
-      minkowski() {
-        cube([sqx,sqx,0.001], center=true);
-        union() {
-          // shoulder cut
-          shell(z=ih, b=cir(dx-sqx, ofn), b2=cir(do-sqx, ofn), l=oh);
-          // angled wall
-          shell(b=cir(di-sqx, ifn), b2=cir(dx-sqx, ifn), l=ih);
-        }
-      }
-    } else {
-      // round hole
-      union() {
-        // shoulder cut
-        shell(z=ih, b=cir(dx, ofn), b2=cir(do, ofn), l=oh);
-        // angled wall
-        shell(b=cir(di, ifn), b2=cir(dx, ifn), l=ih+0.001);
-      }
+  slide(z) pivot(r)
+    ovalize(dx, w) squarish(sqx) {
+      // shoulder cut
+      shell(z=ih, b=cir(dx-sqx, ofn), b2=cir(do-sqx, ofn), l=oh);
+      // angled wall
+      shell(b=cir(di-sqx, ifn), b2=cir(dx-sqx, ifn), l=sqx>=0.001?ih:ih+0.001);
     }
 }
