@@ -78,4 +78,3 @@ module head() {
 }
 
 color("silver") head();
-echo(cir9=cir(9, fn(9)), arc9=arc(9, fn(9)), fn9=fn(9));
