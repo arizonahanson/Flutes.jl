@@ -51,7 +51,7 @@ module pivot(r=0) {
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   dx = d + NOZZLE_DIAMETER;
-  wx = (w==undef ? d : w) + NOZZLE_DIAMETER;
+  w = w==undef ? d : w;
   sqx = sq*dx; // square part
   rh = b/2 + h; // bore radius + height
   ih = sqrt(pow(rh,2)-pow(dx/2,2)); // inner hole depth
@@ -61,7 +61,7 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   ofn = maxfn(dx-sqx, do-sqx); // outer segments
   ifn = maxfn(dx-sqx, di-sqx); // inner segments
   // position/scale/rotate
-  slide(z) scale([1,1,wx/dx]) pivot(-r)
+  slide(z) scale([1,1,w/dx]) pivot(-r)
     if (sqx >= 0.001) {
       // squarish hole
       minkowski() {
