@@ -56,7 +56,7 @@ module ovalize(d, w) {
 
 // minkowski sum children with a square of width sq
 module squarish(sq) {
-  if (sq>0.001) {
+  if (sq>=0.001) {
     minkowski() {
       cube([sq,sq,0.001], center=true);
       children();

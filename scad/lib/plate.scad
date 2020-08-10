@@ -13,7 +13,7 @@ module plate(z=0, b, h, l, r=0, sq=0.4) {
       shell(b=b);
       slide(h) intersection() {
         slide(l) pivot(r)
-          ovalize(od, l) squarish(sqx)
+          squarish(sqx)
             shell(b=b-sqx, b2=2*l-sqx, l=od/2);
         shell(b=od,l=2*l);
       }
@@ -24,7 +24,6 @@ module plate(z=0, b, h, l, r=0, sq=0.4) {
 }
 
 difference() {
-  plate(b=17.4, h=4.3, l=26, r=atan(10/26));
+  plate(b=17.4, h=4.3, l=24, r=atan(10/26));
   hole(b=17.4, h=4.3, d=10, w=12, a=7, s=45, sq=0.1);
 }
-
