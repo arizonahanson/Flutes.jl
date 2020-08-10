@@ -70,7 +70,7 @@ module squarish(sq) {
 // (b)ore (h)eight (d)iameter (w)idth (r)otate° w(a)ll°
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
-  dx = d + NOZZLE_DIAMETER;
+  dx = d + NOZZLE_DIAMETER/2;
   w = w==undef ? d : w;
   sqx = sq*dx; // square part
   rh = b/2 + h; // bore radius + height
