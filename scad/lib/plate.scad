@@ -24,6 +24,6 @@ module plate(z=0, b, h, l, r=0, sq=0.4) {
 }
 
 difference() {
-  plate(b=17.4, h=4.3, l=24, r=atan(10/26));
+  plate(b=17.4, h=4.3, l=24, r=atan((10+NOZZLE_DIAMETER)/26));
   hole(b=17.4, h=4.3, d=10, w=12, a=7, s=45, sq=0.1);
 }
