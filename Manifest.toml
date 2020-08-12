@@ -137,9 +137,9 @@ uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 
 [[NLSolversBase]]
 deps = ["DiffResults", "Distributed", "FiniteDiff", "ForwardDiff"]
-git-tree-sha1 = "ae1cbe7f1de1c443f44a5a3404140f11fe0d2610"
+git-tree-sha1 = "e39c69c2138a277955e6be0a4afc7d14e4948557"
 uuid = "d41bc354-129a-5804-8e4c-c37616107c6c"
-version = "7.6.2"
+version = "7.6.3"
 
 [[NaNMath]]
 git-tree-sha1 = "c84c576296d0e2fbb3fc134d3e09086b3ea617cd"
