@@ -70,7 +70,7 @@ module squarish(sq) {
 // (b)ore (h)eight (d)iameter (w)idth (r)otate° w(a)ll°
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
-  dx = d + NOZZLE_DIAMETER/2;
+  dx = d + NOZZLE_DIAMETER;
   w = w==undef ? d : w;
   sqx = sq*dx; // square part
   rh = b/2 + h; // bore radius + height
@@ -83,9 +83,9 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   // position/scale/rotate
   slide(z) pivot(r)
     ovalize(dx, w) squarish(sqx) {
-      // shoulder cut
-      shell(z=ih, b=cir(dx-sqx, ofn), b2=cir(do-sqx, ofn), l=oh);
       // angled wall
       shell(b=cir(di-sqx, ifn), b2=cir(dx-sqx, ifn), l=sqx>=0.001?ih:ih+0.001);
+      // shoulder cut
+      shell(z=ih, b=cir(dx-sqx, ofn), b2=cir(do-sqx, ofn), l=oh);
     }
 }
