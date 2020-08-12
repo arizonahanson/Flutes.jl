@@ -72,20 +72,21 @@ module squarish(sq) {
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   dx = d + NOZZLE_DIAMETER;
   w = w==undef ? d : w;
-  sqx = sq*dx; // square part
   rh = b/2 + h; // bore radius + height
   ih = sqrt(pow(rh,2)-pow(dx/2,2)); // inner hole depth
   oh = rh-ih; // outer hole height
   di = dx+tan(a)*2*ih; // inner hole diameter
   do = dx+tan(s)*2*oh; // outer hole diameter
-  ofn = maxfn(dx-sqx, do-sqx); // outer segments
-  ifn = maxfn(dx-sqx, di-sqx); // inner segments
+  sqx = sq*dx; // square part
+  dq = dx-sqx; doq = dx-sqx; diq=di-sqx;
+  ofn = maxfn(dq, doq); // outer segments
+  ifn = maxfn(dq, diq); // inner segments
   // position/scale/rotate
   slide(z) pivot(r)
     ovalize(dx, w) squarish(sqx) {
       // angled wall
-      shell(b=cir(di-sqx, ifn), b2=cir(dx-sqx, ifn), l=sqx>=0.001?ih:ih+0.001);
+      shell(b=cir(diq, ifn), b2=cir(dq, ifn), l=sqx>=0.001?ih:ih+0.001);
       // shoulder cut
-      shell(z=ih, b=cir(dx-sqx, ofn), b2=cir(do-sqx, ofn), l=oh);
+      shell(z=ih, b=cir(dq, ofn), b2=cir(doq, ofn), l=oh);
     }
 }

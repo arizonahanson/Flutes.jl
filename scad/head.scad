@@ -12,7 +12,7 @@ HeadLength=156; // [128:0.1:999]
 // slider widget for number in range
 TenonLength=26; // [0:1:42]
 // slider widget for number in range
-EmbouchureDiameter=10.4; // [1:0.1:42]
+EmbouchureDiameter=10.2; // [1:0.1:42]
 // slider widget for number in range
 EmbouchureWidth=12.2; // [1:0.1:42]
 // slider widget for number in range
