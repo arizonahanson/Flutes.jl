@@ -78,7 +78,7 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   di = dx+tan(a)*2*ih; // inner hole diameter
   do = dx+tan(s)*2*oh; // outer hole diameter
   sqx = sq*dx; // square part
-  dq = dx-sqx; doq = dx-sqx; diq=di-sqx;
+  dq = dx-sqx; doq = do-sqx; diq=di-sqx;
   ofn = maxfn(dq, doq); // outer segments
   ifn = maxfn(dq, diq); // inner segments
   // position/scale/rotate
