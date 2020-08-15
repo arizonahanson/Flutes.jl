@@ -49,7 +49,7 @@ openscad variables (supply via SCADFLAGS)
 ----------------------------------------------------------------------------
 | variable        | default | description                                  |
 ----------------------------------------------------------------------------
-| LAYER_HEIGHT    | 0.15    | layer height in mm                           |
+| LAYER_HEIGHT    | 0.162   | layer height in mm                           |
 | NOZZLE_DIAMETER | 0.4     | nozzle diameter in mm                        |
 ----------------------------------------------------------------------------
 

@@ -7,7 +7,7 @@ use <tools.scad>;
 
 // TODO: externalize all this
 // mortise inner bore - 0.925-0.927"
-A=25.2;
+A=25.3;
 // piston outer diameter - 0.923-0.922"
 C=24.9;
 // gland outer diameter - 0.815-0.813"
@@ -19,8 +19,7 @@ module mortise(z=0, l=26) {
   lz=(A-19)/2;
   slide(z) difference() {
     hull() {
-      shell(b=A+3.8);
-      shell(z=1, b=A+5.8);
+      shell(b=A+4);
       shell(z=l/2, b=A+8);
       shell(z=l-1-LAYER_HEIGHT, b=28);
       shell(z=l-LAYER_HEIGHT, b=26);
