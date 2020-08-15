@@ -3,8 +3,11 @@
  */
 include <consts.scad>;
 
+// make multiple of quantity
+function quant(b, n) = ceil(b/n)*n;
+
 // used to calculate number of polygon segments ($fn) multiple of 4
-function fn(b) = ceil(max(PI*b/NOZZLE_DIAMETER,4)/4)*4;
+function fn(b) = quant(max(PI*b/NOZZLE_DIAMETER,4),4);
 
 // segments for maximum of two diameters
 function maxfn(b, b2) = fn(max(b, b2));
@@ -71,7 +74,7 @@ module squarish(sq) {
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   dx = d + NOZZLE_DIAMETER;
-  w = w==undef ? d : w;
+  w = quant((w==undef ? d : w),LAYER_HEIGHT);
   rh = b/2 + h; // bore radius + height
   ih = sqrt(pow(rh,2)-pow(dx/2,2)); // inner hole depth
   oh = rh-ih; // outer hole height
