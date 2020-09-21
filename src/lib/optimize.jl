@@ -50,12 +50,14 @@ end
 function optimal(𝒇, 𝒅₋, 𝒅₊, 𝒑₋, 𝒑₊; trace=false)
   # minimize error function
   errfn = mkerrfn(𝒇, 𝒅₋, 𝒅₊, 𝒑₋, 𝒑₊)
-  # box-constrained, initial parameters
+  # box-constrained, initial parameters (bad guess)
   𝒅₁ = map((𝑑₊, 𝑑₋)->0.9(𝑑₊-𝑑₋)+𝑑₋, 𝒅₊, 𝒅₋)
-  # simulated annealing
-  result = optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₁,
-                    SAMIN(rt=0.97),
-                    Optim.Options(iterations=Int(3e5), show_trace=trace, show_every=Int(2e4)))
-  params = Optim.minimizer(result)
-  return params
+  # simulated annealing round 1 (fast cooldown)
+  options = Optim.Options(iterations=Int(3e5), show_trace=trace, show_every=Int(2e4))
+  result1 = optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₁, SAMIN(rt=0.8), options)
+  𝒅₂ = Optim.minimizer(result1)
+  # simulated annealing round 2 (slow cooldown)
+  result2 = optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₂, SAMIN(rt=0.97), options)
+  𝒅₃ = Optim.minimizer(result2)
+  return 𝒅₃
 end
