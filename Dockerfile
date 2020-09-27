@@ -7,5 +7,5 @@ FROM julia:1.5
 # ; \
 # rm -rf /var/lib/apt/lists/*
 COPY . /Flutes.jl
-RUN cd /Flutes.jl; julia -e 'using Pkg; Pkg.activate("."); Pkg.update()'
+RUN cd /Flutes.jl; julia -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
 CMD ["julia"]
