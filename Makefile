@@ -7,6 +7,8 @@ FLUTE_MAX_PADDING=Inf 35 30 Inf 35 30
 FLUTE_HOLE_ROTATIONS=0 15 0 0 -15 0
 FLUTE_BREAK=3
 FLUTE_TUNING=440.0
+FLUTE_HEAD_LENGTH=156
+FLUTE_TENON_LENGTH=26
 TRACE=false
 export
 # program binaries
@@ -19,6 +21,8 @@ JULIA=docker run -it --rm \
 			-e FLUTE_MAX_PADDING \
 			-e FLUTE_HOLE_ROTATIONS \
 			-e FLUTE_BREAK \
+			-e FLUTE_HEAD_LENGTH \
+			-e FLUTE_TENON_LENGTH \
 			-e TRACE \
 			-v "$(PWD)":/Flutes.jl -w /Flutes.jl workshop:latest julia
 SCAD=openscad

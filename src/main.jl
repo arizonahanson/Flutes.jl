@@ -14,6 +14,8 @@ minp = floats("FLUTE_MIN_PADDING")
 maxp = floats("FLUTE_MAX_PADDING")
 rots = floats("FLUTE_HOLE_ROTATIONS")
 brk = parse(Int, readvariable("FLUTE_BREAK"))
+head_length = parse(Float64, readvariable("FLUTE_HEAD_LENGTH"))
+tenon_length = parse(Float64, readvariable("FLUTE_TENON_LENGTH"))
 trace = parse(Bool, readvariable("TRACE"))
 
 # find best fit
@@ -39,8 +41,6 @@ foot_positions = lengths[brk+1:end-1]
 foot_rotations = rots[brk+1:end]
 flute_length = lengths[end]
 # place body/foot joint
-tenon_length = 26
-head_length = 156 # TODO lose the constant
 spare = max((foot_positions[1] - body_positions[end] - tenon_length)/2, 0)
 nofoot = body_positions[end] + spare + tenon_length
 body_length = round(nofoot - head_length; digits=3)
