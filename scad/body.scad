@@ -7,6 +7,8 @@ BodyLength=0; // [0:0.1:999]
 HoleDiameters=[]; // [1:42]
 // text box for vector
 HolePositions=[]; // [1:42]
+// text box for vector
+HoleRotations=[]; // [-359:359]
 // slider widget for number in range
 MortiseLength=26; // [0:1:42]
 // slider widget for number in range
@@ -25,8 +27,8 @@ module body() {
       tenon(z=BodyLength-TenonLength, l=TenonLength);
     }
     // holes
-    for(i=[0:1:len(HoleDiameters)]) let (zh=HolePositions[i], dh=HoleDiameters[i]) {
-      hole(z=zh, b=FluteInner, h=FluteWall, d=dh);
+    for(i=[0:1:len(HoleDiameters)]) let (zh=HolePositions[i], dh=HoleDiameters[i], rh=HoleRotations[i]) {
+      hole(z=zh, b=FluteInner, h=FluteWall, d=dh, r=rh);
     }
   }
 }

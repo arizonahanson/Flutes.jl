@@ -12,6 +12,7 @@ mind = floats("FLUTE_MIN_DIAMETERS")
 maxd = floats("FLUTE_MAX_DIAMETERS")
 minp = floats("FLUTE_MIN_PADDING")
 maxp = floats("FLUTE_MAX_PADDING")
+rots = floats("FLUTE_HOLE_ROTATIONS")
 brk = parse(Int, readvariable("FLUTE_BREAK"))
 trace = parse(Bool, readvariable("TRACE"))
 
@@ -32,8 +33,10 @@ println(" |")
 # break holes by foot/body
 body_diameters = round.(diameters[1:brk]; digits=3)
 body_positions = lengths[1:brk]
+body_rotations = rots[1:brk]
 foot_diameters = round.(diameters[brk+1:end]; digits=3)
 foot_positions = lengths[brk+1:end-1]
+foot_rotations = rots[brk+1:end]
 flute_length = lengths[end]
 # place body/foot joint
 tenon_length = 26
@@ -52,12 +55,14 @@ bodyset = "body.data"
 setscadparameter!(params, bodyset, "BodyLength", body_length)
 setscadparameter!(params, bodyset, "HoleDiameters", body_diameters)
 setscadparameter!(params, bodyset, "HolePositions", map(bp->round(bp-head_length; digits=3), body_positions))
+setscadparameter!(params, bodyset, "HoleRotations", body_rotations)
 setscadparameter!(params, bodyset, "TenonLength", tenon_length)
 setscadparameter!(params, bodyset, "MortiseLength", tenon_length)
 footset = "foot.data"
 setscadparameter!(params, footset, "FootLength", foot_length)
 setscadparameter!(params, footset, "HoleDiameters", foot_diameters)
 setscadparameter!(params, footset, "HolePositions", map(fp->round(fp-nofoot; digits=3), foot_positions))
+setscadparameter!(params, footset, "HoleRotations", foot_rotations)
 setscadparameter!(params, footset, "MortiseLength", tenon_length)
 extraset = "extra.data"
 setscadparameter!(params, extraset, "CreationDate", now())
