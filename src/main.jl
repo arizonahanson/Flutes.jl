@@ -8,7 +8,6 @@ using Dates
 # input env vars
 tuning = parse(Float64, readvariable("FLUTE_TUNING"))
 scale = tones("FLUTE_SCALE", tuning)
-mind = floats("FLUTE_MIN_DIAMETERS")
 maxd = floats("FLUTE_MAX_DIAMETERS")
 minp = floats("FLUTE_MIN_PADDING")
 maxp = floats("FLUTE_MAX_PADDING")
@@ -20,7 +19,7 @@ trace = parse(Bool, readvariable("TRACE"))
 
 # find best fit
 # all the magic happens here
-diameters = optimal(scale, mind, maxd, minp, maxp; trace=trace)
+diameters = optimal(scale, fill(1, length(maxd)), maxd, minp, maxp; trace=trace)
 lengths = round.(mapflute(scale, diameters); digits=3)
 # end magic
 
