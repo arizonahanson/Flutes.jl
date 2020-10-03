@@ -9,7 +9,6 @@ using Dates
 tuning = parse(Float64, readvariable("FLUTE_TUNING"))
 scale = tones("FLUTE_SCALE", tuning)
 maxd = floats("FLUTE_MAX_DIAMETERS")
-minp = floats("FLUTE_MIN_PADDING")
 maxp = floats("FLUTE_MAX_PADDING")
 rots = floats("FLUTE_HOLE_ROTATIONS")
 brk = parse(Int, readvariable("FLUTE_BREAK"))
@@ -17,9 +16,26 @@ head_length = parse(Float64, readvariable("FLUTE_HEAD_LENGTH"))
 tenon_length = parse(Float64, readvariable("FLUTE_TENON_LENGTH"))
 trace = parse(Bool, readvariable("TRACE"))
 
+# minimum diameters = 1mm
+mind = fill(1, length(maxd))
+# calculate minimum padding between holes
+minp = []
+for h in 1:length(maxd)
+  if h == 1
+    # first hole on body, not headjoint
+    append!(minp, head_length+maxd[h])
+  elseif h == brk+1
+    # make room for the tenon/mortise
+    append!(minp, maxd[brk]+tenon_length+maxd[h])
+  else
+    # minimum hole spacing (sum of diameters)
+    append!(minp, maxd[h-1]+maxd[h])
+  end
+end
+
 # find best fit
 # all the magic happens here
-diameters = optimal(scale, fill(1, length(maxd)), maxd, minp, maxp; trace=trace)
+diameters = optimal(scale, mind, maxd, minp, maxp; trace=trace)
 lengths = round.(mapflute(scale, diameters); digits=3)
 # end magic
 
