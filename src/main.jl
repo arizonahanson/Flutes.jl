@@ -21,16 +21,18 @@ mind = fill(1, length(maxd))
 # calculate minimum padding between holes
 minp = []
 for h in 1:length(maxd)
+  mp = 0
   if h == 1
     # first hole on body, not headjoint
-    append!(minp, head_length+maxd[h])
+    mp = head_length+maxd[h]
   elseif h == brk+1
     # make room for the tenon/mortise
-    append!(minp, maxd[brk]+tenon_length+maxd[h])
+    mp = maxd[brk]+tenon_length+maxd[h]
   else
     # minimum hole spacing (sum of diameters)
-    append!(minp, maxd[h-1]+maxd[h])
+    mp = maxd[h-1]+maxd[h]
   end
+  append!(minp, mp)
 end
 
 # find best fit
