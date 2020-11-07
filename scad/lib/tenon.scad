@@ -7,7 +7,7 @@ use <tools.scad>;
 
 // TODO: externalize all this
 // mortise inner bore - 0.925-0.927"
-A=25.3;
+A=25.2;
 // piston outer diameter - 0.923-0.922"
 C=24.9;
 // gland outer diameter - 0.815-0.813"
