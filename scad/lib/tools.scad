@@ -3,11 +3,11 @@
  */
 include <consts.scad>;
 
-// make multiple of quantity
-function quant(b, n) = ceil(b/n)*n;
+// round up b to nearest multiple of n
+function roundup(b, n) = ceil(b/n)*n;
 
 // used to calculate number of polygon segments ($fn) multiple of 4
-function fn(b) = quant(max(PI*b/NOZZLE_DIAMETER,4),4);
+function fn(b) = roundup(max(PI*b/NOZZLE_DIAMETER,4),4);
 
 // segments for maximum of two diameters
 function maxfn(b, b2) = fn(max(b, b2));
@@ -24,12 +24,12 @@ module slide(z=LAYER_HEIGHT) {
 }
 
 // translate z, then cylinder d1=b, d2=b2|b, h=l
-module shell(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
+module post(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
   slide(z) cylinder(d1=b, d2=b2, h=l, $fn=maxfn(b, b2));
 }
 
-// like shell, but circumscribed polygon and micron z variance
+// like post, but circumscribed polygon and micron z variance
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   bx = b + NOZZLE_DIAMETER;
   bx2 = (b2==undef ? b : b2) + NOZZLE_DIAMETER;
@@ -37,12 +37,12 @@ module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z-0.001) cylinder(d1=arc(bx, fn), d2=arc(bx2, fn), h=l+0.002, $fn=fn);
 }
 
-// tube: bore with a shell wall
+// tube: bore with a post wall
 module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
   b2 = (b2==undef) ? b : b2;
   h2 = (h2==undef) ? h : h2;
   difference() {
-    shell(z=z, b=b+2*h, b2=b2+2*h2, l=l);
+    post(z=z, b=b+2*h, b2=b2+2*h2, l=l);
     bore(z=z, b=b, b2=b2, l=l);
   }
 }
@@ -74,7 +74,7 @@ module squarish(sq) {
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   dx = d + NOZZLE_DIAMETER;
-  w = quant((w==undef ? d : w),LAYER_HEIGHT);
+  w = roundup((w==undef ? d : w),LAYER_HEIGHT);
   rh = b/2 + h; // bore radius + height
   ih = sqrt(pow(rh,2)-pow(dx/2,2)); // inner hole depth
   oh = rh-ih; // outer hole height
@@ -88,8 +88,8 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   slide(z) pivot(r)
     ovalize(dx, w) squarish(sqx) {
       // angled wall
-      shell(b=cir(diq, ifn), b2=cir(dq, ifn), l=sqx>=0.001?ih:ih+0.001);
+      post(b=cir(diq, ifn), b2=cir(dq, ifn), l=sqx>=0.001?ih:ih+0.001);
       // shoulder cut
-      shell(z=ih, b=cir(dq, ofn), b2=cir(doq, ofn), l=oh);
+      post(z=ih, b=cir(dq, ofn), b2=cir(doq, ofn), l=oh);
     }
 }

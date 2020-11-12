@@ -19,10 +19,10 @@ module mortise(z=0, l=26) {
   lz=(A-19)/2;
   slide(z) difference() {
     hull() {
-      shell(b=A+4);
-      shell(z=l/2, b=A+8);
-      shell(z=l-1-LAYER_HEIGHT, b=28);
-      shell(z=l-LAYER_HEIGHT, b=26);
+      post(b=A+4);
+      post(z=l/2, b=A+8);
+      post(z=l-1-LAYER_HEIGHT, b=28);
+      post(z=l-LAYER_HEIGHT, b=26);
     }
     // bore
     bore(b=A, l=l-lz);
@@ -37,9 +37,9 @@ module gland(z=0) {
     // piston
     bore(b=C, l=CS+lz);
     // flat
-    shell(b=F, l=CS);
+    post(b=F, l=CS);
     // bevel to piston
-    shell(z=CS, b=F, b2=C, l=lz);
+    post(z=CS, b=F, b2=C, l=lz);
   }
 }
 
@@ -48,8 +48,8 @@ module tenon(z=0, l=26) {
   lz=(C-bb)/2;
   slide(z) difference() {
     union() {
-      shell(b=C, l=l-lz);
-      shell(z=l-lz, b=C, b2=bb, l=lz);
+      post(b=C, l=l-lz);
+      post(z=l-lz, b=C, b2=bb, l=lz);
     }
     gland(z=l-lz-LAYER_HEIGHT);
     gland(z=(l-lz)/2);

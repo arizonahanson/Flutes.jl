@@ -29,7 +29,7 @@ module head() {
   slide(CrownLength) difference() {
     union() {
       // crown/cork
-      shell(z=-CrownLength,  b=17+2*FluteWall, l=CrownLength-CorkPosition);
+      post(z=-CrownLength,  b=17+2*FluteWall, l=CrownLength-CorkPosition);
       // reflector->embouchure
       tube(z=-CorkPosition, b=17, b2=17.4, l=CorkPosition, h=FluteWall);
       // lip plate

@@ -10,14 +10,14 @@ module plate(z=0, b, h, l, r=0, sq=0.4) {
   sqx=sq*l;
   slide(-l-h+z) difference() {
     hull() {
-      shell(b=b);
+      post(b=b);
       slide(h) intersection() {
         slide(l) pivot(r)
           squarish(sqx)
-            shell(b=b-sqx, b2=2*l-sqx, l=od/2);
-        shell(b=od,l=2*l);
+            post(b=b-sqx, b2=2*l-sqx, l=od/2);
+        post(b=od,l=2*l);
       }
-      shell(z=2*l+2*h-LAYER_HEIGHT, b=b);
+      post(z=2*l+2*h-LAYER_HEIGHT, b=b);
     }
     bore(b=b, l=2*l+2*h);
   }
