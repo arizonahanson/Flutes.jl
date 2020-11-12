@@ -52,7 +52,7 @@ module pivot(r=0) {
   rotate([90,0,r]) children();
 }
 
-// scale into an oval with speciied diameter and width
+// scale into an oval with specified diameter and width
 module ovalize(d, w) {
   scale([1,w/d,1]) children();
 }
