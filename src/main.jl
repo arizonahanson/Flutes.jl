@@ -37,6 +37,7 @@ end
 
 # find best fit
 # all the magic happens here
+println("Optimizing flute parameters: ", ARGS[1])
 diameters = optimal(scale, mind, maxd, minp, maxp; trace=trace)
 lengths = round.(mapflute(scale, diameters); digits=3)
 # end magic

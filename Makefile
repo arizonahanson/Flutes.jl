@@ -1,25 +1,8 @@
 # flute constraints
-FLUTE_SCALE=C♯5 B4 A4 G4 F♯4 E4 D4
-FLUTE_TUNING=440.0
-FLUTE_HEAD_LENGTH=156
-FLUTE_TENON_LENGTH=26
-FLUTE_BREAK=3
-FLUTE_MAX_DIAMETERS=9 10 9 9 10 9
-FLUTE_MAX_PADDING=Inf 35 30 Inf 35 30
-FLUTE_HOLE_ROTATIONS=0 15 0 0 -15 0
-TRACE=false
+ENV_FILE=env-file
 export
 # program binaries
-JULIA=docker run -it --rm \
-			-e FLUTE_SCALE \
-			-e FLUTE_TUNING \
-			-e FLUTE_HEAD_LENGTH \
-			-e FLUTE_TENON_LENGTH \
-			-e FLUTE_BREAK \
-			-e FLUTE_MAX_DIAMETERS \
-			-e FLUTE_MAX_PADDING \
-			-e FLUTE_HOLE_ROTATIONS \
-			-e TRACE \
+JULIA=docker run -it --env-file $(ENV_FILE) --rm \
 			-v "$(PWD)":/Flutes.jl -w /Flutes.jl workshop:latest julia
 SCAD=openscad
 SHELL=/bin/sh
@@ -62,7 +45,7 @@ optimize: $(PARAMSFILE)
 # run optimization to generate parameters
 $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 	@mkdir -pv $(dir $@)
-	@echo -e " * Optimizing flute parameters: "$@
+	@echo -e " * Compiling flute optimizer"
 	@$(JULIA) $(JULIASRC)/main.jl $@
 
 # 3mf scad file dependencies
