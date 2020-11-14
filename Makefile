@@ -14,7 +14,7 @@ SCADSRC=scad
 # export destination directory
 DESTDIR=build
 # optimized openscad parameter set json
-PARAMSFILE=$(DESTDIR)/data.json
+PARAMSFILE=$(DESTDIR)/parameters.json
 # extra openscad export arguments
 SCADFLAGS=
 # openscad theme for previews
