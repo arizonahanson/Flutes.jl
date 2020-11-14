@@ -1,5 +1,5 @@
 # flute constraints
-ENV_FILE=env-file
+ENV_FILE=parameters
 export
 # program binaries
 JULIA=docker run -it --env-file $(ENV_FILE) --rm \
