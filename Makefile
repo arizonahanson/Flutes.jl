@@ -57,7 +57,6 @@ include $(wildcard $(DESTDIR)/*.mk)
 $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
 	@echo -e " * Exporting 3D model: "$@
-	# openscad export 3mf and .mk files
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.3mf=.data)) \
 		-d $@.mk -m $(MAKE) \
@@ -68,7 +67,6 @@ $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
 	@echo -e " * Rendering preview: "$@
-	# openscad export png and .mk files
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.png=.data)) \
 		-d $@.mk -m $(MAKE) \
