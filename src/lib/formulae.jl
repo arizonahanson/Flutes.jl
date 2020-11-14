@@ -14,11 +14,10 @@ function soundspeed(ϑ=25.0)
   return 𝑐
 end
 
-
 """
   𝜔 = angularfreq(𝑓=440.0)
 
-calculate angular frequency of 𝑓
+calculate angular frequency of 𝑓 in rad/s
 """
 function angularfreq(𝑓=440.0)
   𝜔 = 2π*𝑓
@@ -40,7 +39,7 @@ end
 """
   𝜆 = halfwavelength(𝑓=440.0; ϑ=25.0)
 
-calculate half-wavelength of given frequency 𝑓 in air of temperature ϑ in mm
+calculate half-wavelength of given frequency 𝑓 in air of temperature ϑ
 """
 function halfwavelength(𝑓=440.0; ϑ=25.0)
   𝑐 = soundspeed(ϑ)
