@@ -54,13 +54,9 @@ function optimal(𝒇, 𝒅₋, 𝒅₊, 𝒑₋, 𝒑₊; trace=false)
   # box-constrained, initial parameters (bad guess)
   𝒅₁ = map((𝑑₊, 𝑑₋)->0.9(𝑑₊-𝑑₋)+𝑑₋, 𝒅₊, 𝒅₋)
   options = Optim.Options(iterations=Int(4e5), show_trace=trace, show_every=Int(2e4))
-  # simulated annealing round 1 (fast cooldown)
-  𝑟₁ = optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₁, SAMIN(rt=0.5), options)
-  # proposed diameters (round 1)
-  𝒅₂ = Optim.minimizer(𝑟₁)
-  # simulated annealing round 2 (slow cooldown)
-  𝑟₂ = optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₂, SAMIN(rt=0.98), options)
-  # proposed diameters (round 2)
-  𝒅₃ = Optim.minimizer(𝑟₂)
-  return 𝒅₃
+  # simulated annealing
+  𝑟 = optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₁, SAMIN(rt=0.98), options)
+  # proposed diameters
+  𝒅 = Optim.minimizer(𝑟)
+  return 𝒅
 end
