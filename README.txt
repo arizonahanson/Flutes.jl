@@ -35,12 +35,12 @@ environment variables (lists ordered head->foot, measurements in mm)
 -----------------------------------------------------------------------------------
 | FLUTE_SCALE         | C♯5 B4 A4 G4 F♯4 E4 D4 | tones in flute scale # ♯ b ♭     |
 | FLUTE_TUNING        | 440.0                  | tuning of A4 in Hz               |
-| FLUTE_MAX_DIAMETERS | 9 9.5 9 9 10 9.5       | maximum hole diameters           |
-| FLUTE_MAX_PADDING   | Inf 40 35 Inf 35 35    | maximum hole left-footward       |
+| FLUTE_MAX_DIAMETERS | 9 10 9 9 10 9          | maximum hole diameters           |
+| FLUTE_MAX_PADDING   | Inf 35 30 Inf 35 30    | maximum hole left-footward       |
 | FLUTE_BREAK         | 3                      | number of holes on body          |
 | DESTDIR             | build                  | directory to output 3mf files    |
 | SCADFLAGS           |                        | extra openscad arguments         |
-| TRACE               | false                  | show tracing of merit function   |
+| TRACE               | true                   | show tracing of merit function   |
 -----------------------------------------------------------------------------------
 
 openscad variables (supply via SCADFLAGS)
@@ -64,14 +64,3 @@ make targets
 | optimize | generate parameters file     |
 | clean    | delete temporary files       |
 -------------------------------------------
-
-examples:
-
-----make Dmaj flute; output to build/ folder----
-make all
-
-----make Cmaj flute in cmajr/ folder----
-make all DESTDIR='cmajr' FLUTE_SCALE='B4 A4 G4 F4 E4 D4 C4'
-
-----Change layer height; output to draft/ folder----
-make all DESTDIR='draft' SCADFLAGS='-DLAYER_HEIGHT=0.2'
