@@ -23,13 +23,13 @@ minp = []
 for h in 1:length(maxd)
   mp = 0
   if h == 1
-    # first hole on body, not headjoint
+    # first hole must be on body, not the headjoint
     mp = head_length+maxd[h]
   elseif h == brk+1
-    # make room for the tenon/mortise
+    # make room for the tenon/mortise at the break point
     mp = maxd[brk]+tenon_length+maxd[h]
   else
-    # minimum hole spacing (sum of diameters)
+    # minimum hole spacing (sum of max diameters)
     mp = maxd[h-1]+maxd[h]
   end
   append!(minp, mp)
@@ -54,13 +54,16 @@ println(" |")
 body_diameters = round.(diameters[1:brk]; digits=3)
 body_positions = lengths[1:brk]
 body_rotations = rots[1:brk]
+
 foot_diameters = round.(diameters[brk+1:end]; digits=3)
 foot_positions = lengths[brk+1:end-1]
 foot_rotations = rots[brk+1:end]
-flute_length = lengths[end]
+
 # place body/foot joint
 spare = max((foot_positions[1] - body_positions[end] - tenon_length)/2, 0)
 nofoot = body_positions[end] + spare + tenon_length
+
+flute_length = lengths[end]
 body_length = round(nofoot - head_length; digits=3)
 foot_length = round(flute_length - nofoot; digits=3)
 
