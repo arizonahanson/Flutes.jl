@@ -61,6 +61,7 @@ $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 		-p $(PARAMSFILE) -P $(notdir $(@:.3mf=.data)) \
 		-d $@.mk -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
+	@zip $@ $(PARAMSFILE)
 	@echo -e " * Export Complete: "$@
 
 # compile scad to preview png
