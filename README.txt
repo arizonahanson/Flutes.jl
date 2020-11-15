@@ -27,7 +27,7 @@ Diameter and padding constraints are per hole. Padding refers to distance to pre
 or to the embouchure, measured from the centers. The FLUTE_MAX_PADDING may use
 the value `Inf` to represent infinity (for no maximum).  Holes are referenced in order of
 descending pitch, left to right as if holding the instrument.  The FLUTE_SCALE variable ends with the
-lowest frequency of the flute, which is not associated with a tone hole.
+lowest frequency of the flute, which is played with all holes covered.
 
 environment variables (lists ordered head->foot, measurements in mm)
 -----------------------------------------------------------------------------------
