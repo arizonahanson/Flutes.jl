@@ -56,11 +56,11 @@ make targets
 | target   | description                  |
 -------------------------------------------
 | all      | generate all files (default) |
+| optimize | generate parameters file     |
 | previews | generate png previews        |
 | models   | generate 3mf models          |
 | head     | generate headjoint 3mf & png |
 | body     | generate body 3mf & png      |
 | foot     | generate foot 3mf & png      |
-| optimize | generate parameters file     |
 | clean    | delete temporary files       |
 -------------------------------------------
