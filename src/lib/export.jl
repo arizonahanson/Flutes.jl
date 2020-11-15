@@ -1,4 +1,3 @@
-
 import JSON
 export readvariable, mapvariable, floats, tones
 export createscadparameters, setscadparameter!, writescadparameters
