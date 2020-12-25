@@ -74,7 +74,7 @@ module squarish(sq) {
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   dx = d + NOZZLE_DIAMETER;
-  w = roundup((w==undef ? d : w),LAYER_HEIGHT);
+  w = w==undef ? d : w;
   rh = b/2 + h; // bore radius + height
   ih = sqrt(pow(rh,2)-pow(dx/2,2)); // inner hole depth
   oh = rh-ih; // outer hole height
