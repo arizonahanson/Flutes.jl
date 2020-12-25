@@ -20,26 +20,22 @@ SCADFLAGS=
 # openscad theme for previews
 COLORSCHEME=Starnight
 
-# default target "flute"
+# generate 3D models (slow)
 .PHONY: flute
-flute: previews models
+flute: head body foot
 
 # generate image previews
 .PHONY: previews
 previews: $(DESTDIR)/head.png $(DESTDIR)/body.png $(DESTDIR)/foot.png
 
-# generate 3D models (slow)
-.PHONY: models
-models: $(DESTDIR)/head.3mf $(DESTDIR)/body.3mf $(DESTDIR)/foot.3mf
-
 .PHONY: head
-head: $(DESTDIR)/head.3mf $(DESTDIR)/head.png
+head: $(DESTDIR)/head.3mf
 
 .PHONY: body
-body: $(DESTDIR)/body.3mf $(DESTDIR)/body.png
+body: $(DESTDIR)/body.3mf
 
 .PHONY: foot
-foot: $(DESTDIR)/foot.3mf $(DESTDIR)/foot.png
+foot: $(DESTDIR)/foot.3mf
 
 # generate optimized parameters file (alias)
 .PHONY: optimize
@@ -61,7 +57,6 @@ $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 		-p $(PARAMSFILE) -P $(notdir $(@:.3mf=.data)) \
 		-d $@.mk -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@zip $@ $(PARAMSFILE)
 	@echo -e " * Export Complete: "$@
 
 # compile scad to preview png
@@ -74,7 +69,6 @@ $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 		--colorscheme=$(COLORSCHEME) \
 		--imgsize=960,1080 \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@echo -e " * Preview Complete: "$@
 
 # build julia image with packages installed
 .PHONY: workshop
