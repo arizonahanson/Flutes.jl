@@ -33,4 +33,4 @@ module body() {
   }
 }
 
-color("silver") body();
+body();

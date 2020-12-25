@@ -55,4 +55,4 @@ module head() {
   }
 }
 
-color("silver") head();
+head();
