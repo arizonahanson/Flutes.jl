@@ -61,8 +61,8 @@ module ovalize(d, w) {
 module squarish(sq) {
   if (sq>=0.001) {
     minkowski() {
-      cube([sq,sq,0.001], center=true);
       children();
+      cube([sq,sq,0.001], center=true);
     }
   } else {
     children();

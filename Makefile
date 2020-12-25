@@ -22,7 +22,7 @@ COLORSCHEME=Starnight
 
 # generate 3D models (slow)
 .PHONY: flute
-flute: head body foot
+flute: $(DESTDIR)/head.3mf $(DESTDIR)/body.3mf $(DESTDIR)/foot.3mf
 
 # generate image previews
 .PHONY: previews
