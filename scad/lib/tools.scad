@@ -29,12 +29,12 @@ module post(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z) cylinder(d1=b, d2=b2, h=l, $fn=maxfn(b, b2));
 }
 
-// like post, but circumscribed polygon and micron z variance
+// like post, but circumscribed polygon
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   bx = b + NOZZLE_DIAMETER;
   bx2 = (b2==undef ? b : b2) + NOZZLE_DIAMETER;
   fn = maxfn(bx, bx2); // adaptive resolution
-  slide(z-0.001) cylinder(d1=arc(bx, fn), d2=arc(bx2, fn), h=l+0.002, $fn=fn);
+  slide(z) cylinder(d1=arc(bx, fn), d2=arc(bx2, fn), h=l, $fn=fn);
 }
 
 // tube: bore with a post wall
@@ -88,7 +88,7 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   slide(z) pivot(r)
     ovalize(dx, w) squarish(sqx) {
       // angled wall
-      post(b=cir(diq, ifn), b2=cir(dq, ifn), l=sqx>=0.001?ih:ih+0.001);
+      post(b=cir(diq, ifn), b2=cir(dq, ifn), l=ih);
       // shoulder cut
       post(z=ih, b=cir(dq, ofn), b2=cir(doq, ofn), l=oh);
     }
