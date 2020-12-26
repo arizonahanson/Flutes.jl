@@ -73,23 +73,20 @@ module squarish(sq) {
 // (b)ore (h)eight (d)iameter (w)idth (r)otate° w(a)ll°
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
-  dx = d + NOZZLE_DIAMETER;
   w = w==undef ? d : w;
   rh = b/2 + h; // bore radius + height
-  ih = sqrt(pow(rh,2)-pow(dx/2,2)); // inner hole depth
+  ih = sqrt(pow(rh,2)-pow(d/2,2)); // inner hole depth
   oh = rh-ih; // outer hole height
-  di = dx+tan(a)*2*ih; // inner hole diameter
-  do = dx+tan(s)*2*oh; // outer hole diameter
-  sqx = sq*dx; // square part
-  dq = dx-sqx; doq = do-sqx; diq=di-sqx;
-  ofn = maxfn(dq, doq); // outer segments
-  ifn = maxfn(dq, diq); // inner segments
+  di = d+tan(a)*2*ih; // inner hole diameter
+  do = d+tan(s)*2*oh; // outer hole diameter
+  sqx = sq*d; // square part
+  dq = d-sqx; doq = do-sqx; diq=di-sqx;
   // position/scale/rotate
   slide(z) pivot(r)
-    ovalize(dx, w) squarish(sqx) {
+    ovalize(d, w) squarish(sqx) {
       // angled wall
-      post(b=cir(diq, ifn), b2=cir(dq, ifn), l=ih);
+      post(b=diq, b2=dq, l=ih);
       // shoulder cut
-      post(z=ih, b=cir(dq, ofn), b2=cir(doq, ofn), l=oh);
+      post(z=ih, b=dq, b2=doq, l=oh);
     }
 }
