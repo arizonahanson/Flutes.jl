@@ -60,4 +60,5 @@ module head() {
   }
 }
 
+// example usage
 head();

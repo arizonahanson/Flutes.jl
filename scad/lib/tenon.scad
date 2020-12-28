@@ -57,5 +57,6 @@ module tenon(z=0, l=26) {
   }
 }
 
+// example usage
 tenon();
 mortise();

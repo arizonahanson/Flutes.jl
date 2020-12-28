@@ -33,4 +33,5 @@ module body() {
   }
 }
 
+// example usage
 body();

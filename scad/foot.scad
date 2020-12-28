@@ -30,4 +30,5 @@ module foot() {
   }
 }
 
+// example usage
 foot();
