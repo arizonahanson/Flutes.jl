@@ -3,20 +3,20 @@
  */
 include <consts.scad>;
 
-// round up b to nearest multiple of n
-function roundup(b, n) = ceil(b/n)*n;
+// round up fn to nearest multiple of n
+function roundup(fn, n) = max(ceil(fn/n)*n, n);
 
 // used to calculate number of polygon segments ($fn) multiple of 4
-function fn(b) = roundup(max(PI*b/NOZZLE_DIAMETER,4),4);
+function fn(b) = roundup(PI*b/NOZZLE_DIAMETER, 4);
 
 // segments for maximum of two diameters
 function maxfn(b, b2) = fn(max(b, b2));
 
 // used to calculate diameter of circumscribed polygon
-function cir(b, n) = 1/cos(180/n)*b;
+function cir(b, fn) = 1/cos(180/fn)*b;
 
 // used to calculate circumscribed polygon with arc compensation
-function arc(b, n) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(cir(b, n)/2,2));
+function arc(b, fn) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(cir(b, fn)/2,2));
 
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
@@ -26,7 +26,8 @@ module slide(z=LAYER_HEIGHT) {
 // translate z, then cylinder d1=b, d2=b2|b, h=l
 module post(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
-  slide(z) cylinder(d1=b, d2=b2, h=l, $fn=maxfn(b, b2));
+  fn = maxfn(b, b2); // adaptive resolution
+  slide(z) cylinder(d1=b, d2=b2, h=l, $fn=fn);
 }
 
 // like post, but circumscribed polygon
@@ -37,7 +38,7 @@ module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z) cylinder(d1=arc(bx, fn), d2=arc(bx2, fn), h=l, $fn=fn);
 }
 
-// tube: bore with a post wall
+// tube: post with bore removed
 module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
   b2 = (b2==undef) ? b : b2;
   h2 = (h2==undef) ? h : h2;
