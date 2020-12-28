@@ -7,10 +7,7 @@ include <consts.scad>;
 function roundup(fn, n) = max(ceil(fn/n)*n, n);
 
 // used to calculate number of polygon segments ($fn) multiple of 4
-function fn(b) = roundup(PI*b/NOZZLE_DIAMETER, 4);
-
-// segments for maximum of two diameters
-function maxfn(b, b2) = fn(max(b, b2));
+function fns(b) = roundup(PI*b/NOZZLE_DIAMETER, 4);
 
 // used to calculate diameter of circumscribed polygon
 function cir(b, fn) = 1/cos(180/fn)*b;
@@ -26,7 +23,7 @@ module slide(z=LAYER_HEIGHT) {
 // translate z, then cylinder d1=b, d2=b2|b, h=l
 module post(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
-  fn = maxfn(b, b2); // adaptive resolution
+  fn = fns(max(b, b2)); // adaptive resolution
   slide(z) cylinder(d1=b, d2=b2, h=l, $fn=fn);
 }
 
@@ -34,7 +31,7 @@ module post(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   bx = b + NOZZLE_DIAMETER;
   bx2 = (b2==undef ? b : b2) + NOZZLE_DIAMETER;
-  fn = maxfn(bx, bx2); // adaptive resolution
+  fn = fns(max(bx, bx2)); // adaptive resolution
   slide(z) cylinder(d1=arc(bx, fn), d2=arc(bx2, fn), h=l, $fn=fn);
 }
 
@@ -60,14 +57,10 @@ module ovalize(d, w) {
 
 // minkowski sum children with a square of width sq
 module squarish(sq) {
-  if (sq>=0.001) {
-    minkowski() {
-      children();
-      cube([sq,sq,0.001], center=true);
-    }
-  } else {
+  if (sq>=0.001) minkowski() {
     children();
-  }
+    cube([sq,sq,0.001], center=true);
+  } else children();
 }
 
 // tone or embouchure hole
@@ -81,13 +74,12 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   di = d+tan(a)*2*ih; // inner hole diameter
   do = d+tan(s)*2*oh; // outer hole diameter
   sqx = sq*d; // square part
-  dq = d-sqx; doq = do-sqx; diq=di-sqx;
+  fn = fns((d+w)/2); // segment resolution
   // position/scale/rotate
-  slide(z) pivot(r)
-    ovalize(d, w) squarish(sqx) {
-      // angled wall
-      post(b=diq, b2=dq, l=ih);
-      // shoulder cut
-      post(z=ih, b=dq, b2=doq, l=oh);
-    }
+  slide(z) pivot(r) ovalize(d, w) squarish(sqx) {
+    // angled wall
+    cylinder(d1=di-sqx, d2=d-sqx, h=ih, $fn=fn);
+    // shoulder cut
+    slide(ih) cylinder(d1=d-sqx, d2=do-sqx, h=oh, $fn=fn);
+  }
 }
