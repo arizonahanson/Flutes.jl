@@ -22,6 +22,6 @@ module plate(z=0, b, h, l, r=0) {
 
 // example usage
 difference() {
-  plate(b=18, h=4, l=24, r=atan(10.4/26));
-  hole(b=17.4, h=4.3, d=10, w=12, a=7, s=45, sq=0.1);
+  plate(b=17.4, h=4.3, l=24, r=atan(10.4/26));
+  hole(b=17.4, h=4.3, d=10.4, w=12.2, a=7, s=45, sq=0.1);
 }
