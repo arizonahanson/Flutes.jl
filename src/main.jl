@@ -39,23 +39,23 @@ end
 # all the magic happens here
 println("Optimizing flute parameters: ", ARGS[1])
 diameters = optimal(scale, mind, maxd, minp, maxp; trace=trace)
-lengths = round.(mapflute(scale, diameters); digits=3)
+lengths = round.(mapflute(scale, diameters); digits=4)
 # end magic
 
 # display hole separations
 with_origin = [0.0; lengths]
 print("|")
 for h in 1:length(lengths)
-  print(" ∘ ", round(with_origin[h+1]-with_origin[h]; digits=2))
+  print(" ∘ ", round(with_origin[h+1]-with_origin[h]; digits=1))
 end
 println(" |")
 
 # break holes by foot/body
-body_diameters = round.(diameters[1:brk]; digits=3)
+body_diameters = round.(diameters[1:brk]; digits=4)
 body_positions = lengths[1:brk]
 body_rotations = rots[1:brk]
 
-foot_diameters = round.(diameters[brk+1:end]; digits=3)
+foot_diameters = round.(diameters[brk+1:end]; digits=4)
 foot_positions = lengths[brk+1:end-1]
 foot_rotations = rots[brk+1:end]
 
@@ -64,8 +64,8 @@ spare = max((foot_positions[1] - body_positions[end] - tenon_length)/2, 0)
 nofoot = body_positions[end] + spare + tenon_length
 
 flute_length = lengths[end]
-body_length = round(nofoot - head_length; digits=3)
-foot_length = round(flute_length - nofoot; digits=3)
+body_length = round(nofoot - head_length; digits=4)
+foot_length = round(flute_length - nofoot; digits=4)
 
 # export parameters to opencad props
 params = createscadparameters()
@@ -75,14 +75,14 @@ setscadparameter!(params, headset, "TenonLength", tenon_length)
 bodyset = "body.data"
 setscadparameter!(params, bodyset, "BodyLength", body_length)
 setscadparameter!(params, bodyset, "HoleDiameters", body_diameters)
-setscadparameter!(params, bodyset, "HolePositions", map(bp->round(bp-head_length; digits=3), body_positions))
+setscadparameter!(params, bodyset, "HolePositions", map(bp->round(bp-head_length; digits=4), body_positions))
 setscadparameter!(params, bodyset, "HoleRotations", body_rotations)
 setscadparameter!(params, bodyset, "TenonLength", tenon_length)
 setscadparameter!(params, bodyset, "MortiseLength", tenon_length)
 footset = "foot.data"
 setscadparameter!(params, footset, "FootLength", foot_length)
 setscadparameter!(params, footset, "HoleDiameters", foot_diameters)
-setscadparameter!(params, footset, "HolePositions", map(fp->round(fp-nofoot; digits=3), foot_positions))
+setscadparameter!(params, footset, "HolePositions", map(fp->round(fp-nofoot; digits=4), foot_positions))
 setscadparameter!(params, footset, "HoleRotations", foot_rotations)
 setscadparameter!(params, footset, "MortiseLength", tenon_length)
 extraset = "extra.data"
