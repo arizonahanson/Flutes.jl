@@ -10,7 +10,7 @@ function roundup(fn, n) = max(ceil(fn/n)*n, n);
 function fns(b) = roundup(PI*b/NOZZLE_DIAMETER, 4);
 
 // used to calculate diameter of circumscribed polygon
-function cir(b, fn) = 1/cos(180/fn)*b;
+function cir(b, fn) = 1/cos(180/fn)*b + NOZZLE_DIAMETER;
 
 // used to calculate circumscribed polygon with arc compensation
 function arc(b, fn) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(cir(b, fn)/2,2));
@@ -27,12 +27,11 @@ module post(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   slide(z) cylinder(d1=b, d2=b2, h=l, $fn=fn);
 }
 
-// like post, but circumscribed polygon
+// like post, but circumscribed polygon compensation
 module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
-  bx = b + NOZZLE_DIAMETER;
-  bx2 = (b2==undef ? b : b2) + NOZZLE_DIAMETER;
-  fn = fns(max(bx, bx2)); // adaptive resolution
-  slide(z) cylinder(d1=arc(bx, fn), d2=arc(bx2, fn), h=l, $fn=fn);
+  b2 = (b2==undef) ? b : b2;
+  fn = fns(max(b, b2)); // adaptive resolution
+  slide(z) cylinder(d1=arc(b, fn), d2=arc(b2, fn), h=l, $fn=fn);
 }
 
 // tube: post with bore removed
