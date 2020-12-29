@@ -20,6 +20,24 @@ module slide(z=LAYER_HEIGHT) {
   translate([0,0,z]) children();
 }
 
+// rotate x by 90, and z by r (for holes)
+module pivot(r=0) {
+  rotate([90,0,r]) children();
+}
+
+// scale into an oval with specified diameter and width
+module ovalize(d, w) {
+  scale([1,w/d,1]) children();
+}
+
+// minkowski sum children with a square of width sq
+module squarify(sq) {
+  if (sq > 0) minkowski() {
+    children();
+    cube([sq,sq,0.00001], center=true);
+  } else children();
+}
+
 // translate z, then cylinder d1=b, d2=b2|b, h=l
 module post(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
@@ -44,24 +62,6 @@ module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
   }
 }
 
-// rotate x by 90, and z by r (for holes)
-module pivot(r=0) {
-  rotate([90,0,r]) children();
-}
-
-// scale into an oval with specified diameter and width
-module ovalize(d, w) {
-  scale([1,w/d,1]) children();
-}
-
-// minkowski sum children with a square of width sq
-module squarish(sq) {
-  if (sq > 0) minkowski() {
-    children();
-    cube([sq,sq,0.00001], center=true);
-  } else children();
-}
-
 // tone or embouchure hole
 // (b)ore (h)eight (d)iameter (w)idth (r)otate° w(a)ll°
 // (s)houlder° (sq)areness
@@ -75,7 +75,7 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   sqx = sq*d; // square part
   fn = fns((d+w)/2); // segment resolution
   // position/scale/rotate
-  slide(z) pivot(r) ovalize(d, w) squarish(sqx) {
+  slide(z) pivot(r) ovalize(d, w) squarify(sqx) {
     // angled wall
     cylinder(d1=di-sqx, d2=d-sqx, h=ih, $fn=fn);
     // shoulder cut
