@@ -83,6 +83,6 @@ julia:
 # clean-up .mk files
 .PHONY: clean
 clean:
-	@rm $(DESTDIR)/head*.mk $(DESTDIR)/body*.mk $(DESTDIR)/foot*.mk -fv
+	@rm $(DESTDIR)/*.mk -fv
 	@rm $(DESTDIR)/*.png -fv
 
