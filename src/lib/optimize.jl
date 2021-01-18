@@ -58,7 +58,9 @@ function optimal(𝒇, 𝒅₋, 𝒅₊, 𝒑₋, 𝒑₊; trace=false)
   𝒅₂ = Optim.minimizer(optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₁, SAMIN(rt=0.50), options))
   # simulated annealing (round 2, slow cooldown)
   options = Optim.Options(iterations=Int(4e5), show_trace=trace, show_every=Int(2e4))
-  𝒅ₕ = Optim.minimizer(optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₂, SAMIN(rt=0.98), options))
+  result = optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₂, SAMIN(rt=0.98), options)
+  𝒅ₕ = Optim.minimizer(result)
+  𝑒 = Optim.minimum(result)
   # proposed diameters
-  return 𝒅ₕ
+  return 𝒅ₕ, 𝑒
 end

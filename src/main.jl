@@ -38,7 +38,7 @@ end
 # find best fit
 # all the magic happens here
 println("Optimizing flute parameters: ", ARGS[1])
-diameters = optimal(scale, mind, maxd, minp, maxp; trace=trace)
+diameters, error = optimal(scale, mind, maxd, minp, maxp; trace=trace)
 lengths = round.(mapflute(scale, diameters); digits=4)
 # end magic
 
@@ -89,5 +89,6 @@ extraset = "extra.data"
 setscadparameter!(params, extraset, "CreationDate", now())
 setscadparameter!(params, extraset, "Tuning", tuning)
 setscadparameter!(params, extraset, "Scale", readvariable("FLUTE_SCALE"))
+setscadparameter!(params, extraset, "Score", round(error; digits=4))
 writescadparameters(params, ARGS[1])
 
