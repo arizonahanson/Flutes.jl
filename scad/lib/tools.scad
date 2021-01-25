@@ -10,7 +10,7 @@ function roundup(fn, n) = max(ceil(fn/n)*n, n);
 function fns(b) = roundup(PI*b/NOZZLE_DIAMETER, 4);
 
 // used to calculate diameter of circumscribed polygon
-function cir(b, fn) = 1/cos(180/fn)*b + NOZZLE_DIAMETER;
+function cir(b, fn) = 1/cos(180/fn)*b;
 
 // used to calculate circumscribed polygon with arc compensation
 function arc(b, fn) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(cir(b, fn)/2,2));
