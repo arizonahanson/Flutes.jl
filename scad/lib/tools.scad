@@ -3,17 +3,17 @@
  */
 include <consts.scad>;
 
-// round up n to nearest positive multiple of 4
+// next positive multiple of 4 for n
 function roundup(n) = max(ceil(n/4)*4, 4);
 
-// used to calculate number of polygon segments ($fn) given the diameter
-function fns(b) = roundup(PI*b/NOZZLE_DIAMETER);
+// number of polygon segments ($fn) for diameter d
+function seg(d) = roundup(PI*d/NOZZLE_DIAMETER);
 
-// used to calculate diameter of circumscribed polygon
-function cir(b, fn) = let(n = fn ? fn : fns(b)) 1/cos(180/n)*b;
-
-// used to calculate circumscribed polygon with arc compensation
-function arc(b, fn) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(cir(b, fn)/2,2));
+// indiameter of polygon that circumscribes a circle of diameter d
+// with arc compensation
+function circ(d, fn) =
+  let(n = fn ? fn : seg(d))
+  sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow((1/cos(180/n)*d)/2,2));
 
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
@@ -41,8 +41,8 @@ module squarify(sq) {
 // Frustum circumscribes a truncated cone
 module frustum(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
-  fn = fns(max(b, b2)); // adaptive resolution
-  slide(z) cylinder(d1=arc(b, fn), d2=arc(b2, fn), h=l, $fn=fn);
+  fn = seg(max(b, b2)); // adaptive resolution
+  slide(z) cylinder(d1=circ(b, fn), d2=circ(b2, fn), h=l, $fn=fn);
 }
 
 // tube: difference of two frustums
@@ -60,13 +60,13 @@ module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   w = w==undef ? d : w;
-  rh = arc(b + h*2)/2; // outer tube radius, with compensation
+  rh = circ(b + h*2)/2; // outer circumscribed tube radius
   ih = sqrt(pow(rh,2)-pow(d/2,2)); // inner hole depth
   oh = rh-ih; // outer hole height
   di = d+tan(a)*2*ih; // inner hole diameter
   do = d+tan(s)*2*oh; // outer hole diameter
   sqx = sq*d; // square part
-  fn = fns((d+w)/2); // segment resolution
+  fn = seg((d+w)/2); // segment resolution
   // position/scale/rotate
   slide(z) pivot(r) ovalize(d, w) squarify(sqx) {
     // angled wall
