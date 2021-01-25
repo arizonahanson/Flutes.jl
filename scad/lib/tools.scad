@@ -3,14 +3,14 @@
  */
 include <consts.scad>;
 
-// round up fn to nearest multiple of n
-function roundup(fn, n) = max(ceil(fn/n)*n, n);
+// round up n to nearest positive multiple of 4
+function roundup(n) = max(ceil(n/4)*4, 4);
 
-// used to calculate number of polygon segments ($fn) multiple of 4
-function fns(b) = roundup(PI*b/NOZZLE_DIAMETER, 4);
+// used to calculate number of polygon segments ($fn) given the diameter
+function fns(b) = roundup(PI*b/NOZZLE_DIAMETER);
 
 // used to calculate diameter of circumscribed polygon
-function cir(b, fn) = 1/cos(180/fn)*b;
+function cir(b, fn) = let(n = fn ? fn : fns(b)) 1/cos(180/n)*b;
 
 // used to calculate circumscribed polygon with arc compensation
 function arc(b, fn) = sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow(cir(b, fn)/2,2));
@@ -60,7 +60,7 @@ module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   w = w==undef ? d : w;
-  rh = b/2 + h; // bore radius + height
+  rh = arc(b + h*2)/2; // outer tube radius, with compensation
   ih = sqrt(pow(rh,2)-pow(d/2,2)); // inner hole depth
   oh = rh-ih; // outer hole height
   di = d+tan(a)*2*ih; // inner hole diameter
