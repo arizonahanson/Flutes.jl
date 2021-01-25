@@ -9,14 +9,14 @@ module plate(z=0, b, h, l, r=0) {
   od=b+2*h;
   slide(-l-h+z) difference() {
     hull() {
-      post(b=b);
+      frustum(b=b);
       slide(h) intersection() {
-        slide(l) pivot(r) post(b=b, b2=2*l, l=od/2);
-        post(b=od,l=2*l);
+        slide(l) pivot(r) frustum(b=b, b2=2*l, l=od/2);
+        frustum(b=od,l=2*l);
       }
-      post(z=2*l+2*h-LAYER_HEIGHT, b=b);
+      frustum(z=2*l+2*h-LAYER_HEIGHT, b=b);
     }
-    bore(b=b, l=2*l+2*h);
+    frustum(b=b, l=2*l+2*h);
   }
 }
 

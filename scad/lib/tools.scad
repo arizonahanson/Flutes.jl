@@ -38,27 +38,20 @@ module squarify(sq) {
   } else children();
 }
 
-// translate z, then cylinder d1=b, d2=b2|b, h=l
-module post(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
-  b2 = (b2==undef) ? b : b2;
-  fn = fns(max(b, b2)); // adaptive resolution
-  slide(z) cylinder(d1=b, d2=b2, h=l, $fn=fn);
-}
-
-// like post, but circumscribed polygon compensation
-module bore(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
+// Frustum circumscribes a truncated cone
+module frustum(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
   fn = fns(max(b, b2)); // adaptive resolution
   slide(z) cylinder(d1=arc(b, fn), d2=arc(b2, fn), h=l, $fn=fn);
 }
 
-// tube: post with bore removed
+// tube: difference of two frustums
 module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
   b2 = (b2==undef) ? b : b2;
   h2 = (h2==undef) ? h : h2;
   difference() {
-    post(z=z, b=b+2*h, b2=b2+2*h2, l=l);
-    bore(z=z, b=b, b2=b2, l=l);
+    frustum(z=z, b=b+2*h, b2=b2+2*h2, l=l);
+    frustum(z=z, b=b, b2=b2, l=l);
   }
 }
 

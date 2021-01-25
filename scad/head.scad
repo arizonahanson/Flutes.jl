@@ -27,7 +27,7 @@ use <lib/plate.scad>;
 
 module head() {
   // crown/cork
-  post(z=0,  b=17+2*FluteWall, l=CrownLength-CorkPosition);
+  frustum(z=0,  b=17+2*FluteWall, l=CrownLength-CorkPosition);
   // reset z=0 to embouchure position
   slide(CrownLength) {
     // embouchure portion of headjoint
