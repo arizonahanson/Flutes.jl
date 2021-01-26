@@ -16,7 +16,7 @@ F=22.2;
 CS=1.78;
 
 module mortise(z=0, l=26, b=19) {
-  lz=(circ(A)-circ(b))/2;
+  lz=(A-b)/2;
   slide(z) difference() {
     hull() {
       frustum(b=A+4);
@@ -32,7 +32,7 @@ module mortise(z=0, l=26, b=19) {
 }
 
 module gland(z=0) {
-  lz = (circ(C)-circ(F))/2;
+  lz = (C-F)/2;
   slide(z-CS-lz) difference() {
     // piston
     frustum(b=A, l=CS+lz);
@@ -44,7 +44,7 @@ module gland(z=0) {
 }
 
 module tenon(z=0, l=26, b=19) {
-  lz=(circ(C)-circ(b))/2;
+  lz=(C-b)/2;
   slide(z) difference() {
     union() {
       frustum(b=C, l=l-lz);

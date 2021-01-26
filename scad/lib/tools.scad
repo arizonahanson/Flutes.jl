@@ -3,17 +3,11 @@
  */
 include <consts.scad>;
 
-// next positive multiple of 4 for n
-function roundup(n) = max(ceil(n/4)*4, 4);
-
 // number of polygon segments ($fn) for diameter d
-function seg(d) = roundup(PI*d/SEGMENT_SIZE);
-
-// indiameter of polygon that circumscribes a circle of diameter d
-// with arc compensation
-function circ(d, fn) =
-  let(n = fn ? fn : seg(d))
-  sqrt(pow(SEGMENT_SIZE,2) + 4*pow((1/cos(180/n)*d)/2,2));
+// multiple of four
+function seg(d) =
+  let(ns = PI*d/SEGMENT_SIZE)
+  max(floor(ns/4)*4, 4);
 
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
@@ -38,11 +32,10 @@ module squarify(sq) {
   } else children();
 }
 
-// Frustum circumscribes a truncated cone
-module frustum(z=0, b=SEGMENT_SIZE, b2, l=LAYER_HEIGHT) {
+module frustum(z=0, b=SEGMENT_SIZE, b2, l=LAYER_HEIGHT, fn=0) {
   b2 = (b2==undef) ? b : b2;
-  fn = seg(max(b, b2)); // adaptive resolution
-  slide(z) cylinder(d1=circ(b, fn), d2=circ(b2, fn), h=l, $fn=fn);
+  ffn = fn ? fn : seg(max(b, b2)); // adaptive resolution
+  slide(z) cylinder(d1=b, d2=b2, h=l, $fn=ffn);
 }
 
 // tube: difference of two frustums
@@ -60,7 +53,7 @@ module tube(z=0, b=SEGMENT_SIZE, b2, l=LAYER_HEIGHT, h=SEGMENT_SIZE, h2) {
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   w = w==undef ? d : w;
-  rh = circ(b + h*2)/2; // outer circumscribed tube radius
+  rh = b/2 + h; // outer tube radius
   ih = sqrt(pow(rh,2)-pow(d/2,2)); // inner hole depth
   oh = rh-ih; // outer hole height
   di = d+tan(a)*2*ih; // inner hole diameter
@@ -70,8 +63,10 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   // position/scale/rotate
   slide(z) pivot(r) ovalize(d, w) squarify(sqx) {
     // angled wall
-    cylinder(d1=di-sqx, d2=d-sqx, h=ih, $fn=fn);
+    //cylinder(d1=di-sqx, d2=d-sqx, h=ih, $fn=fn);
+    frustum(b=di-sqx, b2=d-sqx, l=ih, fn=fn);
     // shoulder cut
-    slide(ih) cylinder(d1=d-sqx, d2=do-sqx, h=oh, $fn=fn);
+    //slide(ih) cylinder(d1=d-sqx, d2=do-sqx, h=oh, $fn=fn);
+    frustum(z=ih, b=d-sqx, b2=do-sqx, l=oh, fn=fn);
   }
 }
