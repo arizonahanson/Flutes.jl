@@ -25,6 +25,8 @@ EmbouchureSquareness=0.1; // [0:0.01:1]
 include <lib/index.scad>;
 use <lib/plate.scad>;
 
+FluteInner=19;
+
 module head() {
   // crown/cork
   frustum(z=0,  b=17+2*FluteWall, l=CrownLength-CorkPosition);
@@ -54,9 +56,9 @@ module head() {
     tube(z=96.5, b=18.8, b2=19.0, l=10.0, h=FluteWall);
     tube(z=106.5, b=19.0, l=10.1, h=FluteWall);
     // extra untapered
-    tube(z=116.6, b=19.0, l=HeadLength-TenonLength-116.6, h=FluteWall);
+    tube(z=116.6, b=FluteInner, l=HeadLength-TenonLength-116.6, h=FluteWall);
     // tenon
-    tenon(z=HeadLength-TenonLength, l=TenonLength);
+    tenon(z=HeadLength-TenonLength, l=TenonLength, b=FluteInner);
   }
 }
 

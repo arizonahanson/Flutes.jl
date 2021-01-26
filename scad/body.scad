@@ -22,9 +22,9 @@ FluteWall=3.5;
 module body() {
   slide(MortiseLength) difference() {
     union() {
-      mortise(z=-MortiseLength, l=MortiseLength);
+      mortise(z=-MortiseLength, l=MortiseLength, b=FluteInner);
       tube(b=FluteInner, l=BodyLength-TenonLength, h=FluteWall);
-      tenon(z=BodyLength-TenonLength, l=TenonLength);
+      tenon(z=BodyLength-TenonLength, l=TenonLength, b=FluteInner);
     }
     // holes
     union() for(i=[0:1:len(HoleDiameters)]) let (zh=HolePositions[i], dh=HoleDiameters[i], rh=HoleRotations[i]) {

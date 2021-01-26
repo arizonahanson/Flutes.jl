@@ -15,8 +15,8 @@ F=22.2;
 // o-ring minor diameter - .067-.073"
 CS=1.78;
 
-module mortise(z=0, l=26) {
-  lz=(circ(A)-circ(19))/2;
+module mortise(z=0, l=26, b=19) {
+  lz=(circ(A)-circ(b))/2;
   slide(z) difference() {
     hull() {
       frustum(b=A+4);
@@ -27,7 +27,7 @@ module mortise(z=0, l=26) {
     // bore
     frustum(b=A, l=l-lz);
     // bevel to flute bore
-    frustum(z=l-lz, b=A, b2=19, l=lz);
+    frustum(z=l-lz, b=A, b2=b, l=lz);
   }
 }
 
@@ -43,17 +43,16 @@ module gland(z=0) {
   }
 }
 
-module tenon(z=0, l=26) {
-  bb=19;
-  lz=(circ(C)-circ(bb))/2;
+module tenon(z=0, l=26, b=19) {
+  lz=(circ(C)-circ(b))/2;
   slide(z) difference() {
     union() {
       frustum(b=C, l=l-lz);
-      frustum(z=l-lz, b=C, b2=bb, l=lz);
+      frustum(z=l-lz, b=C, b2=b, l=lz);
     }
     gland(z=l-lz-LAYER_HEIGHT);
     gland(z=(l-lz)/2);
-    frustum(b=19, l=26);
+    frustum(b=b, l=l);
   }
 }
 
