@@ -7,13 +7,13 @@ include <consts.scad>;
 function roundup(n) = max(ceil(n/4)*4, 4);
 
 // number of polygon segments ($fn) for diameter d
-function seg(d) = roundup(PI*d/NOZZLE_DIAMETER);
+function seg(d) = roundup(PI*d/SEGMENT_SIZE);
 
 // indiameter of polygon that circumscribes a circle of diameter d
 // with arc compensation
 function circ(d, fn) =
   let(n = fn ? fn : seg(d))
-  sqrt(pow(NOZZLE_DIAMETER,2) + 4*pow((1/cos(180/n)*d)/2,2));
+  sqrt(pow(SEGMENT_SIZE,2) + 4*pow((1/cos(180/n)*d)/2,2));
 
 // translate +z axis
 module slide(z=LAYER_HEIGHT) {
@@ -39,14 +39,14 @@ module squarify(sq) {
 }
 
 // Frustum circumscribes a truncated cone
-module frustum(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT) {
+module frustum(z=0, b=SEGMENT_SIZE, b2, l=LAYER_HEIGHT) {
   b2 = (b2==undef) ? b : b2;
   fn = seg(max(b, b2)); // adaptive resolution
   slide(z) cylinder(d1=circ(b, fn), d2=circ(b2, fn), h=l, $fn=fn);
 }
 
 // tube: difference of two frustums
-module tube(z=0, b=NOZZLE_DIAMETER, b2, l=LAYER_HEIGHT, h=NOZZLE_DIAMETER, h2) {
+module tube(z=0, b=SEGMENT_SIZE, b2, l=LAYER_HEIGHT, h=SEGMENT_SIZE, h2) {
   b2 = (b2==undef) ? b : b2;
   h2 = (h2==undef) ? h : h2;
   difference() {
