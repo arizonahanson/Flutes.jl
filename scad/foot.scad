@@ -24,7 +24,7 @@ module foot() {
       tube(b=FluteInner, l=FootLength, h=FluteWall);
     }
     // holes
-    union() for(i=[0:1:len(HoleDiameters)]) let (zh=HolePositions[i], dh=HoleDiameters[i], rh=HoleRotations[i]) {
+    for(i=[0:1:len(HoleDiameters)]) let (zh=HolePositions[i], dh=HoleDiameters[i], rh=HoleRotations[i]) {
       hole(z=zh, b=FluteInner, h=FluteWall, d=dh, r=rh);
     }
   }

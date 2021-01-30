@@ -28,10 +28,10 @@ use <lib/plate.scad>;
 FluteInner=19;
 
 module head() {
-  // crown/cork
-  frustum(z=0,  b=17+2*FluteWall, l=CrownLength-CorkPosition);
   // reset z=0 to embouchure position
   slide(CrownLength) {
+    // crown/cork
+    frustum(z=-CrownLength,  b=17+2*FluteWall, l=CrownLength-CorkPosition, unshrink=true);
     // embouchure portion of headjoint
     difference() {
       union() {
