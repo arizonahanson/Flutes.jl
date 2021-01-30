@@ -70,6 +70,7 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   di = d+tan(a)*2*ih; // inner hole diameter
   do = d+tan(s)*2*oh; // outer hole diameter
   sqx = sq*d; // square part
+  fn = seg((d+w)/2); // polygon segments
   // position/scale/rotate
   slide(z) pivot(r) ovalize(d, w) squarify(sqx) {
     // angled wall
