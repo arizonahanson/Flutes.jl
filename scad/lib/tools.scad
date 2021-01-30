@@ -37,7 +37,7 @@ module ovalize(d, w) {
 module squarify(sq) {
   if (sq > 0) minkowski() {
     children();
-    cube([sq,sq,1e-8], center=true);
+    cube([sq,sq,NIL], center=true);
   } else children();
 }
 
@@ -46,7 +46,7 @@ module frustum(z=0, b=SEGMENT_SIZE, b2, l=LAYER_HEIGHT, fn=0, unshrink=false) {
   ffn = fn ? fn : seg(max(b, b2)); // adaptive resolution
   cb = unshrink ? unshrink(b, ffn) : circ(b, ffn);
   cb2 = unshrink ? unshrink(b2, ffn) : circ(b2, ffn);
-  slide(z) cylinder(d1=cb, d2=cb2, h=l, $fn=ffn);
+  slide(z) cylinder(d1=cb, d2=cb2, h=l+NIL, $fn=ffn);
 }
 
 // tube: difference of two frustums
