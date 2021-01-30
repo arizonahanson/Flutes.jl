@@ -23,7 +23,7 @@ module body() {
   slide(MortiseLength) difference() {
     union() {
       mortise(z=-MortiseLength, l=MortiseLength, b=FluteInner);
-      tube(b=FluteInner, l=BodyLength-TenonLength, h=FluteWall);
+      tube(b=FluteInner, l=BodyLength-TenonLength+NIL, h=FluteWall);
       tenon(z=BodyLength-TenonLength, l=TenonLength, b=FluteInner);
     }
     // holes
