@@ -69,6 +69,7 @@ $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 		--colorscheme=$(COLORSCHEME) \
 		--imgsize=960,1080 \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
+	@echo -e " * Render Complete: "$@
 
 # build julia image with packages installed
 .PHONY: workshop

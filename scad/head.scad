@@ -31,7 +31,7 @@ module head() {
   // reset z=0 to embouchure position
   slide(CrownLength) {
     // crown/cork
-    frustum(z=-CrownLength, b=17+2*FluteWall, l=CrownLength-CorkPosition, unshrink=true);
+    frustum(z=-CrownLength, b=17+2*FluteWall, l=CrownLength-CorkPosition);
     // embouchure portion of headjoint
     difference() {
       union() {
