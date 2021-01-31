@@ -17,7 +17,7 @@ function circ(d, fn) =
   let(a = PI*pow(d/2,2)) // target circle area
   let(fn = fn ? fn : seg(d)) // number of sides
   let(r = sqrt(a/fn/tan(180/fn))) // polygon inradius
-  2*r/cos(180/fn); // circumscribed diameter
+  2*r/cos(180/fn); // circumscribe diameter
 
 // shrink correction
 function unshrink(d, fn) =

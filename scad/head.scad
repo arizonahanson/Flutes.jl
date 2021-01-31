@@ -38,7 +38,9 @@ module head() {
         // reflector->embouchure
         tube(z=-CorkPosition, b=17, b2=17.4, l=CorkPosition, h=FluteWall);
         // lip plate
-        plate(z=0, b=18, l=24, h=4, r=atan(EmbouchureDiameter/26));
+        ed = (EmbouchureDiameter+EmbouchureWidth)/2;
+        lpr = atan(unshrink(EmbouchureDiameter, seg(ed))/unshrink(26));
+        plate(z=0, b=18, l=24, h=4, r=lpr);
         // embouchure->past lip-plate
         tube(z=0,  b=17.4, b2=17.8, l=26.5, h=FluteWall);
       }
