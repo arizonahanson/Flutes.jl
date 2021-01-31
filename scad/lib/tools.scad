@@ -3,16 +3,21 @@
  */
 include <consts.scad>;
 
-// number of polygon segments ($fn) for diameter d
+// number of polygon segments (fn) for diameter d
 // multiple of four
 function seg(d) =
   let(fn = PI*d/SEGMENT_SIZE)
   max(floor(fn/4)*4, 4);
 
-// circumscribed polygon
+/* diameter of circle that circumscribes a polygon,
+ * with 'fn' sides and the same area as a circle
+ * with diameter 'd'
+ * - n-gon area: a = fn*pow(r,2)*tan(180/fn) */
 function circ(d, fn) =
-  let(fn = fn ? fn : seg(d))
-  d/cos(180/fn);
+  let(a = PI*pow(d/2,2)) // target circle area
+  let(fn = fn ? fn : seg(d)) // number of sides
+  let(r = sqrt(a/fn/tan(180/fn))) // polygon inradius
+  2*r/cos(180/fn); // circumscribed diameter
 
 // shrink correction
 function unshrink(d, fn) =
@@ -64,20 +69,20 @@ module tube(z=0, b=SEGMENT_SIZE, b2, l=LAYER_HEIGHT, h=SEGMENT_SIZE, h2) {
 // (b)ore (h)eight (d)iameter (w)idth (r)otate° w(a)ll°
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
-  w = w==undef ? d : w;
+  w = w ? w : d; // default to circular
   fn = seg((d+w)/2); // polygon segments
-  ud = unshrink(d, fn);
-  rh = unshrink(b + 2*h)/2; // outer tube radius
+  ud = unshrink(d, fn); // unshrink hole X axis here
+  rh = unshrink(b + 2*h)/2; // outer tube radius (unshrunk)
   ih = sqrt(pow(rh,2)-pow(ud/2,2)); // inner hole depth
   oh = rh-ih; // outer hole height
   di = ud+tan(a)*2*ih; // inner hole diameter
   do = ud+tan(s)*2*oh; // outer hole diameter
   sqx = sq*ud; // square part
-  // position/scale/rotate
+  // position/rotate/scale/minkowski
   slide(z) pivot(r) stretch(w/ud) squarify(sqx) {
-    // angled wall
+    // hole with angled wall
     frustum(b=di-sqx, b2=ud-sqx, l=ih, fn=fn, unshrink=0);
-    // shoulder cut
+    // outer shoulder cut
     frustum(z=ih, b=ud-sqx, b2=do-sqx, l=oh, fn=fn, unshrink=0);
   }
 }
