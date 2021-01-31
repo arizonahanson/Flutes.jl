@@ -44,7 +44,7 @@ optimize: $(PARAMSFILE)
 # run optimization to generate parameters
 $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 	@mkdir -pv $(dir $@)
-	@echo -e " * Compiling flute optimizer"
+	@echo " * Compiling flute optimizer"
 	@$(JULIA) $(JULIASRC)/main.jl $@
 
 # 3mf scad dependency makefiles
@@ -52,24 +52,24 @@ include $(wildcard $(DESTDIR)/*.mk)
 # compile scad to 3mf
 $(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
-	@echo -e " * Exporting 3D model: "$@
+	@echo " * Exporting 3D model: "$@
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.3mf=.data)) \
 		-d $@.mk -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@echo -e " * Export Complete: "$@
+	@echo " * Export Complete: "$@
 
 # compile scad to preview png
 $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
-	@echo -e " * Rendering preview: "$@
+	@echo " * Rendering preview: "$@
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.png=.data)) \
 		-d $@.mk -m $(MAKE) \
 		--colorscheme=$(COLORSCHEME) \
 		--imgsize=960,1080 \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@echo -e " * Render Complete: "$@
+	@echo " * Render Complete: "$@
 
 # build julia image with packages installed
 .PHONY: workshop
