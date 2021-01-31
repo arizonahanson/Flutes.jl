@@ -38,9 +38,9 @@ module stretch(a=1) {
 
 // minkowski sum children with a square of width sq
 module squarify(sq=0) {
-  if (sq > 0) minkowski() {
-    children();
+  if (sq > NANO) minkowski() {
     cube([sq,sq,NANO], center=true);
+    children();
   } else children();
 }
 
