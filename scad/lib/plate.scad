@@ -11,7 +11,7 @@ module plate(z=0, b, h, l, r=0) {
     hull() {
       frustum(b=b);
       slide(h) intersection() {
-        slide(l) pivot(r) frustum(b=b, b2=2*l, l=unshrink(od)/2, unshrink=0);
+        slide(l) pivot(r) frustum(b=b, b2=2*l, l=grow(od)/2, grow=0);
         frustum(b=od, l=2*l);
       }
       frustum(z=2*l+2*h-LAYER_HEIGHT, b=b);
