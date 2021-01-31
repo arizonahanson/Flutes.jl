@@ -64,18 +64,19 @@ module tube(z=0, b=SEGMENT_SIZE, b2, l=LAYER_HEIGHT, h=SEGMENT_SIZE, h2) {
 // (s)houlder° (sq)areness
 module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   w = w==undef ? d : w;
-  rh = unshrink(b + 2*h)/2; // outer tube radius
-  ih = sqrt(pow(rh,2)-pow(d/2,2)); // inner hole depth
-  oh = rh-ih; // outer hole height
-  di = d+tan(a)*2*ih; // inner hole diameter
-  do = d+tan(s)*2*oh; // outer hole diameter
-  sqx = sq*d; // square part
   fn = seg((d+w)/2); // polygon segments
+  ud = unshrink(d, fn);
+  rh = unshrink(b + 2*h)/2; // outer tube radius
+  ih = sqrt(pow(rh,2)-pow(ud/2,2)); // inner hole depth
+  oh = rh-ih; // outer hole height
+  di = ud+tan(a)*2*ih; // inner hole diameter
+  do = ud+tan(s)*2*oh; // outer hole diameter
+  sqx = sq*ud; // square part
   // position/scale/rotate
-  slide(z) pivot(r) ovalize(d, w) squarify(sqx) {
+  slide(z) pivot(r) ovalize(ud, w) squarify(sqx) {
     // angled wall
-    frustum(b=di-sqx, b2=d-sqx, l=ih, fn=fn);
+    frustum(b=di-sqx, b2=ud-sqx, l=ih, fn=fn, unshink=false);
     // shoulder cut
-    frustum(z=ih, b=d-sqx, b2=do-sqx, l=oh, fn=fn);
+    frustum(z=ih, b=ud-sqx, b2=do-sqx, l=oh, fn=fn, unshrink=false);
   }
 }
