@@ -1,4 +1,7 @@
 *.3mf
+*.amf
+*.obj
+*.stl
 *.png
 *.mk
 *.json
