@@ -1,5 +1,6 @@
 # flute constraints
 ENV_FILE=constraints
+FTYPE=3mf
 export
 # program binaries
 JULIA=docker run -it --env-file $(ENV_FILE) --rm \
@@ -22,20 +23,20 @@ COLORSCHEME=Starnight
 
 # generate 3D models (slow)
 .PHONY: flute
-flute: $(DESTDIR)/head.3mf $(DESTDIR)/body.3mf $(DESTDIR)/foot.3mf
+flute: $(DESTDIR)/head.$(FTYPE) $(DESTDIR)/body.$(FTYPE) $(DESTDIR)/foot.$(FTYPE)
 
 # generate image previews
 .PHONY: previews
 previews: $(DESTDIR)/head.png $(DESTDIR)/body.png $(DESTDIR)/foot.png
 
 .PHONY: head
-head: $(DESTDIR)/head.3mf
+head: $(DESTDIR)/head.$(FTYPE)
 
 .PHONY: body
-body: $(DESTDIR)/body.3mf
+body: $(DESTDIR)/body.$(FTYPE)
 
 .PHONY: foot
-foot: $(DESTDIR)/foot.3mf
+foot: $(DESTDIR)/foot.$(FTYPE)
 
 # generate optimized parameters file (alias)
 .PHONY: optimize
@@ -47,14 +48,15 @@ $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 	@echo " * Compiling flute optimizer"
 	@$(JULIA) $(JULIASRC)/main.jl $@
 
-# 3mf scad dependency makefiles
+# scad dependency makefiles
 include $(wildcard $(DESTDIR)/*.mk)
-# compile scad to 3mf
-$(DESTDIR)/%.3mf: $(SCADSRC)/%.scad $(PARAMSFILE)
+
+# compile scad files
+$(DESTDIR)/%.$(FTYPE): $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
 	@echo " * Exporting 3D model: "$@
 	@$(SCAD) $< -q \
-		-p $(PARAMSFILE) -P $(notdir $(@:.3mf=.data)) \
+		-p $(PARAMSFILE) -P $(notdir $(@:.$(FTYPE)=.data)) \
 		-d $@.mk -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 	@echo " * Export Complete: "$@
