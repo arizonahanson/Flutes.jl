@@ -8,7 +8,7 @@ A parametric flute modeling tool
 install make, julia, openscad
 then run `make`
 
-Exporting the three stl files can take several minutes each. If you have multiple CPU cores,
+Exporting the three model files can take several minutes each. If you have multiple CPU cores,
 you can speed up the build by running in parallel with the `-j` flag for make: `make -j3`
 
 * better to use a tagged release
@@ -38,9 +38,10 @@ environment variables (lists ordered head->foot, measurements in mm)
 | FLUTE_MAX_DIAMETERS | 9 10 9 9 10 9          | maximum hole diameters           |
 | FLUTE_MAX_PADDING   | Inf 35 30 Inf 35 30    | maximum hole left-footward       |
 | FLUTE_BREAK         | 3                      | number of holes on body          |
-| DESTDIR             | build                  | directory to output stl files    |
+| DESTDIR             | build                  | directory to output files        |
 | SCADFLAGS           |                        | extra openscad arguments         |
 | TRACE               | true                   | show tracing of merit function   |
+| FTYPE               | 3mf                    | model format (3mf, stl, amf)     |
 -----------------------------------------------------------------------------------
 
 openscad variables (supply via SCADFLAGS)
@@ -59,9 +60,9 @@ make targets
 | all      | generate all files (default) |
 | optimize | generate parameters file     |
 | previews | generate png previews        |
-| models   | generate stl models          |
-| head     | generate headjoint stl & png |
-| body     | generate body stl & png      |
-| foot     | generate foot stl & png      |
+| models   | generate models              |
+| head     | generate headjoint model     |
+| body     | generate body model          |
+| foot     | generate foot model          |
 | clean    | delete temporary files       |
 -------------------------------------------
