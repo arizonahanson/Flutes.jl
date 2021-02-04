@@ -6,6 +6,7 @@ export
 JULIA=docker run -it --env-file $(ENV_FILE) --rm \
 			-v "$(PWD)":/Flutes.jl -w /Flutes.jl workshop:latest julia
 SCAD=openscad
+SLIC3R=prusa-slicer
 SHELL=/bin/sh
 # julia args
 ARGS=
@@ -16,18 +17,26 @@ SCADSRC=scad
 DESTDIR=build
 # optimized openscad parameter set json
 PARAMSFILE=$(DESTDIR)/parameters.json
+CONFBUNDLE=Slic3r_config_bundle.ini
 # extra openscad export arguments
 SCADFLAGS=
 # openscad theme for previews
 COLORSCHEME=Starnight
 
+.PHONE: gcode
+gcode: $(DESTDIR)/head.gcode $(DESTDIR)/body.gcode $(DESTDIR)/foot.gcode
+
 # generate 3D models (slow)
-.PHONY: flute
-flute: $(DESTDIR)/head.$(FTYPE) $(DESTDIR)/body.$(FTYPE) $(DESTDIR)/foot.$(FTYPE)
+.PHONY: models
+models: $(DESTDIR)/head.$(FTYPE) $(DESTDIR)/body.$(FTYPE) $(DESTDIR)/foot.$(FTYPE)
 
 # generate image previews
 .PHONY: previews
 previews: $(DESTDIR)/head.png $(DESTDIR)/body.png $(DESTDIR)/foot.png
+
+# generate optimized parameters file (alias)
+.PHONY: optimize
+optimize: $(PARAMSFILE)
 
 .PHONY: head
 head: $(DESTDIR)/head.$(FTYPE)
@@ -37,10 +46,6 @@ body: $(DESTDIR)/body.$(FTYPE)
 
 .PHONY: foot
 foot: $(DESTDIR)/foot.$(FTYPE)
-
-# generate optimized parameters file (alias)
-.PHONY: optimize
-optimize: $(PARAMSFILE)
 
 # run optimization to generate parameters
 $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
@@ -60,6 +65,9 @@ $(DESTDIR)/%.$(FTYPE): $(SCADSRC)/%.scad $(PARAMSFILE)
 		-d $@.mk -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 	@echo " * Export Complete: "$@
+
+$(DESTDIR)/%.gcode: $(DESTDIR)/%.$(FTYPE) $(CONFBUNDLE)
+	@$(SLIC3R) --load $(CONFBUNDLE) -g -o $@ $<
 
 # compile scad to preview png
 $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
