@@ -61,8 +61,6 @@ make targets
 | optimize | generate parameters file     |
 | previews | generate png previews        |
 | models   | generate models              |
-| head     | generate headjoint model     |
-| body     | generate body model          |
-| foot     | generate foot model          |
+| gcode    | generate gcode               |
 | clean    | delete temporary files       |
 -------------------------------------------

@@ -23,38 +23,29 @@ SCADFLAGS=
 # openscad theme for previews
 COLORSCHEME=Starnight
 
-.PHONE: gcode
-gcode: $(DESTDIR)/head.gcode $(DESTDIR)/body.gcode $(DESTDIR)/foot.gcode
-
-# generate 3D models (slow)
-.PHONY: models
-models: $(DESTDIR)/head.$(FTYPE) $(DESTDIR)/body.$(FTYPE) $(DESTDIR)/foot.$(FTYPE)
-
-# generate image previews
-.PHONY: previews
-previews: $(DESTDIR)/head.png $(DESTDIR)/body.png $(DESTDIR)/foot.png
+# scad dependency makefiles
+include $(wildcard $(DESTDIR)/*.mk)
 
 # generate optimized parameters file (alias)
 .PHONY: optimize
 optimize: $(PARAMSFILE)
 
-.PHONY: head
-head: $(DESTDIR)/head.$(FTYPE)
+# generate image previews
+.PHONY: previews
+previews: $(DESTDIR)/head.png $(DESTDIR)/body.png $(DESTDIR)/foot.png
 
-.PHONY: body
-body: $(DESTDIR)/body.$(FTYPE)
+# generate 3D models (slow)
+.PHONY: models
+models: $(DESTDIR)/head.$(FTYPE) $(DESTDIR)/body.$(FTYPE) $(DESTDIR)/foot.$(FTYPE)
 
-.PHONY: foot
-foot: $(DESTDIR)/foot.$(FTYPE)
+.PHONE: gcode
+gcode: $(DESTDIR)/head.gcode $(DESTDIR)/body.gcode $(DESTDIR)/foot.gcode
 
 # run optimization to generate parameters
 $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 	@mkdir -pv $(dir $@)
 	@echo " * Compiling flute optimizer"
 	@$(JULIA) $(JULIASRC)/main.jl $@
-
-# scad dependency makefiles
-include $(wildcard $(DESTDIR)/*.mk)
 
 # compile scad files
 $(DESTDIR)/%.$(FTYPE): $(SCADSRC)/%.scad $(PARAMSFILE)
