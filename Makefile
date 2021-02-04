@@ -26,6 +26,8 @@ COLORSCHEME=Starnight
 # scad dependency makefiles
 include $(wildcard $(DESTDIR)/*.mk)
 
+default: gcode
+
 # generate optimized parameters file (alias)
 .PHONY: optimize
 optimize: $(PARAMSFILE)
