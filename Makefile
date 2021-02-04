@@ -17,7 +17,7 @@ SCADSRC=scad
 DESTDIR=build
 # optimized openscad parameter set json
 PARAMSFILE=$(DESTDIR)/parameters.json
-CONFBUNDLE=Slic3r_config_bundle.ini
+SLICECONF=config.ini
 # extra openscad export arguments
 SCADFLAGS=
 # openscad theme for previews
@@ -66,8 +66,12 @@ $(DESTDIR)/%.$(FTYPE): $(SCADSRC)/%.scad $(PARAMSFILE)
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 	@echo " * Export Complete: "$@
 
-$(DESTDIR)/%.gcode: $(DESTDIR)/%.$(FTYPE) $(CONFBUNDLE)
-	@$(SLIC3R) --load $(CONFBUNDLE) -g -o $@ $<
+$(DESTDIR)/%.gcode: $(DESTDIR)/%.$(FTYPE) $(SLICECONF)
+	@echo " * Slicing gcode: "$@
+	@$(SLIC3R) -g \
+		--load $(SLICECONF) \
+		-o $@ $< >/dev/null
+	@echo " * Slicing Complete: "$@
 
 # compile scad to preview png
 $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
