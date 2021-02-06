@@ -49,7 +49,6 @@ openscad variables (supply via SCADFLAGS)
 | variable         | default | description                                  |
 -----------------------------------------------------------------------------
 | LAYER_HEIGHT     | 0.162   | layer height in mm                           |
-| SEGMENT_SIZE     | 0.486   | min segment size for polygons                |
 | SHRINK_FACTOR    | 0.015   | expected part shrinkage (for compensation)   |
 -----------------------------------------------------------------------------
 

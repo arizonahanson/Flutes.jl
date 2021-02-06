@@ -91,10 +91,6 @@ julia:
 # clean-up generated files
 .PHONY: clean
 clean:
-	@rm $(DESTDIR)/*.gcode -fv
-	@rm $(DESTDIR)/*.3mf -fv
-	@rm $(DESTDIR)/*.amf -fv
-	@rm $(DESTDIR)/*.stl -fv
 	@rm $(DESTDIR)/*.png -fv
 	@rm $(DESTDIR)/*.tmp -fv
 	@rm $(DESTDIR)/*.mk -fv

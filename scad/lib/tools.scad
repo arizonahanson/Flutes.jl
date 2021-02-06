@@ -3,10 +3,13 @@
  */
 include <consts.scad>;
 
+// determine minimum segment size
+SEGMENT_SIZE=2*sqrt(2)*LAYER_HEIGHT;
+
 // number of polygon segments (fn) for diameter d
 function seg(d) =
   let(fn = PI*d/SEGMENT_SIZE) // segments
-  max(floor(fn/4)*4, 4); // round down to multiple 4
+  max(floor(fn/4)*4, 4); // round down to multiple of 4
 
 // diameter of circle that circumscribes a polygon
 // with 'fn' sides and the same area as a circle with diameter 'd'
