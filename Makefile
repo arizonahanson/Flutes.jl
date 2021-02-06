@@ -46,37 +46,37 @@ gcode: $(DESTDIR)/head.gcode $(DESTDIR)/body.gcode $(DESTDIR)/foot.gcode
 # run optimization to generate parameters
 $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 	@mkdir -pv $(dir $@)
-	@echo " * Compiling flute optimizer"
+	@echo " + Compiling flute optimization algorithm..."
 	@$(JULIA) $(JULIASRC)/main.jl $@
 
 # compile scad files
 $(DESTDIR)/%.$(FILETYPE): $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
-	@echo " * Exporting 3D model: "$@
+	@echo " + Modeling solid geometry: "$*
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.$(FILETYPE)=.data)) \
 		-d $@.mk -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@echo " * Export Complete: "$@
+	@echo " - Model complete: "$@
 
 $(DESTDIR)/%.gcode: $(DESTDIR)/%.$(FILETYPE) $(SLICECONF)
-	@echo " * Slicing model: "$@
+	@echo " + Slicing solid model: "$<
 	@$(SLIC3R) -g \
 		--load $(SLICECONF) \
 		-o $@ $< >/dev/null
-	@echo " * Slicing Complete: "$@
+	@echo " - Slicing complete: "$@
 
 # compile scad to preview png
 $(DESTDIR)/%.png: $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
-	@echo " * Rendering preview: "$@
+	@echo " + Rendering geometry preview: "$*
 	@$(SCAD) $< -q \
 		-p $(PARAMSFILE) -P $(notdir $(@:.png=.data)) \
 		-d $@.mk -m $(MAKE) \
 		--colorscheme=$(COLORSCHEME) \
 		--imgsize=960,1080 \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
-	@echo " * Render Complete: "$@
+	@echo " - Render complete: "$@
 
 # build julia image with packages installed
 .PHONY: workshop
@@ -88,9 +88,13 @@ workshop:
 julia:
 	@$(JULIA) $(ARGS)
 
-# clean-up .mk files
+# clean-up generated files
 .PHONY: clean
 clean:
-	@rm $(DESTDIR)/*.mk -fv
+	@rm $(DESTDIR)/*.gcode -fv
+	@rm $(DESTDIR)/*.3mf -fv
+	@rm $(DESTDIR)/*.amf -fv
+	@rm $(DESTDIR)/*.stl -fv
 	@rm $(DESTDIR)/*.png -fv
-
+	@rm $(DESTDIR)/*.tmp -fv
+	@rm $(DESTDIR)/*.mk -fv
