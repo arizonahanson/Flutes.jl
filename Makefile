@@ -1,9 +1,9 @@
 # flute constraints
-ENV_FILE=constraints
-FTYPE=3mf
+ENVFILE=constraints
+FILETYPE=3mf
 export
 # program binaries
-JULIA=docker run -it --env-file $(ENV_FILE) --rm \
+JULIA=docker run -it --env-file $(ENVFILE) --rm \
 			-v "$(PWD)":/Flutes.jl -w /Flutes.jl workshop:latest julia
 SCAD=openscad
 SLIC3R=prusa-slicer
@@ -38,7 +38,7 @@ previews: $(DESTDIR)/head.png $(DESTDIR)/body.png $(DESTDIR)/foot.png
 
 # generate 3D models (slow)
 .PHONY: models
-models: $(DESTDIR)/head.$(FTYPE) $(DESTDIR)/body.$(FTYPE) $(DESTDIR)/foot.$(FTYPE)
+models: $(DESTDIR)/head.$(FILETYPE) $(DESTDIR)/body.$(FILETYPE) $(DESTDIR)/foot.$(FILETYPE)
 
 .PHONE: gcode
 gcode: $(DESTDIR)/head.gcode $(DESTDIR)/body.gcode $(DESTDIR)/foot.gcode
@@ -50,17 +50,17 @@ $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
 	@$(JULIA) $(JULIASRC)/main.jl $@
 
 # compile scad files
-$(DESTDIR)/%.$(FTYPE): $(SCADSRC)/%.scad $(PARAMSFILE)
+$(DESTDIR)/%.$(FILETYPE): $(SCADSRC)/%.scad $(PARAMSFILE)
 	@mkdir -pv $(DESTDIR)
 	@echo " * Exporting 3D model: "$@
 	@$(SCAD) $< -q \
-		-p $(PARAMSFILE) -P $(notdir $(@:.$(FTYPE)=.data)) \
+		-p $(PARAMSFILE) -P $(notdir $(@:.$(FILETYPE)=.data)) \
 		-d $@.mk -m $(MAKE) \
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 	@echo " * Export Complete: "$@
 
-$(DESTDIR)/%.gcode: $(DESTDIR)/%.$(FTYPE) $(SLICECONF)
-	@echo " * Slicing gcode: "$@
+$(DESTDIR)/%.gcode: $(DESTDIR)/%.$(FILETYPE) $(SLICECONF)
+	@echo " * Slicing model: "$@
 	@$(SLIC3R) -g \
 		--load $(SLICECONF) \
 		-o $@ $< >/dev/null
