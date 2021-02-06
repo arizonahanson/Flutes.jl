@@ -14,11 +14,7 @@ function setscadparameter!(parameters::OrderedDict, setname::String, key::String
   if !haskey(sets, setname)
     sets[setname] = OrderedDict{String,String}()
   end
-  if typeof(value) == String
-    sets[setname][key] = value
-  else
-    sets[setname][key] = JSON.json(value)
-  end
+  sets[setname][key] = string(value)
 end
 
 # write scad parameters to filename
