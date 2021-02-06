@@ -16,6 +16,10 @@ head_length = parse(Float64, readvariable("FLUTE_HEAD_LENGTH"))
 tenon_length = parse(Float64, readvariable("FLUTE_TENON_LENGTH"))
 trace = parse(Bool, readvariable("TRACE"))
 
+function rround(value)
+  round(value; digits=5)
+end
+
 # minimum diameters = 1mm
 mind = fill(1, length(maxd))
 # calculate minimum padding between holes
@@ -39,7 +43,7 @@ end
 # all the magic happens here
 println("Optimizing flute parameters: ", ARGS[1])
 diameters, error = optimal(scale, mind, maxd, minp, maxp; trace=trace)
-lengths = round.(mapflute(scale, diameters); digits=4)
+lengths = mapflute(scale, diameters)
 # end magic
 
 # display hole separations
@@ -51,11 +55,11 @@ end
 println(" |")
 
 # break holes by foot/body
-body_diameters = round.(diameters[1:brk]; digits=4)
+body_diameters = diameters[1:brk]
 body_positions = lengths[1:brk]
 body_rotations = rots[1:brk]
 
-foot_diameters = round.(diameters[brk+1:end]; digits=4)
+foot_diameters = diameters[brk+1:end]
 foot_positions = lengths[brk+1:end-1]
 foot_rotations = rots[brk+1:end]
 
@@ -64,8 +68,8 @@ spare = max((foot_positions[1] - body_positions[end] - tenon_length)/2, 0)
 nofoot = body_positions[end] + spare + tenon_length
 
 flute_length = lengths[end]
-body_length = round(nofoot - head_length; digits=4)
-foot_length = round(flute_length - nofoot; digits=4)
+body_length = nofoot - head_length
+foot_length = flute_length - nofoot
 
 # export parameters to opencad props
 params = createscadparameters()
@@ -73,22 +77,22 @@ headset = "head.data"
 setscadparameter!(params, headset, "HeadLength", head_length)
 setscadparameter!(params, headset, "TenonLength", tenon_length)
 bodyset = "body.data"
-setscadparameter!(params, bodyset, "BodyLength", body_length)
-setscadparameter!(params, bodyset, "HoleDiameters", body_diameters)
-setscadparameter!(params, bodyset, "HolePositions", map(bp->round(bp-head_length; digits=4), body_positions))
+setscadparameter!(params, bodyset, "BodyLength", rround(body_length))
+setscadparameter!(params, bodyset, "HoleDiameters", rround.(body_diameters))
+setscadparameter!(params, bodyset, "HolePositions", map(bp->rround(bp-head_length), body_positions))
 setscadparameter!(params, bodyset, "HoleRotations", body_rotations)
 setscadparameter!(params, bodyset, "TenonLength", tenon_length)
 setscadparameter!(params, bodyset, "MortiseLength", tenon_length)
 footset = "foot.data"
-setscadparameter!(params, footset, "FootLength", foot_length)
-setscadparameter!(params, footset, "HoleDiameters", foot_diameters)
-setscadparameter!(params, footset, "HolePositions", map(fp->round(fp-nofoot; digits=4), foot_positions))
+setscadparameter!(params, footset, "FootLength", rround(foot_length))
+setscadparameter!(params, footset, "HoleDiameters", rround.(foot_diameters))
+setscadparameter!(params, footset, "HolePositions", map(fp->rround(fp-nofoot), foot_positions))
 setscadparameter!(params, footset, "HoleRotations", foot_rotations)
 setscadparameter!(params, footset, "MortiseLength", tenon_length)
 extraset = "extra.data"
 setscadparameter!(params, extraset, "CreationDate", now())
 setscadparameter!(params, extraset, "Tuning", tuning)
 setscadparameter!(params, extraset, "Scale", readvariable("FLUTE_SCALE"))
-setscadparameter!(params, extraset, "Score", round(error; digits=4))
+setscadparameter!(params, extraset, "Score", round(error; digits=3))
 writescadparameters(params, ARGS[1])
 
