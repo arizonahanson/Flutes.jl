@@ -56,10 +56,9 @@ make targets
 -------------------------------------------
 | target   | description                  |
 -------------------------------------------
-| all      | generate all files (default) |
-| optimize | generate parameters file     |
-| previews | generate png previews        |
+| gcode    | generate gcode (default)     |
 | models   | generate models              |
-| gcode    | generate gcode               |
+| previews | generate png previews        |
+| optimize | generate parameters file     |
 | clean    | delete temporary files       |
 -------------------------------------------
