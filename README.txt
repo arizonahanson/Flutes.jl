@@ -62,3 +62,14 @@ make targets
 | optimize | generate parameters file     |
 | clean    | delete temporary files       |
 -------------------------------------------
+
+Julia code uses utf8 math symbols that require font coverage:
+
+𝑓   frequency, Hz
+ϑ   temperature, °C
+ℓ   length (distance) from embouchure, mm
+𝜆   acoustic half-wavelength, mm
+ℎ   hole height (depth), mm
+⌀   inner bore diameter, mm
+𝑑   hole diameter, mm
+
