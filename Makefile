@@ -41,7 +41,7 @@ previews: $(DESTDIR)/head.png $(DESTDIR)/body.png $(DESTDIR)/foot.png
 models: $(DESTDIR)/head.$(FILETYPE) $(DESTDIR)/body.$(FILETYPE) $(DESTDIR)/foot.$(FILETYPE)
 
 .PHONE: gcode
-gcode: $(DESTDIR)/head.gcode $(DESTDIR)/body.gcode $(DESTDIR)/foot.gcode
+gcode: $(DESTDIR)/head.gcode $(DESTDIR)/body.gcode $(DESTDIR)/foot.gcode calicat.gcode
 
 # run optimization to generate parameters
 $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
@@ -61,6 +61,13 @@ $(DESTDIR)/%.$(FILETYPE): $(SCADSRC)/%.scad $(PARAMSFILE)
 
 $(DESTDIR)/%.gcode: $(DESTDIR)/%.$(FILETYPE) $(SLICECONF)
 	@echo " + Slicing solid model: "$<
+	@$(SLIC3R) -g \
+		--load $(SLICECONF) \
+		-o $@ $< >/dev/null
+	@echo " - Slicing complete: "$@
+
+calicat.gcode: test/calicat.stl $(SLICECONF) $(PARAMSFILE)
+	@echo " + Slicing Calibration Cat: "$<
 	@$(SLIC3R) -g \
 		--load $(SLICECONF) \
 		-o $@ $< >/dev/null
