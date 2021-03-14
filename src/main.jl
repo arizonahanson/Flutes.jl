@@ -17,7 +17,7 @@ tenon_length = parse(Float64, readvariable("FLUTE_TENON_LENGTH"))
 trace = parse(Bool, readvariable("TRACE"))
 
 function rround(value)
-  round(value; digits=5)
+  round(value; digits=3)
 end
 
 # minimum diameters = 1mm
@@ -93,6 +93,6 @@ extraset = "extra.data"
 setscadparameter!(params, extraset, "CreationDate", now())
 setscadparameter!(params, extraset, "Tuning", tuning)
 setscadparameter!(params, extraset, "Scale", readvariable("FLUTE_SCALE"))
-setscadparameter!(params, extraset, "Score", round(error; digits=3))
+setscadparameter!(params, extraset, "Score", rround(error))
 writescadparameters(params, ARGS[1])
 
