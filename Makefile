@@ -1,6 +1,6 @@
 # flute constraints
 ENVFILE=constraints
-FILETYPE=3mf
+FILETYPE=stl
 export
 # program binaries
 JULIA=docker run -it --env-file $(ENVFILE) --rm \
@@ -41,7 +41,7 @@ previews: $(DESTDIR)/head.png $(DESTDIR)/body.png $(DESTDIR)/foot.png
 models: $(DESTDIR)/head.$(FILETYPE) $(DESTDIR)/body.$(FILETYPE) $(DESTDIR)/foot.$(FILETYPE)
 
 .PHONE: gcode
-gcode: $(DESTDIR)/head.gcode $(DESTDIR)/body.gcode $(DESTDIR)/foot.gcode calicat.gcode
+gcode: $(DESTDIR)/head.gcode $(DESTDIR)/body.gcode $(DESTDIR)/foot.gcode $(DESTDIR)/calicat.gcode
 
 # run optimization to generate parameters
 $(PARAMSFILE): $(JULIASRC)/*.jl $(JULIASRC)/lib/*.jl
@@ -59,15 +59,15 @@ $(DESTDIR)/%.$(FILETYPE): $(SCADSRC)/%.scad $(PARAMSFILE)
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 	@echo " - Model complete: "$@
 
-$(DESTDIR)/%.gcode: $(DESTDIR)/%.$(FILETYPE) $(SLICECONF)
+$(DESTDIR)/calicat.gcode: test/calicat.$(FILETYPE) $(SLICECONF)
 	@echo " + Slicing solid model: "$<
 	@$(SLIC3R) -g \
 		--load $(SLICECONF) \
 		-o $@ $< >/dev/null
 	@echo " - Slicing complete: "$@
 
-calicat.gcode: test/calicat.stl $(SLICECONF) $(PARAMSFILE)
-	@echo " + Slicing Calibration Cat: "$<
+$(DESTDIR)/%.gcode: $(DESTDIR)/%.$(FILETYPE) $(SLICECONF)
+	@echo " + Slicing solid model: "$<
 	@$(SLIC3R) -g \
 		--load $(SLICECONF) \
 		-o $@ $< >/dev/null
