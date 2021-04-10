@@ -52,13 +52,15 @@ function optimal(𝒇, 𝒅₋, 𝒅₊, 𝒑₋, 𝒑₊; trace=false)
   # minimize error function
   errfn = mkerrfn(𝒇, 𝒅₊, 𝒑₋, 𝒑₊)
   # box-constrained, initial parameters (bad guess)
-  𝒅₁ = [8.9, 8.8, 6.5, 8.9, 9.9, 5.5]
+  𝒅₁ = [8.8, 8.8, 6.6, 8.8, 9.9, 5.5]
   # simulated annealing (round 1, fast cooldown)
+  algo = SAMIN(rt=0.5)
   options = Optim.Options(iterations=Int(2e5), show_trace=trace, show_every=Int(1e4))
-  𝒅₂ = Optim.minimizer(optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₁, SAMIN(rt=0.50), options))
+  𝒅₂ = Optim.minimizer(optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₁, algo, options))
   # simulated annealing (round 2, slow cooldown)
+  algo = SAMIN(rt=0.98)
   options = Optim.Options(iterations=Int(4e5), show_trace=trace, show_every=Int(2e4))
-  result = optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₂, SAMIN(rt=0.98), options)
+  result = optimize(errfn, 𝒅₋, 𝒅₊, 𝒅₂, algo, options)
   𝒅ₕ = Optim.minimizer(result)
   𝑒 = Optim.minimum(result)
   # proposed diameters
