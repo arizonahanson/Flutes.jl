@@ -59,7 +59,7 @@ $(DESTDIR)/%.$(FILETYPE): $(SCADSRC)/%.scad $(PARAMSFILE)
 		-o $@ $(subst $$,\$$,$(value SCADFLAGS))
 	@echo " - Model complete: "$@
 
-$(DESTDIR)/calicat.gcode: test/calicat.$(FILETYPE) $(SLICECONF)
+$(DESTDIR)/calicat.gcode: test/calicat.$(FILETYPE) $(SLICECONF) $(PARAMSFILE)
 	@echo " + Slicing solid model: "$<
 	@$(SLIC3R) -g \
 		--load $(SLICECONF) \
