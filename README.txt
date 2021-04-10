@@ -5,7 +5,7 @@
 A parametric flute modeling tool
 ** NOTE *** requires 4 AS568-019 o-rings ** NOTE **
 
-install make, julia, openscad
+install make, julia 1.6, openscad
 then run `make`
 
 Exporting the three model files can take several minutes each. If you have multiple CPU cores,
