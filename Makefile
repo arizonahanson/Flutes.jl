@@ -4,7 +4,7 @@ FILETYPE=stl
 export
 # program binaries
 JULIA=docker run -it --env-file $(ENVFILE) --rm \
-			-v "$(PWD)":/Flutes.jl -w /Flutes.jl workshop:latest julia
+			-v "$(PWD)":/Flutes -w /Flutes workshop:latest julia
 SCAD=openscad
 SLIC3R=prusa-slicer
 SHELL=/bin/sh
