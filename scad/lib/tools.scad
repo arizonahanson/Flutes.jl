@@ -13,9 +13,9 @@ function seg(d) =
 
 // diameter of circle that circumscribes a polygon
 // with 'fn' sides and the same area as a circle with diameter 'd'
-//  polygon area: a = fn*pow(r,2)*tan(180/fn)
+//  polygon area: a = fn*r^2*tan(180/fn)
 function circ(d, fn) =
-  let(a = PI*pow(d/2,2)) // target circle area
+  let(a = PI*(d/2)^2) // target circle area
   let(fn = fn ? fn : seg(d)) // number of sides
   let(r = sqrt(a/fn/tan(180/fn))) // polygon apothem
   2*r/cos(180/fn); // circumscribe diameter
@@ -74,7 +74,7 @@ module hole(z=0, b, h, d, w, r=0, a=0, s=0, sq=0) {
   fn = seg((d+w)/2); // polygon segments
   ud = grow(d, fn); // grow hole X axis here
   rh = grow(b + 2*h)/2; // outer tube radius (unshrunk)
-  ih = sqrt(pow(rh,2)-pow(ud/2,2)); // inner hole depth
+  ih = sqrt(rh^2-(ud/2)^2); // inner hole depth
   oh = rh-ih; // outer hole height
   di = ud+tan(a)*2*ih; // inner hole diameter
   do = ud+tan(s)*2*oh; // outer hole diameter
