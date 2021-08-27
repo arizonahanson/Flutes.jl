@@ -19,7 +19,7 @@ DESTDIR=build
 PARAMSFILE=$(DESTDIR)/parameters.json
 SLICECONF=config.ini
 # extra openscad export arguments
-SCADFLAGS=
+SCADFLAGS=--export-format=binstl
 # openscad theme for previews
 COLORSCHEME=Starnight
 
