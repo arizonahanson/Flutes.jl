@@ -1,6 +1,6 @@
 name = "Flutes"
 uuid = "0847320a-19e7-11ea-24cf-eb2f4631c1dc"
-authors = ["Isaac W Hanson <isaac@starlig.ht>"]
+authors = ["Arizona Hanson <arizona@starlig.ht>"]
 version = "2.3.0"
 
 [deps]

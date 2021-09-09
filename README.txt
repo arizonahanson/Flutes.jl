@@ -1,5 +1,5 @@
 ## Parametric Flute Modeling Tool
-### Author: Isaac W Hanson
+### Author: Arizona Hanson
 ### License: MIT
 
 A parametric flute modeling tool
