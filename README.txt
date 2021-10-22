@@ -41,7 +41,7 @@ environment variables (lists ordered head->foot, measurements in mm)
 | DESTDIR             | build                  | directory to output files        |
 | SCADFLAGS           |                        | extra openscad arguments         |
 | TRACE               | true                   | show tracing of merit function   |
-| FILE_TYPE           | 3mf                    | model format (3mf, stl, amf)     |
+| FILE_TYPE           | stl                    | model format (3mf, stl, amf)     |
 -----------------------------------------------------------------------------------
 
 openscad variables (supply via SCADFLAGS)
